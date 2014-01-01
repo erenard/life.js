@@ -1,5 +1,5 @@
-life
-====
+life.js
+=======
 
 Conway's game of life with HTML5
 
