@@ -224,17 +224,19 @@
 					y = sizeY;
 					while (y--) {
 						cell = collumn[y];
-						if (cell.state !== cell.nextState) {
-							cell.state = cell.nextState;
-							if (cell.state === 1) {
+						if (cell.flip) {
+							cell.flip = false;
+							if (cell.state === 0) {
 								ctx.drawImage(yngCellSprite, x * size, y * size);
 								cell.age = 0;
+								cell.state = 1;
 							} else {
 								ctx.drawImage(dedCellSprite, x * size, y * size);
 								cell.age = -1;
+								cell.state = 0;
 							}
-						} else if (cell.state === 1) {
-							cell.age++;
+						} else {
+							cell.age += cell.state;
 							if (cell.age === 5) {
 								ctx.drawImage(oldCellSprite, x * size, y * size);
 							}
@@ -282,31 +284,31 @@
 			survival = userInterface.rules.s,
 			/** Game of life algorithm */
 			compute = function () {
-				var xm1 = cells[sizeX - 1], //column x minus 1
-					xs0 = cells[0], //column x
-					xp1 = cells[1], //column x plus 1
+				var xm1 = cells[sizeX - 2], //column x minus 1
+					xs0 = cells[sizeX - 1], //column x
+					xp1 = cells[0], //column x plus 1
 					ym1, //index y minus 1
 					yp1, //index y plus 1
 					cell, //current cell
+					isAlive, //current cell state
 					count, //neighboring cells count
 					x, //index x
 					y; //index y
 				/* Phase 1, plant new cells and mark cells for death where appropriate */
-				for (x = 0; x < sizeX; x = x + 1) {
-					for (y = 0; y < sizeY; y = y + 1) {
+				x = sizeX;
+				while (x--) {
+					y = sizeY;
+					while (y--) {
 						ym1 = y > 0 ? y - 1 : sizeY - 1;
 						yp1 = y < (sizeY - 1) ? y + 1 : 0;
 						count = xm1[ym1].state + xs0[ym1].state + xp1[ym1].state + xm1[y].state + xp1[y].state + xm1[yp1].state + xs0[yp1].state + xp1[yp1].state;
 						cell = xs0[y];
-						if (cell.state === 1 && !survival[count]) {
-							cell.nextState = 0;
-						} else if (xs0[y].state === 0 && birth[count]) {
-							cell.nextState = 1;
-						}
+						isAlive = cell.state === 1;
+						cell.flip |= (isAlive && !survival[count]) || (!isAlive && birth[count]);
 					}
-					xm1 = xs0;
-					xs0 = xp1;
-					xp1 = cells[x + 2 < sizeX ? x + 2 : 0];
+					xp1 = xs0;
+					xs0 = xm1;
+					xm1 = cells[x - 1 > 0 ? x - 2 : sizeX - 1];
 				}
 			},
 			x,
@@ -322,11 +324,13 @@
 				 */
 				random: function (ratio) {
 					var x,
-						y;
+						y,
+						cell;
 					for (x = 0; x < sizeX; x = x + 1) {
 						for (y = 0; y < sizeY; y = y + 1) {
 							if (Math.random() + ratio > 1) {
-								cells[x][y].nextState = 1;
+								cell = cells[x][y];
+								cell.flip |= cell.state !== 1;
 							}
 						}
 					}
@@ -336,11 +340,13 @@
 				 */
 				clear: function () {
 					var x,
-						y;
+						y,
+						cell;
 					for (x = 0; x < sizeX; x = x + 1) {
 						for (y = 0; y < sizeY; y = y + 1) {
-							cells[x][y].nextState = 0;
-							cells[x][y].state = 1;
+							cell = cells[x][y];
+							cell.state = 1;
+							cell.flip = true;
 						}
 					}
 				},
@@ -373,7 +379,7 @@
 	 */
 	life.Cell = function () {
 		this.state = 0;
-		this.nextState = 0;
+		this.flip = false;
 		this.age = -1;
 	};
 	return {
@@ -385,7 +391,7 @@
 					canvas = document.getElementById('viewport'),
 					userInterface = life.userInterface(),
 					grid = life.grid(Math.floor(canvas.width / radius), Math.floor(canvas.height / radius), userInterface),
-					renderer = life.renderer(canvas, radius, grid, 1000 / 60),
+					renderer = life.renderer(canvas, radius, grid, 1000 / 100),
 					animation = life.animation(renderer, userInterface);
 				grid.random(0.30);
 				animation.start();
