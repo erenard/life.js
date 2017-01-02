@@ -1,0 +1,36 @@
+@font-face {
+    font-family: subway-ticker;
+    src: url(./subway-ticker.ttf);
+}
+@font-face {
+    font-family: pixel-8bit;
+    /* Font author: http://www.04.jp.org/ */
+    src: url(./04B_03__.ttf);
+}
+.box {
+    font-family: pixel-8bit;
+    font-size: 16px;
+    background-color: black;
+    display: inline-block;
+    color: rgb(0, 127, 0);
+    vertical-align: top;
+}
+.box h1 {
+    font-family: subway-ticker;
+    font-weight: normal;
+    color: rgb(127, 255, 127);
+    font-size: 32px;
+}
+.box div {
+    vertical-align: baseline;
+    margin-bottom: 10px;
+}
+.box a {
+    color: rgb(127, 255, 127);
+}
+.box button, .box select, .box input {
+    font-family: pixel-8bit;
+    font-size: 16px;
+    background-color: black;
+    color: rgb(127, 255, 127);
+}

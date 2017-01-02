@@ -1,0 +1,35 @@
+{
+  "name": "conway-life",
+  "version": "1.0.0",
+  "description": "Conway game of life",
+  "main": "main.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "electron .",
+    "clean": "del ./dist",
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erenard/life.js.git"
+  },
+  "keywords": [
+    "conway",
+    "game",
+    "of",
+    "life"
+  ],
+  "author": "Eric Renard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erenard/life.js/issues"
+  },
+  "homepage": "https://github.com/erenard/life.js#readme",
+  "devDependencies": {
+    "css-loader": "^0.26.1",
+    "electron": "^1.4",
+    "file-loader": "^0.9.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.2.0-rc.3"
+  }
+}
