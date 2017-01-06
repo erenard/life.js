@@ -4,8 +4,10 @@
   "description": "Conway game of life",
   "main": "main.js",
   "scripts": {
-    "build": "webpack",
-    "start": "electron .",
+    "build": "webpack --env production",
+    "electron": "electron .",
+    "start": "webpack-dev-server --env development",
+    "test:lint": "eslint . --cache",
     "clean": "del ./dist",
     "test": "mocha test"
   },
@@ -28,8 +30,11 @@
   "devDependencies": {
     "css-loader": "^0.26.1",
     "electron": "^1.4",
+    "eslint": "^3.12.2",
+    "eslint-loader": "^1.6.1",
     "file-loader": "^0.9.0",
     "style-loader": "^0.13.1",
-    "webpack": "^2.2.0-rc.3"
+    "webpack": "^2.2.0-rc.3",
+    "webpack-dev-server": "^1.16.2"
   }
 }

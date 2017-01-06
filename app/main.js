@@ -1,7 +1,7 @@
-import UserInterface from "./user-interface";
-import Grid from "./grid";
-import Renderer from "./renderer";
-import Animation from "./animation";
+import UserInterface from './user-interface';
+import Grid from './grid';
+import Renderer from './renderer';
+import Animation from './animation';
 
 /*global window, document*/
 function main(setup) {
@@ -16,6 +16,6 @@ function main(setup) {
 		grid.random(0.30);
 		animation.start();
 	}, false);
-};
+}
 
 main({lifeCellSize: 4});
