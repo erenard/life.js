@@ -2,9 +2,8 @@
  * Canvas animator, or 'the main loop',
  * call the parameter method callback at 60fps.
  * @param {Function} callback
- * @param {life.userInterface} userInterface : the page's gui
  */
-export default function (callback, userInterface) {
+export default function (callback) {
 	var running = true,
         /**
          * 60fps timer, using the browser capability if available
@@ -57,6 +56,5 @@ export default function (callback, userInterface) {
 				running = false;
 			}
 		};
-	userInterface.registerAnimation(that);
 	return that;
 }

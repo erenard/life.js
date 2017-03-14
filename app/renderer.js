@@ -9,9 +9,9 @@ export default function (canvas, size, grid, period) {
 	var ctx = canvas.getContext('2d'),
 		lastRender = new Date(),
 		fpsElement = document.getElementById('fps'),
-		sizeX = grid.size.x,
-		sizeY = grid.size.y,
-		cells = grid.getCells(),
+		sizeX = grid.Size.x,
+		sizeY = grid.Size.y,
+		cells = grid.Cells,
         /**
          * prepare a cell's sprite and store it for a later use
          * @param {String} color : fill style

@@ -14,7 +14,15 @@ const config = {
 	target: 'electron',
 	module: {
 		loaders: [
-			{ test: /\.css$/, loader: 'style-loader!css-loader' },
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+				loader: 'babel-loader',
+				query: {
+					presets: ['env']
+				}
+			},
+			{ test: /\.css$/, use: ['style-loader', 'css-loader'] },
 			{ test: /\.png$/, loader: 'url-loader?limit=100000' },
 			{ test: /\.jpg$/, loader: 'file-loader' },
 			{ test: /\.ttf$/, loader: 'file-loader' }
