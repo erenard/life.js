@@ -15,9 +15,9 @@ export default class {
 
         /* game board initialisation */
 		this.cells = [];
-		for (x = 0; x < sizeX; x = x + 1) {
+		for (x = 0; x < this.sizeX; x = x + 1) {
 			this.cells[x] = [];
-			for (y = 0; y < sizeY; y = y + 1) {
+			for (y = 0; y < this.sizeY; y = y + 1) {
 				this.cells[x][y] = new Cell();
 			}
 		}
@@ -43,16 +43,18 @@ export default class {
 		while (x--) {
 			y = this.sizeY;
 			while (y--) {
-				ym1 = y > 0 ? y - 1 : this.sizeY - 1;
-				yp1 = y < (this.sizeY - 1) ? y + 1 : 0;
-				count = xm1[ym1].state + xs0[ym1].state + xp1[ym1].state + xm1[y].state + xp1[y].state + xm1[yp1].state + xs0[yp1].state + xp1[yp1].state;
+				ym1 = (y - 1 + this.sizeY) % this.sizeY;
+				yp1 = (y + 1) % this.sizeY;
+				count = xm1[ym1].state + xs0[ym1].state + xp1[ym1].state
+                      + xm1[y].state                    + xp1[y].state
+                      + xm1[yp1].state + xs0[yp1].state + xp1[yp1].state;
 				cell = xs0[y];
 				isAlive = cell.state === 1;
 				cell.flip |= (isAlive && !this.survival[count]) || (!isAlive && this.birth[count]);
 			}
 			xp1 = xs0;
 			xs0 = xm1;
-			xm1 = this.cells[x - 1 > 0 ? x - 2 : this.sizeX - 1];
+			xm1 = this.cells[(x - 2 + this.sizeX) % this.sizeX];
 		}
 	}
 

@@ -33,7 +33,7 @@ const config = {
 		compress: true,
 		port: 9000
 	},
-	watch: true,
+	watch: false,
 	watchOptions: {
 		ignore: '/node_modules'
 	}
