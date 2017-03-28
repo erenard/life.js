@@ -68,7 +68,7 @@ export default class {
 			cell;
 		for (x = 0; x < this.sizeX; x = x + 1) {
 			for (y = 0; y < this.sizeY; y = y + 1) {
-				if (Math.random() + ratio > 1) {
+				if (Math.random() + ratio >= 1) {
 					cell = this.cells[x][y];
 					cell.flip |= cell.state !== 1;
 				}

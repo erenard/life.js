@@ -1,3 +1,4 @@
+var path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); //installed via npm
 const webpack = require('webpack'); //to access built-in plugins
 
@@ -5,7 +6,7 @@ const config = {
 	entry: './app/main.js',
 	output: {
 		filename: 'bundle.js',
-		path: './dist'
+		path: path.join(__dirname, 'dist')
 	},
 	plugins: [
 		new webpack.optimize.UglifyJsPlugin(),
@@ -17,10 +18,7 @@ const config = {
 			{
 				test: /\.js$/,
 				exclude: /(node_modules|bower_components)/,
-				loader: 'babel-loader',
-				query: {
-					presets: ['env']
-				}
+				loader: 'babel-loader'
 			},
 			{ test: /\.css$/, use: ['style-loader', 'css-loader'] },
 			{ test: /\.png$/, loader: 'url-loader?limit=100000' },
