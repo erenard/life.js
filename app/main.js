@@ -9,7 +9,7 @@ function main(setup) {
 	window.addEventListener('load', () => {
 		console.log(document.getElementById('b0'));
 		//Cell radius
-		var radius = setup.lifeCellSize,
+		var radius = setup.lifeCellSize || 4,
 			canvas = document.getElementById('viewport'),
 			grid = new Grid(Math.floor(canvas.width / radius), Math.floor(canvas.height / radius)),
 			renderer = Renderer(canvas, radius, grid, 1000 / 100),
