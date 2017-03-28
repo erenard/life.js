@@ -1,6 +1,6 @@
 import assert from 'assert';
 import {describe, it} from 'mocha';
-import Grid from '../app/grid.js';
+import Grid from 'grid.js';
 
 describe('Grid', () => {
 	describe('new ()', () => {
