@@ -3,12 +3,9 @@
  * @param {Element} canvas
  * @param {Number} size
  * @param {life.grid} grid
- * @param {Number} period : time in millisecond between two updates
  */
-export default function (canvas, size, grid, period) {
+export default function (canvas, size, grid) {
 	var ctx = canvas.getContext('2d'),
-		lastRender = new Date(),
-		fpsElement = document.getElementById('fps'),
 		sizeX = grid.Size.x,
 		sizeY = grid.Size.y,
 		cells = grid.Cells,
@@ -59,10 +56,8 @@ export default function (canvas, size, grid, period) {
 					}
 				}
 			}
-		},
-		times = new Array(),
-		totalTime = 0;
-        /// disable image smoothing for sake of speed
+		};
+    /// disable image smoothing for sake of speed
 	ctx.webkitImageSmoothingEnabled = false;
 	ctx.mozImageSmoothingEnabled = false;
 	ctx.msImageSmoothingEnabled = false;
@@ -70,21 +65,7 @@ export default function (canvas, size, grid, period) {
 	ctx.imageSmoothingEnabled = false;  ///future...
     /* This function will wrap the whole process of updating the game and drawing it */
 	return function () {
-		var now = new Date(),
-			time = now - lastRender;
-		if (time > period) {
-			grid.update();
-			render();
-			if (fpsElement !== null) {
-				totalTime += time;
-				times.push(time);
-				if (times.length > 60) {
-					time = times.shift();
-					totalTime -= time;
-				}
-				fpsElement.innerHTML = (times.length * 1000 / totalTime) | 0;
-			}
-			lastRender = now;
-		}
+		grid.update();
+		render();
 	};
 }

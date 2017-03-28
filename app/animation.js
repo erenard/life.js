@@ -1,3 +1,4 @@
+import Stats from 'stats.js';
 /**
  * Canvas animator, or 'the main loop',
  * call the parameter method callback at 60fps.
@@ -5,6 +6,7 @@
  */
 export default function (callback) {
 	var running = true,
+		stats = new Stats(),
         /**
          * 60fps timer, using the browser capability if available
          * Source: http://paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -35,7 +37,9 @@ export default function (callback) {
          */
 		animate = function () {
 			if (running) {
+				stats.begin();
 				callback();
+				stats.end();
 				requestAnimationFrame(animate);
 			}
 		},
@@ -56,5 +60,6 @@ export default function (callback) {
 				running = false;
 			}
 		};
+	document.body.appendChild(stats.dom);
 	return that;
 }

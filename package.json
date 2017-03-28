@@ -44,5 +44,8 @@
     "webpack-dev-server": "^1.16.2",
     "webpack-mocha-plugin": "^0.2.1",
     "webpack-node-externals": "^1.5.4"
+  },
+  "dependencies": {
+    "stats.js": "^0.17.0"
   }
 }

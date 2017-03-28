@@ -12,9 +12,9 @@ function main(setup) {
 		var radius = setup.lifeCellSize || 4,
 			canvas = document.getElementById('viewport'),
 			grid = new Grid(Math.floor(canvas.width / radius), Math.floor(canvas.height / radius)),
-			renderer = Renderer(canvas, radius, grid, 1000 / 100),
-			animation = Animation(renderer, userInterface),
-			userInterface = new UserInterface(grid, animation);
+			renderer = Renderer(canvas, radius, grid),
+			animation = Animation(renderer);
+		new UserInterface(grid, animation);
 		grid.random(0.30);
 		animation.start();
 	}, false);

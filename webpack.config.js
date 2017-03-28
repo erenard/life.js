@@ -8,6 +8,12 @@ const config = {
 		filename: 'bundle.js',
 		path: path.join(__dirname, 'dist')
 	},
+	resolve: {
+		modules: [
+			'app',
+			'node_modules'
+		]
+	},
 	plugins: [
 		new webpack.optimize.UglifyJsPlugin(),
 		new HtmlWebpackPlugin({template: './app/index.html'})
