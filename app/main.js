@@ -12,8 +12,12 @@ function main(setup) {
 		var radius = setup.lifeCellSize || 4,
 			canvas = document.getElementById('viewport'),
 			grid = new Grid(Math.floor(canvas.width / radius), Math.floor(canvas.height / radius)),
-			renderer = Renderer(canvas, radius, grid),
-			animation = Animation(renderer);
+			renderer = new Renderer(canvas, radius, grid),
+			animation = Animation(() => {
+                /* This function will wrap the whole process of updating the game and drawing it */
+				grid.update();
+				renderer.render();
+			});
 		new UserInterface(grid, animation);
 		grid.random(0.30);
 		animation.start();
