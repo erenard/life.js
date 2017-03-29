@@ -1,5 +1,5 @@
 
-export default class {
+export default class Sprite {
 	constructor (size) {
 		this.size = size;
 		this.youngCell = this.createCellSprite('rgba(0, 127, 0, 1)');

@@ -2,11 +2,14 @@ import Sprite from 'sprite';
 
 /**
  * Do the drawings on the canvas
- * @param {Element} canvas
- * @param {Number} size
- * @param {life.grid} grid
  */
 export default class Renderer {
+    /**
+     * Constructor
+     * @param {Element} canvas
+     * @param {Number} size
+     * @param {Grid} grid
+     */
 	constructor(canvas, size, grid) {
 		this.ctx = canvas.getContext('2d');
         /// disable image smoothing for sake of speed
