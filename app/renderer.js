@@ -1,33 +1,47 @@
-import Sprite from 'sprite';
+import * as PIXI from 'pixi.js';
 
 /**
  * Do the drawings on the canvas
  */
 export default class Renderer {
-    /**
-     * Constructor
-     * @param {Element} canvas
-     * @param {Number} size
-     * @param {Grid} grid
-     */
-	constructor(canvas, size, grid) {
-		this.ctx = canvas.getContext('2d');
-        /// disable image smoothing for sake of speed
-		this.ctx.webkitImageSmoothingEnabled = false;
-		this.ctx.mozImageSmoothingEnabled = false;
-		this.ctx.msImageSmoothingEnabled = false;
-		this.ctx.oImageSmoothingEnabled = false;
-		this.ctx.imageSmoothingEnabled = false;  ///future...
+  /**
+   * Constructor
+   * @param {Element} canvas
+   */
+	constructor(width, height, viewport) {
+		this.renderer = new PIXI.autoDetectRenderer(width, height);
+		viewport.appendChild(this.renderer.view);
+		this.stage = new PIXI.Container();
+		//this.container = new PIXI.particles.ParticleContainer(19200);
+		this.container = new PIXI.Container();
+	}
 
-		this.size = size;
-		this.sizeX = grid.Size.x;
-		this.sizeY = grid.Size.y;
-		this.cells = grid.Cells;
-		this.sprite = new Sprite(size);
+	/**
+	 * Constructor
+	 * @param {Number} size
+	 * @param {Grid} grid
+	 */
+	initStage(size, grid) {
+		var x, y, collumn, cell;
+		x = grid.Size.x;
+		while (x--) {
+			collumn = grid.cells[x];
+			y = grid.Size.y;
+			while (y--) {
+				cell = collumn[y];
+				cell.sprite.x = x * size;
+				cell.sprite.y = y * size;
+				this.container.addChild(cell.sprite);
+			}
+		}
+		this.stage.addChild(this.container);
 	}
 
     /** draws the game board with each cells */
 	render () {
+		//this.renderer.clear();
+		this.renderer.render(this.stage);
+		/*
 		var x, y, collumn, cell;
         //ctx.clearRect(0, 0, canvas.width, canvas.height);
 		x = this.sizeX;
@@ -39,6 +53,7 @@ export default class Renderer {
 				if (cell.flip) {
 					cell.flip = false;
 					if (cell.state === 0) {
+
 						this.ctx.drawImage(this.sprite.YoungCell, x * this.size, y * this.size);
 						cell.age = 0;
 						cell.state = 1;
@@ -55,5 +70,6 @@ export default class Renderer {
 				}
 			}
 		}
+		*/
 	}
 }
