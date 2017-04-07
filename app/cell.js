@@ -1,6 +1,3 @@
-import {CellTextures} from 'texture-loader';
-import * as PIXI from 'pixi.js';
-
 /**
  * Cell
  */
@@ -10,25 +7,25 @@ export default class Cell {
 		this.state = 0;
 		this.flip = false;
 		this.age = -1;
-		this.sprite = new PIXI.Sprite(CellTextures.youngCell);
+		this.sprite = null;
 	}
 
 	update () {
 		if (this.flip) {
 			this.flip = false;
 			if (this.state === 0) {
-				this.sprite.texture = CellTextures.youngCell;
+				this.sprite.alpha = 0.5;
 				this.age = 0;
 				this.state = 1;
 			} else {
-				this.sprite.texture = CellTextures.deadCell;
+				this.sprite.alpha = 0;
 				this.age = -1;
 				this.state = 0;
 			}
 		} else {
 			this.age += this.state;
 			if (this.age === 5) {
-				this.sprite.texture = CellTextures.oldCell;
+				this.sprite.alpha = 1;
 			}
 		}
 	}
