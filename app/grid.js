@@ -12,8 +12,7 @@ export default class {
 		this.sizeY = sizeY;
 		this.birth = [false, false, false, false, false, false, false, false, false];
 		this.survival = [false, false, false, false, false, false, false, false, false];
-
-        /* game board initialisation */
+    /* game board initialisation */
 		this.cells = [];
 		for (x = 0; x < this.sizeX; x = x + 1) {
 			this.cells[x] = [];
@@ -38,7 +37,7 @@ export default class {
 			count, //neighboring cells count
 			x, //index x
 			y; //index y
-        /* Phase 1, plant new cells and mark cells for death where appropriate */
+    /* Phase 1, plant new cells and mark cells for death where appropriate */
 		x = this.sizeX;
 		while (x--) {
 			y = this.sizeY;
@@ -55,6 +54,15 @@ export default class {
 			xp1 = xs0;
 			xs0 = xm1;
 			xm1 = this.cells[(x - 2 + this.sizeX) % this.sizeX];
+		}
+		/* Phase 2, filp the cells state */
+		x = this.sizeX;
+		while (x--) {
+			y = this.sizeY;
+			while (y--) {
+				cell = this.cells[x][y];
+				cell.update();
+			}
 		}
 	}
 

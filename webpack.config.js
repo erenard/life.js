@@ -15,10 +15,10 @@ const config = {
 		]
 	},
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin(),
+		//new webpack.optimize.UglifyJsPlugin(),
 		new HtmlWebpackPlugin({template: './app/index.html'})
 	],
-	target: 'electron',
+	//target: 'electron',
 	module: {
 		loaders: [
 			{
@@ -27,14 +27,14 @@ const config = {
 				loader: 'babel-loader'
 			},
 			{ test: /\.css$/, use: ['style-loader', 'css-loader'] },
-			{ test: /\.png$/, loader: 'url-loader?limit=100000' },
-			{ test: /\.jpg$/, loader: 'file-loader' },
-			{ test: /\.ttf$/, loader: 'file-loader' }
+			//{ test: /\.png$/, loader: 'url-loader?limit=100000' },
+			//{ test: /\.jpg$/, loader: 'file-loader' },
+			{ test: /\.ttf$/, loader: 'file-loader' },
 		]
 	},
-	devtool: 'cheap-eval-source-map',
+	devtool: 'source-map',
 	devServer: {
-		compress: true,
+		compress: false,
 		port: 9000
 	},
 	watch: false,

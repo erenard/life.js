@@ -7,7 +7,7 @@
     "build": "webpack --env production",
     "electron": "electron .",
     "start": "webpack-dev-server --env development",
-    "test:lint": "eslint . --cache",
+    "lint": "eslint . --cache",
     "clean": "del ./dist",
     "test": "mocha-webpack --webpack-config webpack.config.test.js \"test/**/*.spec.js\"",
     "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test"
@@ -41,6 +41,7 @@
     "inject-loader": "^3.0.0",
     "istanbul": "^0.4.5",
     "istanbul-instrumenter-loader": "^2.0.0",
+    "json-loader": "^0.5.4",
     "mocha": "^3.2.0",
     "mocha-webpack": "^0.7.0",
     "nyc": "^10.2.0",
@@ -52,6 +53,7 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
+    "pixi.js": "^4.4.4",
     "stats.js": "^0.17.0"
   },
   "nyc": {

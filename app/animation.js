@@ -1,4 +1,5 @@
 import Stats from 'stats.js';
+
 /**
  * Canvas animator, or 'the main loop',
  * call the parameter method callback at 60fps.
@@ -7,10 +8,10 @@ import Stats from 'stats.js';
 export default function (callback) {
 	var running = true,
 		stats = new Stats(),
-        /**
-         * 60fps timer, using the browser capability if available
-         * Source: http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-         */
+    /**
+     * 60fps timer, using the browser capability if available
+     * Source: http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+		 */
 		requestAnimationFrame = (function () {
             // shim layer with setTimeout fallback
 			if (!window.requestAnimationFrame) {
@@ -31,10 +32,11 @@ export default function (callback) {
 				return window.requestAnimationFrame;
 			}
 		}()),
-        /**
-         * The loop itself, running if used to stop
-         * or continue the animation
-         */
+
+    /**
+     * The loop itself, running if used to stop
+     * or continue the animation
+     */
 		animate = function () {
 			if (running) {
 				stats.begin();
@@ -44,18 +46,18 @@ export default function (callback) {
 			}
 		},
 		that = {
-            /**
-             * Initialize and start the animator
-             */
+      /**
+       * Initialize and start the animator
+       */
 			start: function () {
 				running = true;
 				animate();
 			},
-            /**
-             * stop the animator and return the average
-             * fps of the last execution
-             * @return {String} last execution's fps
-             */
+      /**
+       * stop the animator and return the average
+       * fps of the last execution
+       * @return {String} last execution's fps
+       */
 			stop: function () {
 				running = false;
 			}

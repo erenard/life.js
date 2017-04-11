@@ -1,59 +1,62 @@
-import Sprite from 'sprite';
+import * as PIXI from 'pixi.js';
 
 /**
  * Do the drawings on the canvas
  */
 export default class Renderer {
-    /**
-     * Constructor
-     * @param {Element} canvas
-     * @param {Number} size
-     * @param {Grid} grid
-     */
-	constructor(canvas, size, grid) {
-		this.ctx = canvas.getContext('2d');
-        /// disable image smoothing for sake of speed
-		this.ctx.webkitImageSmoothingEnabled = false;
-		this.ctx.mozImageSmoothingEnabled = false;
-		this.ctx.msImageSmoothingEnabled = false;
-		this.ctx.oImageSmoothingEnabled = false;
-		this.ctx.imageSmoothingEnabled = false;  ///future...
-
-		this.size = size;
-		this.sizeX = grid.Size.x;
-		this.sizeY = grid.Size.y;
-		this.cells = grid.Cells;
-		this.sprite = new Sprite(size);
+  /**
+   * Constructor
+	 * @param {Number} size Cell sprite's size
+	 * @param {Number} size Cell sprite's size
+   * @param {Element} viewport dom element to use
+	 * @param {Grid} grid
+   */
+	constructor(width, height, viewport, grid, size) {
+		this.renderer = new PIXI.autoDetectRenderer(width, height);
+		viewport.appendChild(this.renderer.view);
+		this.stage = new PIXI.Container();
+		this.container = new PIXI.particles.ParticleContainer(
+			grid.Size.x * grid.Size.y,
+			{ alpha: true }
+		);
+		this.cellTexture = this.generateCellTexture();
+		this.initStage(grid, size);
 	}
 
-    /** draws the game board with each cells */
-	render () {
-		var x, y, collumn, cell;
-        //ctx.clearRect(0, 0, canvas.width, canvas.height);
-		x = this.sizeX;
+	/**
+	 * @param {Grid} grid
+	 * @param {Number} size Cell sprite's size
+	 */
+	initStage(grid, size) {
+		var x, y, collumn, cell, texture = this.generateCellTexture(size);
+		x = grid.Size.x;
 		while (x--) {
-			collumn = this.cells[x];
-			y = this.sizeY;
+			collumn = grid.cells[x];
+			y = grid.Size.y;
 			while (y--) {
 				cell = collumn[y];
-				if (cell.flip) {
-					cell.flip = false;
-					if (cell.state === 0) {
-						this.ctx.drawImage(this.sprite.YoungCell, x * this.size, y * this.size);
-						cell.age = 0;
-						cell.state = 1;
-					} else {
-						this.ctx.drawImage(this.sprite.DeadCell, x * this.size, y * this.size);
-						cell.age = -1;
-						cell.state = 0;
-					}
-				} else {
-					cell.age += cell.state;
-					if (cell.age === 5) {
-						this.ctx.drawImage(this.sprite.OldCell, x * this.size, y * this.size);
-					}
-				}
+				cell.sprite = new PIXI.Sprite(texture);
+				cell.sprite.x = x * size;
+				cell.sprite.y = y * size;
+				cell.sprite.alpha = 0;
+				this.container.addChild(cell.sprite);
 			}
 		}
+		this.stage.addChild(this.container);
+	}
+
+	/**
+	 * @param {Number} size Cell sprite's size
+	 */
+	generateCellTexture (size) {
+		const graphic = new PIXI.Graphics();
+		graphic.beginFill(0x7fff7f);
+		graphic.drawRect(0, 0, size - 1, size - 1);
+		return this.renderer.generateTexture( graphic );
+	}
+
+  /** draws the game board with each cells */
+	render () {
+		this.renderer.render(this.stage);
 	}
 }
