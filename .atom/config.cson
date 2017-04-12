@@ -1,0 +1,14 @@
+'global':
+  'core':
+    'ignoredNames': [
+      '.git'
+      '.hg'
+      '.svn'
+      'coverage'
+      'dist'
+      'node_modules'
+    ]
+  "tree-view":
+    autoReveal: true
+    hideVcsIgnoredFiles: true
+    squashDirectoryNames: true

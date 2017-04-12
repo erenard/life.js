@@ -4,13 +4,15 @@ import * as PIXI from 'pixi.js';
  * Do the drawings on the canvas
  */
 export default class Renderer {
-  /**
-   * Constructor
-	 * @param {Number} size Cell sprite's size
-	 * @param {Number} size Cell sprite's size
-   * @param {Element} viewport dom element to use
-	 * @param {Grid} grid
-   */
+    /**
+     * Initialize the renderer.
+     *
+     * @param {number} width - Width of the renderer viewport.
+     * @param {number} height - Height of the renderer viewport.
+     * @param {Element} viewport - DOM element to containing the viewport.
+     * @param {Grid} grid - Simulation's model.
+     * @param {number} size - Cell sprite's size.
+     */
 	constructor(width, height, viewport, grid, size) {
 		this.renderer = new PIXI.autoDetectRenderer(width, height);
 		viewport.appendChild(this.renderer.view);
@@ -20,22 +22,14 @@ export default class Renderer {
 			{ alpha: true }
 		);
 		this.cellTexture = this.generateCellTexture();
-		this.initStage(grid, size);
-	}
-
-	/**
-	 * @param {Grid} grid
-	 * @param {Number} size Cell sprite's size
-	 */
-	initStage(grid, size) {
-		var x, y, collumn, cell, texture = this.generateCellTexture(size);
+		var x, y, collumn, cell;
 		x = grid.Size.x;
 		while (x--) {
 			collumn = grid.cells[x];
 			y = grid.Size.y;
 			while (y--) {
 				cell = collumn[y];
-				cell.sprite = new PIXI.Sprite(texture);
+				cell.sprite = new PIXI.Sprite(this.cellTexture);
 				cell.sprite.x = x * size;
 				cell.sprite.y = y * size;
 				cell.sprite.alpha = 0;
@@ -46,7 +40,9 @@ export default class Renderer {
 	}
 
 	/**
-	 * @param {Number} size Cell sprite's size
+     * Generate a cell texture.
+     *
+	 * @param {number} size - Cell's texture size.
 	 */
 	generateCellTexture (size) {
 		const graphic = new PIXI.Graphics();
@@ -55,7 +51,9 @@ export default class Renderer {
 		return this.renderer.generateTexture( graphic );
 	}
 
-  /** draws the game board with each cells */
+    /**
+     * Draws the game board with each cells.
+     */
 	render () {
 		this.renderer.render(this.stage);
 	}

@@ -3,14 +3,14 @@ const nodeExternals = require('webpack-node-externals');
 const isCoverage = process.env.NODE_ENV === 'coverage';
 
 const config = {
-	output: {
-    // use absolute paths in sourcemaps (important for debugging via IDE)
+	output: { // use absolute paths in sourcemaps (important for debugging via IDE)
 		devtoolModuleFilenameTemplate: '[absolute-resource-path]',
 		devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
 	},
 	resolve: {
 		modules: [
 			'app',
+			'test/mock',
 			'node_modules'
 		]
 	},

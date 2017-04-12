@@ -1,11 +1,15 @@
 import Cell from './cell';
 
 /**
- * grid: implements the game algorithm
- * @param {Number} sizeX : game board's width
- * @param {Number} sizeY : game board's height
+ * Implements the game algorithm
  */
 export default class {
+    /**
+     * Initialize the grid.
+     *
+     * @param {number} sizeX - Game board's width.
+     * @param {number} sizeY - Game board's height.
+     */
 	constructor (sizeX, sizeY) {
 		let x, y;
 		this.sizeX = sizeX;

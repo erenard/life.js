@@ -4,40 +4,37 @@ import injectRenderer from 'inject-loader!renderer';
 import sinon from 'sinon';
 import assert from 'assert';
 
+import PixiMock from 'pixi-mock';
+import CanvasMock from 'canvas-mock';
+import Grid from 'grid';
+
 describe('Renderer', () => {
 	describe('new ()', () => {
-		var SpriteMock = sinon.spy(class {
-			constructor() {}
-			createCellSprite () {}
-            }),
-			canvasMock = {
-				getContext: function () { return {};}
-			},
-			gridMock = {
-				Size: {x: 0, y: 0}
-			},
-			Renderer;
+		var Renderer;
 
 		before(() => {
             // create mocked module
 			Renderer = injectRenderer({
-				'sprite': SpriteMock
+				'pixi.js': PixiMock
 			}).default;
 		});
 
-		it('should call sprite constructor one time', () => {
-			new Renderer(canvasMock, 4, gridMock);
-			//new SpriteMock(4);
-			console.log(SpriteMock.calledWithNew());
-			console.log(SpriteMock.calledOnce);
-			assert(SpriteMock.calledWithNew());
-			assert(SpriteMock.calledOnce);
+		it('should call new pixi renderer', () => {
+			var width = 123,
+				height = 456,
+				canvas = new CanvasMock();
+			new Renderer(width, height, canvas, new Grid(1, 1), 4);
+			assert(PixiMock.autoDetectRenderer.calledWithNew());
+			assert(PixiMock.autoDetectRenderer.calledOnce);
 		});
 
 		it('should call getContext one time', () => {
-			sinon.spy(canvasMock, 'getContext');
-			new Renderer(canvasMock, 4, gridMock);
-			expect(canvasMock.getContext.calledOnce).to.be.true;
+			var width = 123,
+				height = 456,
+				canvas = new CanvasMock();
+			sinon.spy(canvas, 'getContext');
+			new Renderer(width, height, canvas, new Grid(1, 1), 4);
+			expect(canvas.getContext.calledOnce).to.be.true;
 		});
 	});
 });
