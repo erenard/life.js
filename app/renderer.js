@@ -37,7 +37,6 @@ export default class Renderer {
 			}
 		}
 		this.stage.addChild(this.container);
-		this.stage.addChild(new PIXI.Sprite(this.cellTexture));
 	}
 
 	/**
