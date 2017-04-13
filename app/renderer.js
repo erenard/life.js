@@ -14,14 +14,14 @@ export default class Renderer {
      * @param {number} size - Cell sprite's size.
      */
 	constructor(width, height, viewport, grid, size) {
-		this.renderer = new PIXI.autoDetectRenderer(width, height);
+		this.renderer = new PIXI.autoDetectRenderer(width, height);//, {antialias: false, transparent: false, resolution: 1}
 		viewport.appendChild(this.renderer.view);
 		this.stage = new PIXI.Container();
 		this.container = new PIXI.particles.ParticleContainer(
 			grid.Size.x * grid.Size.y,
 			{ alpha: true }
 		);
-		this.cellTexture = this.generateCellTexture();
+		this.cellTexture = this.generateCellTexture(size);
 		var x, y, collumn, cell;
 		x = grid.Size.x;
 		while (x--) {
@@ -37,6 +37,7 @@ export default class Renderer {
 			}
 		}
 		this.stage.addChild(this.container);
+		this.stage.addChild(new PIXI.Sprite(this.cellTexture));
 	}
 
 	/**
