@@ -27,14 +27,5 @@ describe('Renderer', () => {
 			assert(PixiMock.autoDetectRenderer.calledWithNew());
 			assert(PixiMock.autoDetectRenderer.calledOnce);
 		});
-
-		it('should call getContext one time', () => {
-			var width = 123,
-				height = 456,
-				canvas = new CanvasMock();
-			sinon.spy(canvas, 'getContext');
-			new Renderer(width, height, canvas, new Grid(1, 1), 4);
-			expect(canvas.getContext.calledOnce).to.be.true;
-		});
 	});
 });
