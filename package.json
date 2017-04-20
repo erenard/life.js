@@ -10,7 +10,8 @@
     "lint": "eslint . --cache",
     "clean": "del ./dist",
     "test": "mocha-webpack --webpack-config webpack.config.test.js \"test/**/*.spec.js\"",
-    "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test"
+    "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test",
+    "coveralls": "cross-env NODE_ENV=coverage nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "babel-loader": "^6.4.0",
     "babel-preset-env": "^1.2.1",
     "chai": "^3.5.0",
+    "coveralls": "^2.13.0",
     "cross-env": "^3.2.4",
     "css-loader": "^0.26.1",
     "electron": "^1.4",
