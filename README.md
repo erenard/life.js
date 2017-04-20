@@ -1,3 +1,8 @@
+[![CircleCI](https://circleci.com/gh/erenard/life.js.svg?style=svg)](https://circleci.com/gh/erenard/life.js)
+[![CircleCI](https://img.shields.io/circleci/project/github/erenard/life.js.svg)](https://circleci.com/gh/erenard/life.js)
+[![Coverage Status](https://coveralls.io/repos/github/erenard/life.js/badge.svg)](https://coveralls.io/github/erenard/life.js)
+[![CodeClimate](http://img.shields.io/codeclimate/github/erenard/life.js.svg)](https://codeclimate.com/github/erenard/life.js)
+
 life.js
 =======
 
