@@ -2,6 +2,9 @@
  * Cell
  */
 export default class Cell {
+	/**
+	 * Initialize a Cell.
+	 */
 	constructor () {
 		// 0 or 1, the cell value used to count cells
 		this.state = 0;
@@ -10,6 +13,9 @@ export default class Cell {
 		this.sprite = null;
 	}
 
+	/**
+	 * Update the cell state.
+	 */
 	update () {
 		if (this.flip) {
 			this.flip = false;
@@ -29,5 +35,4 @@ export default class Cell {
 			}
 		}
 	}
-
 }

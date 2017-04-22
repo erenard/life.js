@@ -1,7 +1,7 @@
 import {describe, it, before} from 'mocha';
-import {expect} from 'chai';
+//import {expect} from 'chai';
 import injectRenderer from 'inject-loader!renderer';
-import sinon from 'sinon';
+//import sinon from 'sinon';
 import assert from 'assert';
 
 import PixiMock from 'pixi-mock';

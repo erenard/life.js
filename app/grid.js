@@ -27,8 +27,8 @@ export default class {
 	}
 
     /**
-     * Game of life algorithm
-     * Update the game board
+     * Game of life algorithm,
+     * update the game board.
      */
 	update () {
 		var xm1 = this.cells[this.sizeX - 2], //column x minus 1
@@ -71,8 +71,9 @@ export default class {
 	}
 
     /**
-     * Fill the game board with cells
-     * @param {Number} ratio : filling ratio from 0.0 to 1.0
+     * Fill the game board with cells.
+		 *
+     * @param {number} ratio - Filling ratio from 0.0 to 1.0.
      */
 	random (ratio) {
 		var x,
@@ -89,7 +90,7 @@ export default class {
 	}
 
     /**
-     * Clear the game board
+     * Clear the game board.
      */
 	clear () {
 		var x,
@@ -104,16 +105,16 @@ export default class {
 		}
 	}
 
-    /**
-     * Expose the game board
-     */
+  /**
+   * Expose the game board.
+   */
 	get Cells () {
 		return this.cells;
 	}
 
-    /**
-     * Read-only access to the game board's bounds
-     */
+  /**
+   * Expose the board's size.
+   */
 	get Size () {
 		return {
 			x: this.sizeX,
@@ -121,6 +122,9 @@ export default class {
 		};
 	}
 
+	/**
+   * Expose the rules.
+   */
 	get Rules () {
 		return {
 			b: this.birth,

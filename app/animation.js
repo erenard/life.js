@@ -3,7 +3,8 @@ import Stats from 'stats.js';
 /**
  * Canvas animator, or 'the main loop',
  * call the parameter method callback at 60fps.
- * @param {Function} callback
+ *
+ * @param {Function} callback - The function to be called back.
  */
 export default function (callback) {
 	var running = true,
@@ -35,7 +36,7 @@ export default function (callback) {
 
     /**
      * The loop itself, running if used to stop
-     * or continue the animation
+     * or continue the animation.
      */
 		animate = function () {
 			if (running) {
@@ -47,16 +48,15 @@ export default function (callback) {
 		},
 		that = {
       /**
-       * Initialize and start the animator
+       * Initialize and start the animator.
        */
 			start: function () {
 				running = true;
 				animate();
 			},
       /**
-       * stop the animator and return the average
-       * fps of the last execution
-       * @return {String} last execution's fps
+       * Stop the animator and return the average
+       * fps of the last execution.
        */
 			stop: function () {
 				running = false;
