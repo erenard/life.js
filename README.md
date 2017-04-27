@@ -3,6 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/erenard/life.js/badge.svg)](https://coveralls.io/github/erenard/life.js)
 [![CodeClimate](http://img.shields.io/codeclimate/github/erenard/life.js.svg)](https://codeclimate.com/github/erenard/life.js)
 [![Known Vulnerabilities](https://snyk.io/test/github/erenard/life.js/badge.svg)](https://snyk.io/test/github/erenard/life.js)
+[![Live demo](https://img.shields.io/badge/live-demo-800080.svg)](https://erenard.github.io/life.js/)
 
 life.js
 =======
