@@ -5,7 +5,7 @@
     "es6": true,
     "node": true
   },
-  "extends": "eslint:recommended",
+  "extends": "standard",
   "parserOptions": {
     "sourceType": "module"
   },
@@ -13,25 +13,6 @@
     "jsdoc"
   ],
   "rules": {
-    "indent": [
-      "error",
-      "tab"
-    ],
-    "linebreak-style": [
-      "warn",
-      "windows"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
-    "no-unused-vars": [
-      "warn"
-    ],
     "no-console": 0,
     "jsdoc/check-param-names": 1,
     "jsdoc/check-tag-names": 1,
