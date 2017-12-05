@@ -1,28 +1,33 @@
-import sinon from 'sinon';
+import sinon from 'sinon'
 
-class autoDetectRenderer {
-	generateTexture() {}
+class Renderer {
+  generateTexture () {}
+  render () {}
+}
+
+function autoDetectRenderer () {
+  return new Renderer()
 }
 
 class Container {
-	addChild() {}
+  addChild () {}
 }
 
 class ParticleContainer extends Container {}
 
 class Graphics {
-	beginFill() {}
-	drawRect() {}
+  beginFill () {}
+  drawRect () {}
 }
 
 class Sprite {}
 
 export default {
-	autoDetectRenderer: sinon.spy(autoDetectRenderer),
-	Container: sinon.spy(Container),
-	Graphics: sinon.spy(Graphics),
-	Sprite: sinon.spy(Sprite),
-	particles: {
-		ParticleContainer: sinon.spy(ParticleContainer)
-	}
-};
+  autoDetectRenderer: sinon.spy(autoDetectRenderer),
+  Container: sinon.spy(Container),
+  Graphics: sinon.spy(Graphics),
+  Sprite: sinon.spy(Sprite),
+  particles: {
+    ParticleContainer: sinon.spy(ParticleContainer)
+  }
+}
