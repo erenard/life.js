@@ -64,7 +64,6 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
-    "electron": "^1",
     "pixi.js": "^4.4.4",
     "stats.js": "^0.17.0",
     "vue": "^2.3.3"
