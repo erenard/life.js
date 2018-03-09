@@ -23,14 +23,13 @@ export default class Renderer {
     )
     this.cellTexture = this.generateCellTexture(size)
     let i = grid.Size.length
-    let cell, x, y
+    let cell, position
     while (i--) {
-      x = i % grid.Size.x
-      y = Math.floor(i / grid.Size.x)
+      position = grid.indexToXy(i)
       cell = grid.cells[i]
       cell.sprite = new PIXI.Sprite(this.cellTexture)
-      cell.sprite.x = x * size
-      cell.sprite.y = y * size
+      cell.sprite.x = position.x * size
+      cell.sprite.y = position.y * size
       cell.sprite.alpha = 0
       this.container.addChild(cell.sprite)
     }

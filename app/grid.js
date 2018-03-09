@@ -24,10 +24,6 @@ export default class {
     }
   }
 
-  getCellAt (index) {
-    return this.cells[(index + this.length) % this.length]
-  }
-
   /**
    * Game of life algorithm,
    * update the game board.
@@ -37,10 +33,10 @@ export default class {
     let i = this.length
     let count
     while (i--) {
-      count = this.getCellAt(i - this.sizeX - 1).state +
-        this.getCellAt(i - this.sizeX).state +
-        this.getCellAt(i - this.sizeX + 1).state +
-        this.getCellAt(i - 1).state +
+      count = this.getCellAt(this.length + i - this.sizeX - 1).state +
+        this.getCellAt(this.length + i - this.sizeX).state +
+        this.getCellAt(this.length + i - this.sizeX + 1).state +
+        this.getCellAt(this.length + i - 1).state +
         this.getCellAt(i + 1).state +
         this.getCellAt(i + this.sizeX - 1).state +
         this.getCellAt(i + this.sizeX).state +
@@ -110,5 +106,20 @@ export default class {
       b: this.birth,
       s: this.survival
     }
+  }
+
+  getCellAt (index) {
+    return this.cells[index % this.length]
+  }
+
+  indexToXy (i) {
+    return {
+      x: i % this.Size.x,
+      y: Math.floor(i / this.Size.x)
+    }
+  }
+
+  xyToIndex (x, y) {
+    return this.Size.x * y + x
   }
 }
