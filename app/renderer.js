@@ -22,19 +22,17 @@ export default class Renderer {
       { alpha: true }
     )
     this.cellTexture = this.generateCellTexture(size)
-    var x, y, collumn, cell
-    x = grid.Size.x
-    while (x--) {
-      collumn = grid.cells[x]
-      y = grid.Size.y
-      while (y--) {
-        cell = collumn[y]
-        cell.sprite = new PIXI.Sprite(this.cellTexture)
-        cell.sprite.x = x * size
-        cell.sprite.y = y * size
-        cell.sprite.alpha = 0
-        this.container.addChild(cell.sprite)
-      }
+    let i = grid.Size.length
+    let cell, x, y
+    while (i--) {
+      x = i % grid.Size.x
+      y = Math.floor(i / grid.Size.x)
+      cell = grid.cells[i]
+      cell.sprite = new PIXI.Sprite(this.cellTexture)
+      cell.sprite.x = x * size
+      cell.sprite.y = y * size
+      cell.sprite.alpha = 0
+      this.container.addChild(cell.sprite)
     }
     this.stage.addChild(this.container)
   }

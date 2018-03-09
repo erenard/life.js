@@ -23,4 +23,4 @@ function main (setup) {
   animation.start()
 }
 
-main({lifeCellSize: 4})
+main({lifeCellSize: 3})
