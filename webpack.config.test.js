@@ -3,19 +3,29 @@ const nodeExternals = require('webpack-node-externals')
 const isCoverage = process.env.NODE_ENV === 'coverage'
 
 const config = {
+  entry: [
+    './test/index.js'
+  ],
   output: { // use absolute paths in sourcemaps (important for debugging via IDE)
     devtoolModuleFilenameTemplate: '[absolute-resource-path]',
-    devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
+    devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
+    path: path.join(__dirname, '.tmp'),
+    filename: 'tests.js'
   },
   resolve: {
     modules: [
-      'src',
+      'app',
       'test/mock',
       'node_modules'
     ]
   },
   module: {
-    loaders: [
+    rules: [
+      {
+        test: /test\.js$/,
+        use: 'mocha-loader',
+        exclude: /node_modules/
+      },
       {
         test: /.js$/,
         exclude: /(node_modules|bower_components)/,
@@ -29,11 +39,16 @@ const config = {
 }
 
 if (isCoverage) {
-  config.module.loaders = [{
+  config.module.rules = [{
     test: /\.(js|ts)/,
-    include: path.resolve('src'), // instrument only testing sources with Istanbul, after ts-loader runs
-    loader: 'istanbul-instrumenter-loader'
-  }].concat(config.module.loaders)
+    include: path.resolve('app'), // instrument only testing sources with Istanbul, after ts-loader runs
+    use: {
+      loader: 'istanbul-instrumenter-loader',
+      options: {
+        esModules: true
+      }
+    }
+  }].concat(config.module.rules)
 }
 
 module.exports = config

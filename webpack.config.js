@@ -1,36 +1,38 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin') // installed via npm
-// const webpack = require('webpack'); //to access built-in plugins
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const config = {
-  entry: './src/main.js',
+  entry: './app',
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, 'dist')
   },
   resolve: {
     modules: [
-      'src',
+      'app',
       'node_modules'
     ],
     alias: { vue: 'vue/dist/vue.js' }
   },
   plugins: [
-    // new webpack.optimize.UglifyJsPlugin(),
-    new HtmlWebpackPlugin({ template: './src/index.html' })
+    new UglifyJsPlugin({
+      sourceMap: true
+    }),
+    new HtmlWebpackPlugin({ template: './app/index.html' })
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader'
+        use: 'babel-loader'
       },
-      { test: /\.vue$/, loader: 'vue-loader' },
+      { test: /\.vue$/, use: 'vue-loader' },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-      // { test: /\.png$/, loader: 'url-loader?limit=100000' },
-      // { test: /\.jpg$/, loader: 'file-loader' },
-      { test: /\.ttf$/, loader: 'file-loader' }
+      // { test: /\.png$/, use: 'url-loader?limit=100000' },
+      // { test: /\.jpg$/, use: 'file-loader' },
+      { test: /\.ttf$/, use: 'file-loader' }
     ]
   },
   devtool: 'source-map',

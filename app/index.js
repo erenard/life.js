@@ -1,8 +1,8 @@
 import 'assets/app.css'
-import UserInterface from 'user-interface'
-import Grid from 'game/grid'
-import Renderer from 'game/renderer'
-import Animation from 'game/animation'
+import UserInterface from './user-interface'
+import Grid from './game/grid'
+import Renderer from './game/renderer'
+import Animation from './game/animation'
 
 function main (setup) {
   var radius = setup.lifeCellSize || 4
