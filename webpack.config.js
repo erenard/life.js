@@ -3,21 +3,21 @@ const HtmlWebpackPlugin = require('html-webpack-plugin') // installed via npm
 // const webpack = require('webpack'); //to access built-in plugins
 
 const config = {
-  entry: './app/main.js',
+  entry: './src/main.js',
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, 'dist')
   },
   resolve: {
     modules: [
-      'app',
+      'src',
       'node_modules'
     ],
     alias: { vue: 'vue/dist/vue.js' }
   },
   plugins: [
     // new webpack.optimize.UglifyJsPlugin(),
-    new HtmlWebpackPlugin({ template: './app/index.html' })
+    new HtmlWebpackPlugin({ template: './src/index.html' })
   ],
   module: {
     loaders: [

@@ -9,7 +9,7 @@ const config = {
   },
   resolve: {
     modules: [
-      'app',
+      'src',
       'test/mock',
       'node_modules'
     ]
@@ -31,7 +31,7 @@ const config = {
 if (isCoverage) {
   config.module.loaders = [{
     test: /\.(js|ts)/,
-    include: path.resolve('app'), // instrument only testing sources with Istanbul, after ts-loader runs
+    include: path.resolve('src'), // instrument only testing sources with Istanbul, after ts-loader runs
     loader: 'istanbul-instrumenter-loader'
   }].concat(config.module.loaders)
 }

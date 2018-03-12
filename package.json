@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack --env production",
-    "electron": "electron .",
+    "electron": "electron src/electron.js",
     "start": "webpack-dev-server --env development",
     "lint": "eslint . --cache --fix",
     "clean": "del ./dist",
@@ -70,7 +70,7 @@
   },
   "nyc": {
     "include": [
-      "app/**/*.js"
+      "src/**/*.js"
     ],
     "instrument": false,
     "sourceMap": false
