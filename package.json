@@ -35,14 +35,14 @@
     "babel-preset-env": "^1.2.1",
     "chai": "^4",
     "coveralls": "^3",
-    "cross-env": "^5",
+    "cross-env": "^5.1.4",
     "css-loader": "^0.28",
     "eslint": "^4",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsdoc": "^3.0.2",
     "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
     "file-loader": "^1",
     "html-webpack-plugin": "^2.28.0",
@@ -54,10 +54,10 @@
     "mocha-webpack": "^1",
     "nyc": "^11",
     "remap-istanbul": "^0.9.5",
-    "sinon": "^4",
+    "sinon": "^4.4.3",
     "style-loader": "^0.19.0",
     "vue-loader": "^13",
-    "vue-template-compiler": "^2.3.3",
+    "vue-template-compiler": "^2.5.15",
     "webpack": "^3",
     "webpack-dev-server": "^2.4.5",
     "webpack-mocha-plugin": "^0.2.1",
@@ -66,7 +66,7 @@
   "dependencies": {
     "pixi.js": "^4.4.4",
     "stats.js": "^0.17.0",
-    "vue": "^2.3.3"
+    "vue": "^2.5.15"
   },
   "nyc": {
     "include": [
