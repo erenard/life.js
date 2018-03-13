@@ -1,11 +1,12 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const production = process.argv.indexOf('production') > -1
 
 const config = {
-  entry: './app',
+  entry: { main: './app' },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.join(__dirname, 'dist')
   },
   resolve: {
@@ -16,9 +17,17 @@ const config = {
     alias: { vue: 'vue/dist/vue.js' }
   },
   plugins: [
-    new UglifyJsPlugin({
-      sourceMap: true
-    }),
+    new UglifyJsPlugin(production ? {
+      sourceMap: true,
+      uglifyOptions: {
+        comment: false,
+        compress: {
+          warnings: false,
+          drop_console: true,
+          drop_debugger: true
+        }
+      }
+    } : {}),
     new HtmlWebpackPlugin({ template: './app/index.html' })
   ],
   module: {
@@ -39,6 +48,23 @@ const config = {
   devServer: {
     compress: false,
     port: 9000
+  },
+  optimization: {
+    minimize: true,
+    runtimeChunk: {
+      name: 'vendor'
+    },
+    splitChunks: {
+      cacheGroups: {
+        default: false,
+        commons: {
+          test: /node_modules/,
+          name: 'vendor',
+          chunks: 'initial',
+          minSize: 1
+        }
+      }
+    }
   }
 }
 
