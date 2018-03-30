@@ -1,3 +1,4 @@
+import 'normalize.css'
 import 'assets/app.css'
 import UserInterface from './user-interface'
 import Grid from './game/grid'
@@ -6,9 +7,9 @@ import Animation from './game/animation'
 
 function main (setup) {
   var radius = setup.lifeCellSize || 4
-  var width = 1280
-  var height = 1024
   var viewport = document.getElementById('viewport')
+  var width = window.innerWidth || 1280
+  var height = window.innerHeight || 1024
   var grid = new Grid(Math.floor(width / radius), Math.floor(height / radius))
   var renderer = new Renderer(width, height, viewport, grid, radius)
   var animation = Animation(() => {

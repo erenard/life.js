@@ -63,6 +63,7 @@
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
+    "normalize.css": "^8.0.0",
     "pixi.js": "^4.4.4",
     "stats.js": "^0.17.0",
     "vue": "^2.5.15",
