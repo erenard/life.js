@@ -1,7 +1,5 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const production = process.argv.indexOf('production') > -1
 
 const config = {
   entry: { main: './app' },
@@ -17,17 +15,6 @@ const config = {
     alias: { vue: 'vue/dist/vue.js' }
   },
   plugins: [
-    new UglifyJsPlugin(production ? {
-      sourceMap: true,
-      uglifyOptions: {
-        comment: false,
-        compress: {
-          warnings: false,
-          drop_console: true,
-          drop_debugger: true
-        }
-      }
-    } : {}),
     new HtmlWebpackPlugin({ template: './app/index.html' })
   ],
   module: {
@@ -43,7 +30,7 @@ const config = {
       { test: /\.ttf$/, use: 'file-loader' }
     ]
   },
-  devtool: 'source-map',
+  devtool: 'eval-cheap-module-source-map',
   devServer: {
     compress: false,
     port: 9000
