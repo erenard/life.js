@@ -1,6 +1,7 @@
 export default class {
-  constructor (grid, animation) {
+  constructor ({ grid, mainLoop, animation }) {
     this.grid = grid
+    this.mainLoop = mainLoop
     this.animation = animation
     this.birthElements = [
       document.getElementById('b0'),
@@ -27,6 +28,7 @@ export default class {
     this.presetsElement = document.getElementById('presets')
     this.stopButtonElement = document.getElementById('stop')
     this.startButtonElement = document.getElementById('start')
+    this.stepButtonElement = document.getElementById('step')
     this.randomButtonElement = document.getElementById('random')
     this.clearButtonElement = document.getElementById('clear')
     this.ratioElement = document.getElementById('ratio')
@@ -84,6 +86,9 @@ export default class {
       this.startButtonElement.style.display = 'none'
       this.stopButtonElement.style.display = ''
     })
+    this.stepButtonElement.addEventListener('click', () => {
+      this.mainLoop()
+    })
     this.randomButtonElement.addEventListener('click', () => {
       var ratioValue = this.ratioElement.value
       if (isNaN(ratioValue) || ratioValue < 0 || ratioValue > 100) {
@@ -91,9 +96,11 @@ export default class {
         this.ratioElement.value = ratioValue
       }
       this.grid.random(ratioValue / 100)
+      this.mainLoop()
     })
     this.clearButtonElement.addEventListener('click', () => {
       this.grid.clear()
+      this.mainLoop()
     })
     this.presetsElement.addEventListener('change', changePreset)
   }

@@ -24,7 +24,7 @@ export default class Animation {
       this.stats.begin()
       this.callback()
       this.stats.end()
-      requestAnimationFrame(this.animate)
+      requestAnimationFrame(this.animate.bind(this))
     }
   }
 

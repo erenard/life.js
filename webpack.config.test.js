@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
 const isCoverage = process.env.NODE_ENV === 'coverage'
 
@@ -22,17 +23,17 @@ const config = {
   module: {
     rules: [
       {
-        test: /test\.js$/,
-        use: 'mocha-loader',
-        exclude: /node_modules/
-      },
-      {
         test: /.js$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader'
       }
     ]
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      document: ['document-mock', 'default']
+    })
+  ],
   target: 'node', // webpack should compile node compatible code
   externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   devtool: 'inline-cheap-module-source-map'
