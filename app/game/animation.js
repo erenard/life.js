@@ -1,3 +1,4 @@
+import requestAnimationFrame from './request-animation-frame'
 import Stats from 'stats.js'
 
 /**
@@ -6,62 +7,40 @@ import Stats from 'stats.js'
  *
  * @param {Function} callback - The function to be called back.
  */
-export default function (callback) {
-  var running = true
-  var stats = new Stats()
-  /**
-   * 60fps timer, using the browser capability if available
-   * Source: http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-   */
-  var requestAnimationFrame = (function () {
-    // shim layer with setTimeout fallback
-    if (!window.requestAnimationFrame) {
-      if (window.webkitRequestAnimationFrame) {
-        return window.webkitRequestAnimationFrame
-      } else if (window.mozRequestAnimationFrame) {
-        return window.mozRequestAnimationFrame
-      } else if (window.oRequestAnimationFrame) {
-        return window.oRequestAnimationFrame
-      } else if (window.msRequestAnimationFrame) {
-        return window.msRequestAnimationFrame
-      } else {
-        return function (animateCallback) {
-          window.setTimeout(animateCallback, 1000 / 60)
-        }
-      }
-    } else {
-      return window.requestAnimationFrame
-    }
-  }())
+export default class Animation {
+  constructor (callback) {
+    this.callback = callback
+    this.running = true
+    this.stats = new Stats()
+    document.body.appendChild(this.stats.dom)
+  }
 
   /**
    * The loop itself, running if used to stop
    * or continue the animation.
    */
-  var animate = function () {
-    if (running) {
-      stats.begin()
-      callback()
-      stats.end()
-      requestAnimationFrame(animate)
+  animate () {
+    if (this.running) {
+      this.stats.begin()
+      this.callback()
+      this.stats.end()
+      requestAnimationFrame(this.animate)
     }
   }
-  var that = {
-    /**
-     * Initialize and start the animator.
-     */
-    start: function () {
-      running = true
-      animate()
-    },
-    /**
-     * Stop the animator and return the average
-     * fps of the last execution.
-     */
-    stop: function () {
-      running = false
-    }
+
+  /**
+   * Initialize and start the animator.
+   */
+  start () {
+    this.running = true
+    this.animate()
   }
-  document.body.appendChild(stats.dom)
-  return that
+
+  /**
+   * Stop the animator and return the average
+   * fps of the last execution.
+   */
+  stop () {
+    this.running = false
+  }
 }
