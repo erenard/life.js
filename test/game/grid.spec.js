@@ -1,6 +1,7 @@
 import assert from 'assert'
 import {describe, it} from 'mocha'
 import Grid from 'game/grid'
+import {Rules} from 'game/cell'
 
 describe('Grid', () => {
   describe('constructor', () => {
@@ -22,16 +23,6 @@ describe('Grid', () => {
       let grid = new Grid(10, 10)
       let size = grid.Size
       assert.deepEqual(size, {x: 10, y: 10, length: 10 * 10})
-    })
-  })
-  describe('get Rules ()', () => {
-    it('should return the grid rules', () => {
-      let grid = new Grid(10, 10)
-      let rules = grid.Rules
-      assert.deepEqual(rules, {
-        b: [false, false, false, false, false, false, false, false, false],
-        s: [false, false, false, false, false, false, false, false, false]
-      })
     })
   })
   describe('random (ratio)', () => {
@@ -73,9 +64,9 @@ describe('Grid', () => {
       grid.Cells[grid.xyToIndex(2, 1)].state = 1
       grid.Cells[grid.xyToIndex(2, 2)].state = 1
       grid.Cells[grid.xyToIndex(2, 3)].state = 1
-      grid.birth[3] = true
-      grid.survival[2] = true
-      grid.survival[3] = true
+      Rules.b[3] = true
+      Rules.s[2] = true
+      Rules.s[3] = true
       grid.update()
       assert.equal(grid.Cells[grid.xyToIndex(2, 1)].state, 0)
       assert.equal(grid.Cells[grid.xyToIndex(2, 3)].state, 0)

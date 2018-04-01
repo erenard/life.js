@@ -26,7 +26,7 @@ export default class Cell {
    * Update the cell state.
    */
   update () {
-    this.flip |=
+    this.flip = this.flip ||
       (this.state === 1 && !Rules.s[this.count]) ||
       (this.state === 0 && Rules.b[this.count])
 
