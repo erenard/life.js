@@ -24,6 +24,7 @@ body {
     display: inline-block;
     color: rgb(0, 127, 0);
     vertical-align: top;
+    opacity: 0.75;
 }
 .box h1 {
     font-family: subway-ticker;
