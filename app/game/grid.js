@@ -14,8 +14,6 @@ export default class {
     this.sizeX = sizeX
     this.sizeY = sizeY
     this.length = sizeX * sizeY
-    this.birth = [false, false, false, false, false, false, false, false, false]
-    this.survival = [false, false, false, false, false, false, false, false, false]
     /* game board initialisation */
     this.cells = new Array(this.length)
     let i = this.length
@@ -24,28 +22,47 @@ export default class {
     }
   }
 
+  countNeighboursSafe (i) {
+    return this.getCellAt(i - this.sizeX - 1).state +
+    this.getCellAt(i - this.sizeX).state +
+    this.getCellAt(i - this.sizeX + 1).state +
+    this.getCellAt(i - 1).state +
+    this.getCellAt(i + 1).state +
+    this.getCellAt(i + this.sizeX - 1).state +
+    this.getCellAt(i + this.sizeX).state +
+    this.getCellAt(i + this.sizeX + 1).state
+  }
+
+  countNeighboursUnsafe (i) {
+    return this.cells[i - this.sizeX - 1].state +
+    this.cells[i - this.sizeX].state +
+    this.cells[i - this.sizeX + 1].state +
+    this.cells[i - 1].state +
+    this.cells[i + 1].state +
+    this.cells[i + this.sizeX - 1].state +
+    this.cells[i + this.sizeX].state +
+    this.cells[i + this.sizeX + 1].state
+  }
+
   /**
    * Game of life algorithm,
    * update the game board.
    */
   update () {
     /* Phase 1, plant new cells and mark cells for death where appropriate */
-    let i = this.length
-    let count
-    while (i--) {
-      count = this.getCellAt(this.length + i - this.sizeX - 1).state +
-        this.getCellAt(this.length + i - this.sizeX).state +
-        this.getCellAt(this.length + i - this.sizeX + 1).state +
-        this.getCellAt(this.length + i - 1).state +
-        this.getCellAt(i + 1).state +
-        this.getCellAt(i + this.sizeX - 1).state +
-        this.getCellAt(i + this.sizeX).state +
-        this.getCellAt(i + this.sizeX + 1).state
-      let isAlive = this.cells[i].state === 1
-      this.cells[i].flip |= (isAlive && !this.survival[count]) || (!isAlive && this.birth[count])
+    for (let i = 0; i < this.sizeX + 1; i++) {
+      this.cells[i].count = this.countNeighboursSafe(this.length + i)
+    }
+
+    for (let i = this.sizeX + 1; i < this.length - (this.sizeX + 1); i++) {
+      this.cells[i].count = this.countNeighboursUnsafe(i)
+    }
+
+    for (let i = this.length - (this.sizeX + 1); i < this.length; i++) {
+      this.cells[i].count = this.countNeighboursSafe(i)
     }
     /* Phase 2, filp the cells state */
-    i = this.length
+    let i = this.length
     while (i--) {
       this.cells[i].update()
     }
@@ -95,16 +112,6 @@ export default class {
       x: this.sizeX,
       y: this.sizeY,
       length: this.length
-    }
-  }
-
-  /**
-   * Expose the rules.
-   */
-  get Rules () {
-    return {
-      b: this.birth,
-      s: this.survival
     }
   }
 

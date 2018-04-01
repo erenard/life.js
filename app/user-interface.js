@@ -1,3 +1,5 @@
+import { Rules } from 'game/cell'
+
 export default class {
   constructor ({ grid, mainLoop, animation }) {
     this.grid = grid
@@ -41,18 +43,18 @@ export default class {
     var length = preset.length
     if (length !== 0 && preset !== 'custom' && start !== -1 && stop !== -1 && start < stop) {
       for (let index = 0; index < 9; index += 1) {
-        this.grid.Rules.b[index] = false
-        this.grid.Rules.s[index] = false
+        Rules.b[index] = false
+        Rules.s[index] = false
         this.birthElements[index].checked = false
         this.survivalElements[index].checked = false
       }
       for (let index = start + 1; index < stop; index += 1) {
         this.birthElements[preset.charAt(index)].checked = true
-        this.grid.Rules.b[preset.charAt(index)] = true
+        Rules.b[preset.charAt(index)] = true
       }
       for (let index = stop + 1; index < length; index += 1) {
         this.survivalElements[preset.charAt(index)].checked = true
-        this.grid.Rules.s[preset.charAt(index)] = true
+        Rules.s[preset.charAt(index)] = true
       }
     }
   }
@@ -60,8 +62,8 @@ export default class {
   registerEventListeners () {
     var updateRules = function () {
       for (let index = 0; index < 9; index += 1) {
-        this.grid.Rules.b[index] = this.birthElements[index].checked
-        this.grid.Rules.s[index] = this.survivalElements[index].checked
+        Rules.b[index] = this.birthElements[index].checked
+        Rules.s[index] = this.survivalElements[index].checked
       }
       this.presetsElement.value = 'custom'
     }.bind(this)

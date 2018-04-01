@@ -1,4 +1,12 @@
 /**
+ * Expose the rules.
+ */
+export var Rules = {
+  b: [false, false, false, false, false, false, false, false, false],
+  s: [false, false, false, false, false, false, false, false, false]
+}
+
+/**
  * Cell
  */
 export default class Cell {
@@ -11,12 +19,17 @@ export default class Cell {
     this.flip = false
     this.age = -1
     this.sprite = null
+    this.count = 0
   }
 
   /**
    * Update the cell state.
    */
   update () {
+    this.flip |=
+      (this.state === 1 && !Rules.s[this.count]) ||
+      (this.state === 0 && Rules.b[this.count])
+
     if (this.flip) {
       this.flip = false
       if (this.state === 0) {
