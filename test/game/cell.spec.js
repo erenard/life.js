@@ -1,16 +1,19 @@
-import { describe, it } from 'mocha'
+import { describe, it, beforeEach } from 'mocha'
 import { assert, expect } from 'chai'
 
 import { default as Cell, Rules } from 'game/cell'
 
 describe('Cell', () => {
+  beforeEach(() => {
+    Rules.b = [false, false, false, false, false, false, false, false, false]
+    Rules.s = [false, false, false, false, false, false, false, false, false]
+  })
   describe('new ()', () => {
     it('should initialize a Cell', () => {
       var cell = new Cell()
       expect(cell).to.deep.equal({
         state: 0,
-        flip: false,
-        age: -1,
+        age: 0,
         sprite: null,
         count: 0
       })
@@ -22,63 +25,58 @@ describe('Cell', () => {
       cell.update()
       expect(cell).to.deep.equal({
         state: 0,
-        flip: false,
-        age: -1,
+        age: 0,
         sprite: null,
         count: 0
       })
     })
-    it('should flip a cell state (newborn)', () => {
+    it('should reborn a cell', () => {
       var cell = new Cell()
       cell.sprite = {}
-      cell.flip = true
+      Rules.b[0] = true
       cell.update()
       expect(cell).to.deep.equal({
         state: 1,
-        flip: false,
         age: 0,
         sprite: {alpha: 0.5},
         count: 0
       })
     })
-    it('should increment a cell age', () => {
+    it('should increment a living cell age', () => {
       var cell = new Cell()
       cell.sprite = {}
-      cell.flip = true
+      cell.state = 1
       Rules.s[0] = true
+      cell.update()
+      expect(cell.age).to.be.equal(1)
+    })
+    it('should keep a dead cell age', () => {
+      var cell = new Cell()
+      cell.sprite = {}
       cell.update()
       expect(cell.age).to.be.equal(0)
-      console.log(cell)
-      cell.update()
-      console.log(cell)
-      expect(cell.age).to.be.equal(1)
-      Rules.s[0] = false
     })
-    it('should flip a cell state (old)', () => {
+    it('should update the opacity at age == 5', () => {
       var cell = new Cell()
+      cell.state = 1
       cell.sprite = {}
-      cell.flip = true
+      cell.age = 4
       Rules.s[0] = true
       cell.update()
-      cell.age = 4
-      cell.update()
       expect(cell.sprite.alpha).to.be.equal(1)
-      Rules.s[0] = false
     })
-    it('should flip a cell state (dead)', () => {
+    it('should kill a cell', () => {
       var cell = new Cell()
-      var dead = new Cell()
+      cell.state = 1
       cell.sprite = {}
+      var dead = new Cell()
       dead.sprite = {alpha: 0}
-      cell.flip = true
-      cell.update()
-      cell.flip = true
       cell.update()
       expect(cell).to.deep.equal(dead)
     })
   })
   describe('get Rules ()', () => {
-    it('should return the grid rules', () => {
+    it('should return the rules', () => {
       assert.deepEqual(Rules, {
         b: [false, false, false, false, false, false, false, false, false],
         s: [false, false, false, false, false, false, false, false, false]

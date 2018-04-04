@@ -30,14 +30,14 @@ describe('Grid', () => {
       let grid = new Grid(10, 10)
       grid.random(1)
       for (let i = 0; i < 100; i++) {
-        assert.equal(grid.Cells[i].flip, true)
+        assert.equal(grid.Cells[i].state, 1)
       }
     })
     it('should leave the grid empty when ratio = 0', () => {
       let grid = new Grid(10, 10)
       grid.random(0)
       for (let i = 0; i < 100; i++) {
-        assert.equal(grid.Cells[i].flip, false)
+        assert.equal(grid.Cells[i].state, 0)
       }
     })
   })
@@ -48,8 +48,7 @@ describe('Grid', () => {
       grid.Cells[1].state = 1
       grid.clear()
       for (let i = 0; i < 100; i++) {
-        assert.equal(grid.Cells[i].flip, true)
-        assert.equal(grid.Cells[i].state, 1)
+        assert.equal(grid.Cells[i].state, 0)
       }
     })
   })

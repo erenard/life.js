@@ -73,7 +73,6 @@ export default class {
       if (Math.random() + ratio >= 1) {
         cell = this.cells[i]
         cell.state = 1
-        cell.flip = false
       }
     }
   }
@@ -87,7 +86,6 @@ export default class {
     while (i--) {
       cell = this.cells[i]
       cell.state = 0
-      cell.flip = false
     }
   }
 
