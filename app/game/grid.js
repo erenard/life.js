@@ -79,7 +79,7 @@ export default class {
     while (i--) {
       if (Math.random() + ratio >= 1) {
         cell = this.cells[i]
-        cell.flip |= cell.state !== 1
+        cell.state = 1
       }
     }
   }
@@ -92,8 +92,7 @@ export default class {
     var cell
     while (i--) {
       cell = this.cells[i]
-      cell.state = 1
-      cell.flip = true
+      cell.state = 0
     }
   }
 
