@@ -1,4 +1,5 @@
 import Cell from './cell'
+import GridWorker from './grid.worker'
 
 /**
  * Implements the game algorithm
@@ -14,6 +15,15 @@ export default class {
     this.sizeX = sizeX
     this.sizeY = sizeY
     this.length = sizeX * sizeY
+    this.worker = new GridWorker()
+    this.worker.onmessage = function (e) {
+      var cellCounts = e.data
+      let i = this.length
+      while (i--) {
+        this.cells[i].count = cellCounts[i]
+        this.cells[i].update()
+      }
+    }.bind(this)
     /* game board initialisation */
     this.cells = new Array(this.length)
     let i = this.length
@@ -22,33 +32,16 @@ export default class {
     }
   }
 
-  countNeighboursSafe (i) {
-    return this.getCellAt(i - this.sizeX - 1).state +
-    this.getCellAt(i - this.sizeX).state +
-    this.getCellAt(i - this.sizeX + 1).state +
-    this.getCellAt(i - 1).state +
-    this.getCellAt(i + 1).state +
-    this.getCellAt(i + this.sizeX - 1).state +
-    this.getCellAt(i + this.sizeX).state +
-    this.getCellAt(i + this.sizeX + 1).state
-  }
-
-  countNeighboursUnsafe (i) {
-    return this.cells[i - this.sizeX - 1].state +
-    this.cells[i - this.sizeX].state +
-    this.cells[i - this.sizeX + 1].state +
-    this.cells[i - 1].state +
-    this.cells[i + 1].state +
-    this.cells[i + this.sizeX - 1].state +
-    this.cells[i + this.sizeX].state +
-    this.cells[i + this.sizeX + 1].state
+  update () {
+    let cellStates = this.cells.map(cell => cell.state)
+    this.worker.postMessage({ cellStates: cellStates, sizeX: this.sizeX })
   }
 
   /**
    * Game of life algorithm,
    * update the game board.
    */
-  update () {
+  updateLocal () {
     /* Phase 1, plant new cells and mark cells for death where appropriate */
     for (let i = 0; i < this.sizeX + 1; i++) {
       this.cells[i].count = this.countNeighboursSafe(this.length + i)
@@ -79,7 +72,8 @@ export default class {
     while (i--) {
       if (Math.random() + ratio >= 1) {
         cell = this.cells[i]
-        cell.flip |= cell.state !== 1
+        cell.state = 1
+        cell.flip = false
       }
     }
   }
@@ -92,8 +86,8 @@ export default class {
     var cell
     while (i--) {
       cell = this.cells[i]
-      cell.state = 1
-      cell.flip = true
+      cell.state = 0
+      cell.flip = false
     }
   }
 
@@ -113,10 +107,6 @@ export default class {
       y: this.sizeY,
       length: this.length
     }
-  }
-
-  getCellAt (index) {
-    return this.cells[index % this.length]
   }
 
   indexToXy (i) {
