@@ -16,6 +16,7 @@ export default class {
     this.sizeY = sizeY
     this.length = sizeX * sizeY
     this.worker = new GridWorker()
+    this.ready = true
     this.worker.onmessage = function (e) {
       var cellCounts = e.data
       let i = this.length
@@ -23,6 +24,7 @@ export default class {
         this.cells[i].count = cellCounts[i]
         this.cells[i].update()
       }
+      this.ready = true
     }.bind(this)
     /* game board initialisation */
     this.cells = new Array(this.length)
@@ -33,8 +35,11 @@ export default class {
   }
 
   update () {
-    let cellStates = this.cells.map(cell => cell.state)
-    this.worker.postMessage({ cellStates: cellStates, sizeX: this.sizeX })
+    if (this.ready) {
+      let cellStates = this.cells.map(cell => cell.state)
+      this.ready = false
+      this.worker.postMessage({ cellStates: cellStates, sizeX: this.sizeX })
+    }
   }
 
   /**

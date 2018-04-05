@@ -29,7 +29,6 @@ function countNeighboursUnsafe (i) {
 }
 
 onmessage = function (e) {
-  console.log(e.data)
   cellStates = e.data.cellStates
   sizeX = e.data.sizeX
   length = cellStates.length
