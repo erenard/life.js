@@ -23,6 +23,7 @@ function main (setup) {
   ui.loadPreset('b3s23')
   grid.random(0.30)
   animation.start()
+  animation.stop()
 }
 
 main({lifeCellSize: 4})
