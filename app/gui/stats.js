@@ -1,4 +1,4 @@
-import Stats from 'stats.js'
+import Stats from 'stats'
 
 const stats = new Stats()
 document.body.appendChild(stats.dom)

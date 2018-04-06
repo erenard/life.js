@@ -24,10 +24,6 @@ const config = {
         exclude: /(node_modules|bower_components)/,
         use: 'babel-loader'
       },
-      {
-        test: /\.worker\.js$/,
-        use: { loader: 'worker-loader' }
-      },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       // { test: /\.png$/, use: 'url-loader?limit=100000' },
       // { test: /\.jpg$/, use: 'file-loader' },

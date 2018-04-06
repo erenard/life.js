@@ -1,5 +1,5 @@
 {
-  "name": "lifejs",
+  "name": "conway-life",
   "version": "1.0.0",
   "description": "Conway game of life",
   "main": "app/index.js",
@@ -55,14 +55,12 @@
     "nyc": "^11.4.1",
     "sinon": "^4.4.3",
     "style-loader": "^0.20.3",
-    "tiny-worker": "^2.1.2",
     "uglifyjs-webpack-plugin": "^1.2.3",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.11",
     "webpack-dev-middleware": "^3.0.1",
     "webpack-dev-server": "^3.1.1",
-    "webpack-node-externals": "^1.5.4",
-    "worker-loader": "^1.1.1"
+    "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
     "normalize.css": "^8.0.0",

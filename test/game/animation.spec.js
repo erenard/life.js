@@ -19,7 +19,7 @@ describe('Animation', () => {
     // create mocked module
     Animation = injectAnimation({
       './request-animation-frame': requestAnimationFrame,
-      '../gui/stats': new StatsMock()
+      'stats.js': StatsMock
     }).default
   })
 
@@ -35,7 +35,8 @@ describe('Animation', () => {
       var animation = new Animation(updateFunction)
       assert.deepEqual(animation, {
         running: true,
-        callback: updateFunction
+        callback: updateFunction,
+        stats: new StatsMock()
       })
     })
   })

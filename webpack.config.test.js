@@ -26,10 +26,6 @@ const config = {
         test: /.js$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader'
-      },
-      {
-        test: /\.worker\.js$/,
-        use: { loader: 'worker-loader' }
       }
     ]
   },
