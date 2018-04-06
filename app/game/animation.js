@@ -1,5 +1,5 @@
 import requestAnimationFrame from './request-animation-frame'
-import Stats from 'stats.js'
+import stats from '../gui/stats'
 
 /**
  * Canvas animator, or 'the main loop',
@@ -11,8 +11,6 @@ export default class Animation {
   constructor (callback) {
     this.callback = callback
     this.running = true
-    this.stats = new Stats()
-    document.body.appendChild(this.stats.dom)
   }
 
   /**
@@ -21,9 +19,9 @@ export default class Animation {
    */
   animate () {
     if (this.running) {
-      this.stats.begin()
+      stats.begin()
       this.callback()
-      this.stats.end()
+      stats.end()
       requestAnimationFrame(this.animate.bind(this))
     }
   }
