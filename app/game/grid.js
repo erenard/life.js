@@ -1,4 +1,4 @@
-import Cell from './cell'
+import { default as Cell, Rules } from './cell'
 import GridWorker from './grid.worker'
 
 /**
@@ -18,11 +18,10 @@ export default class {
     this.worker = new GridWorker()
     this.ready = true
     this.worker.onmessage = function (e) {
-      var cellCounts = e.data
+      const cellStates = e.data
       let i = this.length
       while (i--) {
-        this.cells[i].count = cellCounts[i]
-        this.cells[i].update()
+        this.cells[i].setState(cellStates[i])
       }
       this.ready = true
     }.bind(this)
@@ -32,13 +31,23 @@ export default class {
     while (i--) {
       this.cells[i] = new Cell()
     }
+    this.worker.postMessage({
+      type: 'initialize',
+      length: this.length,
+      sizeX: this.sizeX,
+      rules: Rules
+    })
+  }
+
+  postCellStates () {
+    const cellStates = new Uint8Array(this.cells.map(cell => cell.state))
+    this.worker.postMessage({ type: 'setCellStates', cellStates: cellStates.buffer }, [cellStates.buffer])
   }
 
   update () {
     if (this.ready) {
-      let cellStates = this.cells.map(cell => cell.state)
       this.ready = false
-      this.worker.postMessage({ cellStates: cellStates, sizeX: this.sizeX })
+      this.worker.postMessage({ type: 'update' })
     }
   }
 
@@ -80,6 +89,7 @@ export default class {
         cell.state = 1
       }
     }
+    this.postCellStates()
   }
 
   /**
@@ -92,6 +102,7 @@ export default class {
       cell = this.cells[i]
       cell.state = 0
     }
+    this.postCellStates()
   }
 
   /**

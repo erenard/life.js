@@ -1,6 +1,9 @@
+import { update as stateUpdate, Rules } from './cell'
+
 var sizeX = 1
 var length = 1
 var cellStates = []
+var cellCounts = []
 
 function getCellAt (index) {
   return cellStates[index % length]
@@ -29,11 +32,35 @@ function countNeighboursUnsafe (i) {
 }
 
 onmessage = function (e) {
-  cellStates = e.data.cellStates
-  sizeX = e.data.sizeX
-  length = cellStates.length
-  let cellCounts = new Array(length)
+  switch (e.data.type) {
+    case 'initialize':
+      initialize(e)
+      break
+    case 'update':
+      update()
+      break
+    case 'setCellStates':
+      setCellStates(e)
+      break
+  }
+}
 
+const initialize = e => {
+  length = e.data.length
+  cellStates = new Uint8Array(length)
+  cellCounts = new Array(length)
+  sizeX = e.data.sizeX
+  Rules = e.data.rules
+  console.log(Rules)
+}
+
+const setCellStates = e => {
+  const uint8Array = new Uint8Array(e.data.cellStates)
+  cellStates.set(uint8Array)
+}
+
+const update = () => {
+  console.log(cellStates)
   /* Phase 1, plant new cells and mark cells for death where appropriate */
   for (let i = 0; i < sizeX + 1; i++) {
     cellCounts[i] = countNeighboursSafe(length + i)
@@ -47,5 +74,13 @@ onmessage = function (e) {
     cellCounts[i] = countNeighboursSafe(i)
   }
 
-  postMessage(cellCounts)
+  console.log(cellCounts)
+  /* Phase 2, flip the cells state */
+  let i = length
+  while (i--) {
+    cellStates[i] = stateUpdate(cellStates[i], cellCounts[i])
+  }
+
+  console.log(cellStates)
+  postMessage(cellStates)
 }

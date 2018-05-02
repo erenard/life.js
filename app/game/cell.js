@@ -44,4 +44,36 @@ export default class Cell {
       }
     }
   }
+
+  setState (state) {
+    if (this.state === 1 && state === 0) {
+      // Death
+      this.age = 0
+      this.state = 0
+      this.age = 0
+      this.sprite.alpha = 0
+    } else if (this.state === 0 && state === 1) {
+      // Newborn
+      this.state = 1
+      this.age = 0
+      this.sprite.alpha = 0.5
+    } else {
+      // Staying alive
+      this.age += this.state
+      if (this.age === 5) {
+        this.sprite.alpha = 1
+      }
+    }
+  }
+}
+
+export function update (state, count) {
+  if (state === 1 && !Rules.s[count]) {
+    // Death
+    return 0
+  } else if (state === 0 && Rules.b[count]) {
+    // Newborn
+    return 1
+  }
+  return state
 }
