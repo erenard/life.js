@@ -56,6 +56,7 @@ export default class {
         this.survivalElements[preset.charAt(index)].checked = true
         Rules.s[preset.charAt(index)] = true
       }
+      this.grid.postRules()
     }
   }
 
@@ -66,6 +67,7 @@ export default class {
         Rules.s[index] = this.survivalElements[index].checked
       }
       this.presetsElement.value = 'custom'
+      this.grid.postRules()
     }.bind(this)
 
     var changePreset = function () {

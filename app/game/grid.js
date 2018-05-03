@@ -21,7 +21,7 @@ export default class {
       const cellStates = e.data
       let i = this.length
       while (i--) {
-        this.cells[i].setState(cellStates[i])
+        this.cells[i].update(cellStates[i])
       }
       this.ready = true
     }.bind(this)
@@ -34,14 +34,21 @@ export default class {
     this.worker.postMessage({
       type: 'initialize',
       length: this.length,
-      sizeX: this.sizeX,
-      rules: Rules
+      sizeX: this.sizeX
     })
+  }
+
+  postRules () {
+    this.worker.postMessage({ type: 'setRules', birth: Rules.b, survival: Rules.s })
   }
 
   postCellStates () {
     const cellStates = new Uint8Array(this.cells.map(cell => cell.state))
     this.worker.postMessage({ type: 'setCellStates', cellStates: cellStates.buffer }, [cellStates.buffer])
+  }
+
+  postCellStatesArray () {
+    this.worker.postMessage({ type: 'setCellStates', cellStates: this.cells.map(cell => cell.state) })
   }
 
   update () {
@@ -124,13 +131,14 @@ export default class {
   }
 
   indexToXy (i) {
+    i = i % this.length
     return {
-      x: i % this.Size.x,
-      y: Math.floor(i / this.Size.x)
+      x: i % this.sizeX,
+      y: Math.floor(i / this.sizeX)
     }
   }
 
   xyToIndex (x, y) {
-    return this.Size.x * y + x
+    return (this.sizeX * y + x) % this.length
   }
 }
