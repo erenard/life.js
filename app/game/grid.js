@@ -119,13 +119,14 @@ export default class {
   }
 
   indexToXy (i) {
+    i = i % this.length
     return {
-      x: i % this.Size.x,
-      y: Math.floor(i / this.Size.x)
+      x: i % this.sizeX,
+      y: Math.floor(i / this.sizeX)
     }
   }
 
   xyToIndex (x, y) {
-    return this.Size.x * y + x
+    return (this.sizeX * y + x) % this.length
   }
 }
