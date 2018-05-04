@@ -4,3 +4,7 @@ machine:
 dependencies:
   override:
     - npm install
+general:
+  branches:
+    ignore:
+      - gh-pages
