@@ -8,7 +8,8 @@
     "electron": "electron app/electron.js",
     "start": "webpack-dev-server --mode development",
     "lint": "eslint . --cache --fix",
-    "clean": "del ./dist",
+    "prepare": "git clone https://github.com/erenard/mandelbrot.git --branch gh-pages dist",
+    "deploy": "cd dist && git add --all && git commit -m \"Release at $(date)\" && git push",
     "test": "webpack --mode development --config webpack.config.test.js && mocha ./.tmp/tests.js",
     "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test",
     "coveralls": "cross-env NODE_ENV=coverage nyc npm test && nyc report --reporter=text-lcov | coveralls"
