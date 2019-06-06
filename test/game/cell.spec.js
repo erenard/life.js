@@ -1,7 +1,7 @@
 import { describe, it, beforeEach } from 'mocha'
 import { assert, expect } from 'chai'
 
-import { default as Cell, Rules } from 'game/cell'
+import Cell, { Rules } from 'game/cell'
 
 describe('Cell', () => {
   beforeEach(() => {

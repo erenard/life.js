@@ -1,4 +1,4 @@
-import {describe, it, before} from 'mocha'
+import { describe, it, before } from 'mocha'
 // eslint-disable-next-line
 import injectRenderer from 'inject-loader!game/renderer'
 import assert from 'assert'
