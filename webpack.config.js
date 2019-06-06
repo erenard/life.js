@@ -11,8 +11,7 @@ const config = {
     modules: [
       'app',
       'node_modules'
-    ],
-    alias: { vue: 'vue/dist/vue.js' }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './app/index.html' })
