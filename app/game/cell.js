@@ -17,7 +17,7 @@ export default class Cell {
     // 0 or 1, the cell value used to count cells
     this.state = 0
     this.age = 0
-    this.sprite = null
+    this.sprite = {}
     this.count = 0
   }
 
@@ -27,21 +27,32 @@ export default class Cell {
   update () {
     if (this.state === 1 && !Rules.s[this.count]) {
       // Death
-      this.age = 0
-      this.state = 0
-      this.age = 0
-      this.sprite.alpha = 0
+      this.isLiving = false
     } else if (this.state === 0 && Rules.b[this.count]) {
-      // Newborn
-      this.state = 1
-      this.age = 0
-      this.sprite.alpha = 0.5
+      // Birth
+      this.isLiving = true
     } else {
       // Staying alive
       this.age += this.state
       if (this.age === 5) {
         this.sprite.alpha = 1
       }
+    }
+  }
+
+  get isLiving () {
+    return this.state === 1
+  }
+
+  set isLiving (value) {
+    if (value) {
+      this.state = 1
+      this.age = 0
+      this.sprite.alpha = 0.5
+    } else {
+      this.state = 0
+      this.age = 0
+      this.sprite.alpha = 0
     }
   }
 }

@@ -1,7 +1,7 @@
-import assert from 'assert'
-import {describe, it} from 'mocha'
+import { assert } from 'chai'
+import { describe, it } from 'mocha'
 import Grid from 'game/grid'
-import {Rules} from 'game/cell'
+import { Rules } from 'game/cell'
 
 const gridSide = 4
 const gridLength = gridSide * gridSide
@@ -24,7 +24,7 @@ describe('Grid', () => {
     it('should return the grid size', () => {
       let grid = new Grid(gridSide, gridSide)
       let size = grid.Size
-      assert.deepEqual(size, {x: gridSide, y: gridSide, length: gridLength})
+      assert.deepEqual(size, { x: gridSide, y: gridSide, length: gridLength })
     })
   })
   describe('random (ratio)', () => {
@@ -89,11 +89,11 @@ describe('Grid', () => {
   describe('indexToXy ()', () => {
     it('should convert index to (x, y)', () => {
       let grid = new Grid(gridSide, gridSide)
-      assert.deepEqual(grid.indexToXy(0 + gridSide * 0), {x: 0, y: 0})
-      assert.deepEqual(grid.indexToXy(3 + gridSide * 3), {x: 3, y: 3})
-      assert.deepEqual(grid.indexToXy(1 + gridSide * 1), {x: 1, y: 1})
-      assert.deepEqual(grid.indexToXy(3 + gridSide * 0), {x: 3, y: 0})
-      assert.deepEqual(grid.indexToXy(0 + gridSide * 3), {x: 0, y: 3})
+      assert.deepEqual(grid.indexToXy(0 + gridSide * 0), { x: 0, y: 0 })
+      assert.deepEqual(grid.indexToXy(3 + gridSide * 3), { x: 3, y: 3 })
+      assert.deepEqual(grid.indexToXy(1 + gridSide * 1), { x: 1, y: 1 })
+      assert.deepEqual(grid.indexToXy(3 + gridSide * 0), { x: 3, y: 0 })
+      assert.deepEqual(grid.indexToXy(0 + gridSide * 3), { x: 0, y: 3 })
     })
   })
 })

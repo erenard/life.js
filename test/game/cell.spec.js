@@ -14,7 +14,7 @@ describe('Cell', () => {
       expect(cell).to.deep.equal({
         state: 0,
         age: 0,
-        sprite: null,
+        sprite: {},
         count: 0
       })
     })
@@ -26,7 +26,7 @@ describe('Cell', () => {
       expect(cell).to.deep.equal({
         state: 0,
         age: 0,
-        sprite: null,
+        sprite: {},
         count: 0
       })
     })
@@ -38,7 +38,7 @@ describe('Cell', () => {
       expect(cell).to.deep.equal({
         state: 1,
         age: 0,
-        sprite: {alpha: 0.5},
+        sprite: { alpha: 0.5 },
         count: 0
       })
     })
@@ -70,7 +70,7 @@ describe('Cell', () => {
       cell.state = 1
       cell.sprite = {}
       var dead = new Cell()
-      dead.sprite = {alpha: 0}
+      dead.sprite = { alpha: 0 }
       cell.update()
       expect(cell).to.deep.equal(dead)
     })

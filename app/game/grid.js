@@ -79,7 +79,7 @@ export default class {
     while (i--) {
       if (Math.random() + ratio >= 1) {
         cell = this.cells[i]
-        cell.state = 1
+        cell.isLiving = true
       }
     }
   }
@@ -92,7 +92,7 @@ export default class {
     var cell
     while (i--) {
       cell = this.cells[i]
-      cell.state = 0
+      cell.isLiving = false
     }
   }
 
