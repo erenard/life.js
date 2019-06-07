@@ -1,5 +1,4 @@
 import 'normalize.css'
-import 'assets/app.css'
 import UserInterface from './user-interface'
 import Grid from './game/grid'
 import Renderer from './game/renderer'
@@ -24,14 +23,15 @@ function main (setup) {
   var ui = new UserInterface({ grid, animation, mainLoop })
   ui.loadPreset('b3s23')
   grid.random(0.30)
-  // animation.start()
-
-  var app = new Vue({
-    el: '#app',
-    data: {
-      message: 'Hello Vue!'
-    }
-  })
+  animation.start()
 }
 
-main({ lifeCellSize: 4 })
+// main({ lifeCellSize: 4 })
+
+const vm = new Vue({
+  el: '#app',
+  components: {
+    'app': AppVue
+  },
+  template: '<app />'
+})
