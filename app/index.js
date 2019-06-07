@@ -4,6 +4,8 @@ import UserInterface from './user-interface'
 import Grid from './game/grid'
 import Renderer from './game/renderer'
 import Animation from './game/animation'
+import Vue from 'vue/dist/vue'
+import AppVue from './components/App.vue'
 
 function main (setup) {
   var radius = setup.lifeCellSize || 4
@@ -22,7 +24,14 @@ function main (setup) {
   var ui = new UserInterface({ grid, animation, mainLoop })
   ui.loadPreset('b3s23')
   grid.random(0.30)
-  animation.start()
+  // animation.start()
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue!'
+    }
+  })
 }
 
 main({ lifeCellSize: 4 })
