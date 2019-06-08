@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import { Rules } from '../game/cell'
+
 export default {
   name: 'RulesEditor',
   props: {
@@ -95,7 +97,9 @@ export default {
         const bValue = birthPart.indexOf(index) >= 0
         const sValue = survivalPart.indexOf(index) >= 0
         this.$refs['b' + index][0].checked = bValue
+        Rules.b[index] = bValue
         this.$refs['s' + index][0].checked = sValue
+        Rules.s[index] = sValue
       }
       this.$refs.customPreset.value = this.preset
     },

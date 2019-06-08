@@ -19,7 +19,6 @@ export default {
   mounted() {
     game.init(this.$refs.viewport)
     game.grid.random(0.30)
-    game.rules.
     game.animation.start()
   }
 }

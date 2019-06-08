@@ -13,6 +13,7 @@
 
 <script>
 import RulesEditorVue from './RulesEditor.vue'
+import game from '../game'
 
 export default {
   name: 'UserInterface',
@@ -32,12 +33,20 @@ export default {
   methods: {
     handleClickPause () {
       this.isStarted = !this.isStarted
+      if(this.isStarted) {
+        game.animation.start()
+      } else {
+        game.animation.stop()
+      }
     },
     handleClickStep () {
+      game.animation.mainLoop()
     },
     handleClickClear () {
+      game.grid.clear()
     },
     handleClickRandom () {
+      game.grid.random(this.randomRatio / 100)
     }
   },
   watch: {
