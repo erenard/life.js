@@ -3,14 +3,26 @@ import stats from '../gui/stats'
 
 /**
  * Canvas animator, or 'the main loop',
- * call the parameter method callback at 60fps.
- *
- * @param {Function} callback - The function to be called back.
+ * call the mainLoop method at 60fps.
  */
 export default class Animation {
-  constructor (callback) {
-    this.callback = callback
-    this.running = true
+  constructor () {
+    this.grid = null
+    this.renderer = null
+    this.running = false
+  }
+
+  init (grid, renderer) {
+    this.grid = grid
+    this.renderer = renderer
+  }
+
+  mainLoop () {
+    // This function will wrap the whole process of updating the game and drawing it
+    if (this.grid && this.renderer) {
+      this.grid.update()
+      this.renderer.render()
+    }
   }
 
   /**
@@ -20,7 +32,7 @@ export default class Animation {
   animate () {
     if (this.running) {
       stats.begin()
-      this.callback()
+      this.mainLoop()
       stats.end()
       requestAnimationFrame(this.animate.bind(this))
     }

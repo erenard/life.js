@@ -3,7 +3,7 @@
     <div>
       <h1>Controls</h1>
       <button @click="handleClickPause">{{ pauseButtonLabel }}</button> the game.<br/>
-      <button @click="handleClickStep">Step</button><br/>
+      <button :disabled="isStarted" @click="handleClickStep">Step</button><br/>
       <button @click="handleClickClear">Clear</button> the board.<br/>
       <button @click="handleClickRandom">Random</button> fill ratio: <input type="text" v-model="randomRatio" style="width: 1.5em;" />%<br/>
     </div>
