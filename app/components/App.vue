@@ -1,25 +1,27 @@
 <template>
   <div>
     <div ref="viewport"></div>
-    <UserInterfaceVue />
+    <user-interface :game="game" />
   </div>
 </template>
 
 <script>
-import GameBoardVue from './GameBoard.vue'
 import UserInterfaceVue from './UserInterface.vue'
-import game from '../game'
+import Game from '../game'
 
 export default {
   name: 'App',
   components: {
-    GameBoardVue, UserInterfaceVue
+    'user-interface': UserInterfaceVue
   },
-  data: () => ({}),
+  data: () => ({
+    game: new Game()
+  }),
   mounted() {
-    game.init(this.$refs.viewport)
-    game.grid.random(0.30)
-    game.animation.start()
+    this.game.init(this.$refs.viewport)
+    this.game.rules = 'b3s23'
+    this.game.random(0.30)
+    this.game.start()
   }
 }
 </script>

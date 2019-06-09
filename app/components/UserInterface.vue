@@ -7,21 +7,25 @@
       <button @click="handleClickClear">Clear</button> the board.<br/>
       <button @click="handleClickRandom">Random</button> fill ratio: <input type="text" v-model="randomRatio" style="width: 1.5em;" />%<br/>
     </div>
-    <RulesEditor v-model="preset" />
+    <RulesEditor :game="game" />
   </div>
 </template>
 
 <script>
 import RulesEditorVue from './RulesEditor.vue'
-import game from '../game'
 
 export default {
   name: 'UserInterface',
   components: {
     'RulesEditor': RulesEditorVue
   },
+  props: {
+    game: {
+      type: Object,
+      required: true
+    }
+  },
   data: () => ({
-    preset: 'b3s23',
     isStarted: true,
     randomRatio: 30
   }),
@@ -34,24 +38,24 @@ export default {
     handleClickPause () {
       this.isStarted = !this.isStarted
       if(this.isStarted) {
-        game.animation.start()
+        this.game.start()
       } else {
-        game.animation.stop()
+        this.game.stop()
       }
     },
     handleClickStep () {
-      game.animation.mainLoop()
+      this.game.step()
     },
     handleClickClear () {
-      game.grid.clear()
+      this.game.clear()
     },
     handleClickRandom () {
-      game.grid.random(this.randomRatio / 100)
+      this.game.random(this.randomRatio / 100)
     }
   },
   watch: {
     preset (value) {
-      console.log(value)
+      this.game.rules = value
     }
   }
 }

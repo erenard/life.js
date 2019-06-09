@@ -35,7 +35,7 @@
     </div>
     <div class="full_width">
       Load a preset:
-      <select v-model="preset" ref="presetSelector">
+      <select v-model="preset">
         <option value="b3s23">Conway</option>
         <option value="b36s23">HighLife</option>
         <option value="b1357s1357">Replicator</option>
@@ -59,58 +59,57 @@
 </template>
 
 <script>
-import { Rules } from '../game/cell'
+// import { Rules } from '../game/cell'
 
 export default {
   name: 'RulesEditor',
   props: {
-    preset: {
-      type: String,
+    game: {
+      type: Object,
       required: true
     }
   },
-  model: {
-    prop: 'preset',
-    event: 'change'
-  },
-  watch: {
+  computed: {
     preset: {
-      handler: 'importPreset'
+      get () {
+        return this.game.rules
+      },
+      set (rules) {
+        this.game.rules = rules
+      }
     }
   },
-  mounted() {
-    this.importPreset()
-  },
-  methods: {
-    handleRuleChange (key) {
-      this.exportPreset()
-    },
-    handleChangePreset(event) {
-      this.importPreset(event.target.value)
-    },
-    importPreset() {
-      const indexOfB = this.preset.indexOf('b')
-      const indexOfS = this.preset.indexOf('s')
-      const birthPart = this.preset.substring(indexOfB + 1, (indexOfS - indexOfB))
-      const survivalPart = this.preset.substring(indexOfS + 1)
-      for (let index = 0; index < 9; index ++) {
+  watch: {
+    preset (rules) {
+      const birthRegExp = new RegExp('b([0-9]*)', 'g')
+      const birthMatch = birthRegExp.exec(rules)
+      const birthPart = birthMatch ? birthMatch[1] : ''
+
+      const survivalRegExp = new RegExp('s([0-9]*)', 'g')
+      const survivalMatch = survivalRegExp.exec(rules)
+      const survivalPart = survivalMatch ? survivalMatch[1] : ''
+
+      for (let index = 0; index < 9; index++) {
         const bValue = birthPart.indexOf(index) >= 0
         const sValue = survivalPart.indexOf(index) >= 0
         this.$refs['b' + index][0].checked = bValue
-        Rules.b[index] = bValue
         this.$refs['s' + index][0].checked = sValue
-        Rules.s[index] = sValue
       }
-      this.$refs.customPreset.value = this.preset
-    },
-    exportPreset() {
+    }
+  },
+  mounted() {
+    // this.importPreset()
+  },
+  methods: {
+    handleRuleChange () {
       let birthPart = 'b'
       let survivalPart = 's'
       for (let index = 0; index < 9; index ++) {
         birthPart += this.$refs['b' + index][0].checked ? index : ''
         survivalPart += this.$refs['s' + index][0].checked ? index : ''
       }
-      this.$emit('change', birthPart + survivalPart)
+      this.preset = birthPart + survivalPart
+      this.$refs.customPreset.value = this.preset
     }
   }
 }
