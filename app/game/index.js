@@ -15,10 +15,11 @@ function Game () {
   const height = window.innerHeight || 1024
   const grid = new Grid(Math.floor(width / radius), Math.floor(height / radius))
   const animation = new Animation()
+  let renderer
 
   return {
     init (viewport) {
-      const renderer = new Renderer(width, height, viewport, grid, radius)
+      renderer = new Renderer(width, height, viewport, grid, radius)
       animation.init(grid, renderer)
     },
     start () {
@@ -28,13 +29,15 @@ function Game () {
       animation.stop()
     },
     step () {
-      animation.step()
+      animation.mainLoop()
     },
     random (ratio) {
       grid.random(ratio)
+      renderer.render()
     },
     clear () {
       grid.clear()
+      renderer.render()
     },
     set rules (preset) {
       const birthRegExp = new RegExp('b([0-9]*)', 'g')
