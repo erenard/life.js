@@ -19,6 +19,14 @@ describe('Cell', () => {
       })
     })
   })
+  describe('get isLiving ()', () => {
+    it('should return {state === 1}', () => {
+      const cell = new Cell()
+      expect(cell.isLiving).to.equal(false)
+      cell.state = 1
+      expect(cell.isLiving).to.equal(true)
+    })
+  })
   describe('update ()', () => {
     it('should keep a cell state', () => {
       var cell = new Cell()

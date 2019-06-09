@@ -1,7 +1,7 @@
 /**
  * Expose the rules.
  */
-export var Rules = {
+export const Rules = {
   b: [false, false, false, false, false, false, false, false, false],
   s: [false, false, false, false, false, false, false, false, false]
 }
