@@ -1,7 +1,7 @@
 import Animation from './animation'
 import Grid from './grid'
 import Renderer from './renderer'
-import { Rules } from './cell'
+import Rules from './rules'
 
 /**
  * Public interface for the game.
@@ -11,9 +11,10 @@ import { Rules } from './cell'
  */
 function Game () {
   const radius = 4
+  const _rules = new Rules()
   const width = window.innerWidth || 1280
   const height = window.innerHeight || 1024
-  const grid = new Grid(Math.floor(width / radius), Math.floor(height / radius))
+  const grid = new Grid(Math.floor(width / radius), Math.floor(height / radius), _rules)
   const animation = new Animation()
   let renderer
 
@@ -51,16 +52,16 @@ function Game () {
       for (let index = 0; index < 9; index++) {
         const bValue = birthPart.indexOf(index) >= 0
         const sValue = survivalPart.indexOf(index) >= 0
-        Rules.b[index] = bValue
-        Rules.s[index] = sValue
+        _rules.b[index] = bValue
+        _rules.s[index] = sValue
       }
     },
     get rules () {
       let birthPart = 'b'
       let survivalPart = 's'
       for (let index = 0; index < 9; index++) {
-        birthPart += Rules.b[index] ? index : ''
-        survivalPart += Rules.s[index] ? index : ''
+        birthPart += _rules.b[index] ? index : ''
+        survivalPart += _rules.s[index] ? index : ''
       }
       return birthPart + survivalPart
     }

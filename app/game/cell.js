@@ -1,19 +1,14 @@
 /**
- * Expose the rules.
- */
-export const Rules = {
-  b: [false, false, false, false, false, false, false, false, false],
-  s: [false, false, false, false, false, false, false, false, false]
-}
-
-/**
  * Cell
  */
 export default class Cell {
   /**
    * Initialize a Cell.
+   *
+   * @param {Rules} rules - Birth and survival rules.
    */
-  constructor () {
+  constructor (rules) {
+    this.rules = rules
     // 0 or 1, the cell value used to count cells
     this.state = 0
     this.age = 0
@@ -25,10 +20,10 @@ export default class Cell {
    * Update the cell state.
    */
   update () {
-    if (this.state === 1 && !Rules.s[this.count]) {
+    if (this.state === 1 && !this.rules.s[this.count]) {
       // Death
       this.isLiving = false
-    } else if (this.state === 0 && Rules.b[this.count]) {
+    } else if (this.state === 0 && this.rules.b[this.count]) {
       // Birth
       this.isLiving = true
     } else {

@@ -9,8 +9,9 @@ export default class {
    *
    * @param {number} sizeX - Game board's width.
    * @param {number} sizeY - Game board's height.
+   * @param {Rules} rules - Birth and sruvival rules.
    */
-  constructor (sizeX, sizeY) {
+  constructor (sizeX, sizeY, rules) {
     this.sizeX = sizeX
     this.sizeY = sizeY
     this.length = sizeX * sizeY
@@ -18,7 +19,7 @@ export default class {
     this.cells = new Array(this.length)
     let i = this.length
     while (i--) {
-      this.cells[i] = new Cell()
+      this.cells[i] = new Cell(rules)
     }
   }
 
