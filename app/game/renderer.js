@@ -42,10 +42,13 @@ export default class Renderer {
    * @param {number} size - Cell's texture size.
    */
   generateCellTexture (size) {
-    const graphic = new PIXI.Graphics()
-    graphic.beginFill(0x7fff7f)
-    graphic.drawRect(0, 0, size - 1, size - 1)
-    return this.renderer.generateTexture(graphic)
+    const canvas = document.createElement('canvas')
+    canvas.setAttribute('height', size)
+    canvas.setAttribute('width', size)
+    const context = canvas.getContext('2d', { alpha: false })
+    context.fillStyle = '#FFFFFF'
+    context.fillRect(0, 0, size, size)
+    return PIXI.Texture.fromCanvas(canvas)
   }
 
   /**
