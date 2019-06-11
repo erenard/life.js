@@ -4,16 +4,17 @@
   "description": "Conway game of life",
   "main": "app/index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --config config/webpack.config.js --mode production",
     "electron": "electron app/electron.js",
-    "start": "webpack-dev-server --mode development",
+    "start": "webpack-dev-server --config config/webpack.config.js --mode development",
     "lint": "eslint . --ext .js,.vue --cache --fix",
     "prepare": "git clone https://github.com/erenard/life.js.git --branch gh-pages dist",
     "deploy": "cd dist && git add --all && git commit -m \"Release at $(date)\" && git push",
-    "test": "karma start config/karma.conf.js",
+    "test": "karma start config/karma.conf.js --single-run",
+    "test:start": "karma start config/karma.conf.js",
     "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test",
     "coveralls": "cross-env NODE_ENV=coverage nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "bundle-analyzer": "webpack --mode production --profile --bundle-analyzer"
+    "bundle-analyzer": "webpack --config config/webpack.config.js --mode production --profile --bundle-analyzer"
   },
   "repository": {
     "type": "git",

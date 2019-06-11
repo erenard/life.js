@@ -1,6 +1,7 @@
 process.env.CHROME_BIN = require('puppeteer').executablePath()
 // const webpack = require('webpack')
 // const path = require('path')
+const webpackBaseConfig = require('../config/webpack.base.config')
 
 module.exports = function (config) {
   config.set({
@@ -24,27 +25,7 @@ module.exports = function (config) {
       // 'karma-chai'
     ],
 
-    webpack: {
-      mode: 'none',
-      resolve: {
-        modules: ['./app', './node_modules'],
-        alias: {
-          vue: 'vue/dist/vue.js'
-        }
-      },
-      module: {
-        rules: [
-          {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: {
-              loader: 'babel-loader'
-            }
-          },
-          { test: /\.vue$|\.html$|\.styl$|\.css$|\.scss$/, loader: 'ignore-loader' }
-        ]
-      }
-    },
+    webpack: webpackBaseConfig,
 
     webpackMiddleware: {
       stats: 'errors-only'
