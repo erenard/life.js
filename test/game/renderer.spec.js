@@ -1,21 +1,15 @@
-import { describe, it, before } from 'mocha'
 // eslint-disable-next-line
-import injectRenderer from 'inject-loader!game/renderer'
+import Renderer from 'game/renderer'
 import assert from 'assert'
 import sinon from 'sinon'
-import PixiMock from 'pixi-mock'
-import CanvasMock from 'canvas-mock'
+import PixiMock from '../mock/pixi-mock'
+import CanvasMock from '../mock/canvas-mock'
 import Grid from 'game/grid'
 
 describe('Renderer', () => {
   describe('new ()', () => {
-    var Renderer
-
     before(() => {
       // create mocked module
-      Renderer = injectRenderer({
-        'pixi.js': PixiMock
-      }).default
     })
 
     it('should call new pixi renderer', () => {

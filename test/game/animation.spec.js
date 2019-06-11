@@ -1,79 +1,70 @@
-import { describe, it, beforeEach, afterEach } from 'mocha'
 import { assert } from 'chai'
 import sinon from 'sinon'
-// eslint-disable-next-line
-import injectAnimation from 'inject-loader!game/animation'
+
+import Animation from 'game/animation'
 
 describe('Animation', () => {
-  var updateFunction = sinon.spy()
-  var beginSpy = sinon.spy()
-  var endSpy = sinon.spy()
-  var StatsMock = function StatsMock () {
-    this.begin = beginSpy
-    this.end = endSpy
+  const grid = {
+    update: sinon.spy()
   }
-  var requestAnimationFrame = sinon.spy()
-  var Animation
+  const renderer = {
+    render: sinon.spy()
+  }
 
   beforeEach(() => {
-    // create mocked module
-    Animation = injectAnimation({
-      './request-animation-frame': requestAnimationFrame,
-      '../gui/stats': new StatsMock()
-    }).default
   })
 
   afterEach(() => {
-    updateFunction.resetHistory()
-    beginSpy.resetHistory()
-    endSpy.resetHistory()
-    requestAnimationFrame.resetHistory()
   })
 
   describe('new ()', () => {
     it('should initialize the Animation', () => {
-      var animation = new Animation(updateFunction)
-      assert.deepEqual(animation, {
-        running: true,
-        callback: updateFunction
-      })
+      const animation = new Animation()
+      animation.init(grid, renderer)
+      assert.equal(animation.running, false)
     })
   })
 
   describe('animate ()', () => {
     it('should measure the callback time', () => {
-      var animation = new Animation(updateFunction)
+      const animation = new Animation()
+      animation.init(grid, renderer)
       animation.animate()
       beginSpy.calledBefore(updateFunction)
       updateFunction.calledBefore(endSpy)
     })
     it('should call the callback function', () => {
-      var animation = new Animation(updateFunction)
+      const animation = new Animation()
+      animation.init(grid, renderer)
       animation.animate()
       assert(updateFunction.called)
     })
     it('should do nothing if stopped', () => {
-      var animation = new Animation(updateFunction)
+      const animation = new Animation()
+      animation.init(grid, renderer)
       animation.stop()
       animation.animate()
       assert(updateFunction.notCalled)
     })
     it('should call requestAnimationFrame', () => {
-      var animation = new Animation(updateFunction)
+      const animation = new Animation()
+      animation.init(grid, renderer)
       animation.animate()
-      assert(requestAnimationFrame.called)
+      rafMock.verify()
     })
   })
 
   describe('start ()', () => {
     it('should set running to true', () => {
-      var animation = new Animation(updateFunction)
+      const animation = new Animation()
+      animation.init(grid, renderer)
       animation.running = false
       animation.start()
       assert(animation.running)
     })
     it('should call animate', () => {
-      var animation = new Animation(updateFunction)
+      const animation = new Animation()
+      animation.init(grid, renderer)
       animation.start()
       assert(updateFunction.called)
     })
@@ -81,7 +72,8 @@ describe('Animation', () => {
 
   describe('stop ()', () => {
     it('should set running to false', () => {
-      var animation = new Animation()
+      const animation = new Animation()
+      animation.init(grid, renderer)
       animation.running = true
       animation.stop()
       assert(!animation.running)
