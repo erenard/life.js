@@ -1,5 +1,11 @@
+/* global it, describe */
+
 import { assert } from 'chai'
 import sinon from 'sinon'
+
+import stats from 'gui/stats'
+stats.begin = sinon.spy()
+stats.end = sinon.spy()
 
 import Animation from 'game/animation'
 
@@ -11,12 +17,6 @@ describe('Animation', () => {
     render: sinon.spy()
   }
 
-  beforeEach(() => {
-  })
-
-  afterEach(() => {
-  })
-
   describe('new ()', () => {
     it('should initialize the Animation', () => {
       const animation = new Animation()
@@ -25,48 +25,28 @@ describe('Animation', () => {
     })
   })
 
-  describe('animate ()', () => {
-    it('should measure the callback time', () => {
+  describe('mainLoop ()', () => {
+    it('should call grid.update() before renderer.render()', () => {
       const animation = new Animation()
       animation.init(grid, renderer)
-      animation.animate()
-      beginSpy.calledBefore(updateFunction)
-      updateFunction.calledBefore(endSpy)
-    })
-    it('should call the callback function', () => {
-      const animation = new Animation()
-      animation.init(grid, renderer)
-      animation.animate()
-      assert(updateFunction.called)
-    })
-    it('should do nothing if stopped', () => {
-      const animation = new Animation()
-      animation.init(grid, renderer)
-      animation.stop()
-      animation.animate()
-      assert(updateFunction.notCalled)
-    })
-    it('should call requestAnimationFrame', () => {
-      const animation = new Animation()
-      animation.init(grid, renderer)
-      animation.animate()
-      rafMock.verify()
+      //
+      animation.mainLoop()
+      //
+      grid.update.calledBefore(renderer.render)
     })
   })
 
   describe('start ()', () => {
     it('should set running to true', () => {
       const animation = new Animation()
-      animation.init(grid, renderer)
-      animation.running = false
       animation.start()
       assert(animation.running)
     })
-    it('should call animate', () => {
+    it('should start the animation', () => {
       const animation = new Animation()
-      animation.init(grid, renderer)
+      animation.animate = sinon.spy()
       animation.start()
-      assert(updateFunction.called)
+      assert(animation.animate.calledOnce)
     })
   })
 
@@ -77,6 +57,15 @@ describe('Animation', () => {
       animation.running = true
       animation.stop()
       assert(!animation.running)
+    })
+  })
+
+  describe('animate ()', () => {
+    it('should measure the mainLoop execution time', () => {
+      const animation = new Animation()
+      animation.animate()
+      assert(stats.begin.calledOnce)
+      assert(stats.end.calledOnce)
     })
   })
 })

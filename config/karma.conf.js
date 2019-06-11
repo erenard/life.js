@@ -1,24 +1,29 @@
 process.env.CHROME_BIN = require('puppeteer').executablePath()
-const webpack = require('webpack')
-const path = require('path')
+// const webpack = require('webpack')
+// const path = require('path')
 
 module.exports = function (config) {
   config.set({
     basePath: '..',
-    files: ['./test/**/*.spec.js'],
-    preprocessors: {
-      './test/**/*.spec.js': ['webpack', 'sourcemap']
-    },
-    frameworks: ['mocha'],
     browsers: ['ChromeHeadless'],
-    reporters: ['progress', 'coverage'],
-    coverageReporter: {
-      dir: 'coverage',
-      reporters: [{ type: 'text-summary' }, { type: 'lcov', subdir: '.' }]
+    frameworks: [
+      'mocha',
+      // 'chai'
+    ],
+
+    files: ['./test/**/*.spec.js'],
+
+    preprocessors: {
+      './test/**/*.spec.js': ['webpack']
     },
-    plugins: ['karma-chrome-launcher', 'karma-mocha', 'karma-webpack', 'karma-sourcemap-loader', 'karma-coverage'],
-    singleRun: false,
-    autoWatch: true,
+
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-mocha',
+      'karma-webpack'
+      // 'karma-chai'
+    ],
+
     webpack: {
       mode: 'none',
       resolve: {
@@ -33,19 +38,18 @@ module.exports = function (config) {
             test: /\.js$/,
             exclude: /node_modules/,
             use: {
-              loader: 'babel-loader',
-              options: {
-                plugins: ['istanbul']
-              }
+              loader: 'babel-loader'
             }
           },
           { test: /\.vue$|\.html$|\.styl$|\.css$|\.scss$/, loader: 'ignore-loader' }
         ]
-      },
-      devtool: 'inline-source-map'
+      }
     },
+
     webpackMiddleware: {
-      noInfo: true
-    }
+      stats: 'errors-only'
+    },
+
+    reporters: ['progress']
   })
 }
