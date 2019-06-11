@@ -1,7 +1,10 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const BundleAnalyzer = require('webpack-bundle-analyzer')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
+const developmentPort = 9000
 
 const config = {
   entry: { main: './app' },
@@ -13,7 +16,10 @@ const config = {
     modules: [
       'app',
       'node_modules'
-    ]
+    ],
+    alias: {
+      'vue': 'vue/dist/vue.esm.js'
+    }
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './app/index.html' }),
@@ -36,32 +42,23 @@ const config = {
   devtool: 'eval-cheap-module-source-map',
   devServer: {
     compress: false,
-    port: 9000
-  },
-  optimization: {
-    minimize: true,
-    runtimeChunk: {
-      name: 'vendor'
-    },
-    splitChunks: {
-      cacheGroups: {
-        default: false,
-        commons: {
-          test: /node_modules/,
-          name: 'vendor',
-          chunks: 'initial',
-          minSize: 1
-        }
-      }
-    }
+    port: developmentPort
   }
 }
 
 module.exports = function (env, args) {
   if (args['bundle-analyzer']) {
-    config.plugins.push(new BundleAnalyzer({
-      analyzerPort: 9000
+    config.plugins.push(new BundleAnalyzerPlugin({
+      analyzerPort: developmentPort
     }))
+  }
+  if (args.mode === 'production') {
+    config.optimization = {
+      minimize: true,
+      minimizer: [new UglifyJsPlugin({
+        parallel: true
+      })]
+    }
   }
   return config
 }

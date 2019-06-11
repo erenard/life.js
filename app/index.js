@@ -1,5 +1,5 @@
 import 'normalize.css'
-import Vue from 'vue/dist/vue'
+import Vue from 'vue'
 import AppVue from './components/App.vue'
 
 const vm = new Vue({
