@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="viewport"></div>
+    <div ref="viewport" />
     <user-interface :game="game" />
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   data: () => ({
     game: new Game()
   }),
-  mounted() {
+  mounted () {
     this.game.init(this.$refs.viewport)
     this.game.rules = 'b3s23'
     this.game.random(0.30)

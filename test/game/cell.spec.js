@@ -1,4 +1,4 @@
-// import { describe, it, beforeEach } from 'mocha'
+/* global it, describe, beforeEach */
 import { assert, expect } from 'chai'
 
 import Cell from 'game/cell'

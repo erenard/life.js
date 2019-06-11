@@ -7,7 +7,7 @@ module.exports = function (config) {
     basePath: '..',
     browsers: ['ChromeHeadless'],
     frameworks: [
-      'mocha',
+      'mocha'
       // 'chai'
     ],
 

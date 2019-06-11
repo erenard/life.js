@@ -4,10 +4,10 @@ import { assert } from 'chai'
 import sinon from 'sinon'
 
 import stats from 'gui/stats'
-stats.begin = sinon.spy()
-stats.end = sinon.spy()
 
 import Animation from 'game/animation'
+stats.begin = sinon.spy()
+stats.end = sinon.spy()
 
 describe('Animation', () => {
   const grid = {

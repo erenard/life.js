@@ -1,3 +1,4 @@
+/* global it, describe */
 import { assert } from 'chai'
 import Grid from 'game/grid'
 import Rules from 'game/rules'

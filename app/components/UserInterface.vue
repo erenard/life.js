@@ -2,10 +2,25 @@
   <div class="box">
     <div>
       <h1>Controls</h1>
-      <button @click="handleClickPause">{{ pauseButtonLabel }}</button> the game.<br/>
-      <button :disabled="isStarted" @click="handleClickStep">Step</button><br/>
-      <button @click="handleClickClear">Clear</button> the board.<br/>
-      <button @click="handleClickRandom">Random</button> fill ratio: <input type="text" v-model="randomRatio" style="width: 1.5em;" />%<br/>
+      <button @click="handleClickPause">
+        {{ pauseButtonLabel }}
+      </button> the game.<br>
+      <button
+        :disabled="isStarted"
+        @click="handleClickStep"
+      >
+        Step
+      </button><br>
+      <button @click="handleClickClear">
+        Clear
+      </button> the board.<br>
+      <button @click="handleClickRandom">
+        Random
+      </button> fill ratio: <input
+        v-model="randomRatio"
+        type="text"
+        style="width: 1.5em;"
+      >%<br>
     </div>
     <RulesEditor :game="game" />
   </div>
@@ -30,14 +45,19 @@ export default {
     randomRatio: 30
   }),
   computed: {
-    pauseButtonLabel() {
+    pauseButtonLabel () {
       return this.isStarted ? 'Pause' : 'Resume'
+    }
+  },
+  watch: {
+    preset (value) {
+      this.game.rules = value
     }
   },
   methods: {
     handleClickPause () {
       this.isStarted = !this.isStarted
-      if(this.isStarted) {
+      if (this.isStarted) {
         this.game.start()
       } else {
         this.game.stop()
@@ -51,11 +71,6 @@ export default {
     },
     handleClickRandom () {
       this.game.random(this.randomRatio / 100)
-    }
-  },
-  watch: {
-    preset (value) {
-      this.game.rules = value
     }
   }
 }
