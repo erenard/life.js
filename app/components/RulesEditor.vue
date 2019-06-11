@@ -4,63 +4,97 @@
       <h1>Rules</h1>
     </div>
     <div class="rules-container">
-      <div class="full_width">Birth rules</div>
+      <div class="full_width">
+        Birth rules
+      </div>
       <div
-        class="third_width"
         v-for="index of 9"
         :key="index"
+        class="third_width"
       >
         <input
           :ref="'b' + (index - 1)"
-          @change="handleRuleChange('b' + (index - 1))"
           type="checkbox"
-        />
+          @change="handleRuleChange('b' + (index - 1))"
+        >
         <span class="checkboxLabel">{{ index - 1 }}</span>
       </div>
     </div>
     <div class="rules-container">
-      <div class="full_width">Survival rules</div>
+      <div class="full_width">
+        Survival rules
+      </div>
       <div
-        class="third_width"
         v-for="index of 9"
         :key="index"
+        class="third_width"
       >
         <input
-          type="checkbox"
           :ref="'s' + (index - 1)"
+          type="checkbox"
           @change="handleRuleChange('s' + (index - 1))"
-        />
+        >
         <span class="checkboxLabel">{{ index - 1 }}</span>
       </div>
     </div>
     <div class="full_width">
       Load a preset:
       <select v-model="preset">
-        <option value="b3s23">Conway</option>
-        <option value="b36s23">HighLife</option>
-        <option value="b1357s1357">Replicator</option>
-        <option value="b2s">Seeds</option>
-        <option value="b25s2">Self-replic.</option>
-        <option value="b3s012345678">No death</option>
-        <option value="b34s34">34 Life</option>
-        <option value="b35678s5678">Diamoeba</option>
-        <option value="b36s125">2x2</option>
-        <option value="b3678s34678">Day&amp;Night</option>
-        <option value="b368s245">Morley</option>
-        <option value="b4567s5678">Islands</option>
-        <option value="b4567s4567">Blobs</option>
-        <option ref="customPreset">Custom</option>
+        <option value="b3s23">
+          Conway
+        </option>
+        <option value="b36s23">
+          HighLife
+        </option>
+        <option value="b1357s1357">
+          Replicator
+        </option>
+        <option value="b2s">
+          Seeds
+        </option>
+        <option value="b25s2">
+          Self-replic.
+        </option>
+        <option value="b3s012345678">
+          No death
+        </option>
+        <option value="b34s34">
+          34 Life
+        </option>
+        <option value="b35678s5678">
+          Diamoeba
+        </option>
+        <option value="b36s125">
+          2x2
+        </option>
+        <option value="b3678s34678">
+          Day&amp;Night
+        </option>
+        <option value="b368s245">
+          Morley
+        </option>
+        <option value="b4567s5678">
+          Islands
+        </option>
+        <option value="b4567s4567">
+          Blobs
+        </option>
+        <option ref="customPreset">
+          Custom
+        </option>
       </select>
     </div>
     <div class="full_width">
-      More info on presets <a href="http://en.wikipedia.org/wiki/Life-like_cellular_automaton" target="_blank">here</a>
+      More info on presets
+      <a
+        href="http://en.wikipedia.org/wiki/Life-like_cellular_automaton"
+        target="_blank"
+      >here</a>
     </div>
   </div>
 </template>
 
 <script>
-// import { Rules } from '../game/cell'
-
 export default {
   name: 'RulesEditor',
   props: {
@@ -97,14 +131,11 @@ export default {
       }
     }
   },
-  mounted() {
-    // this.importPreset()
-  },
   methods: {
     handleRuleChange () {
       let birthPart = 'b'
       let survivalPart = 's'
-      for (let index = 0; index < 9; index ++) {
+      for (let index = 0; index < 9; index++) {
         birthPart += this.$refs['b' + index][0].checked ? index : ''
         survivalPart += this.$refs['s' + index][0].checked ? index : ''
       }
