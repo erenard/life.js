@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const BundleAnalyzer = require('webpack-bundle-analyzer')
 
 const config = {
   entry: { main: './app' },
@@ -56,4 +57,11 @@ const config = {
   }
 }
 
-module.exports = config
+module.exports = function (env, args) {
+  if (args['bundle-analyzer']) {
+    config.plugins.push(new BundleAnalyzer({
+      analyzerPort: 9000
+    }))
+  }
+  return config
+}

@@ -12,7 +12,8 @@
     "deploy": "cd dist && git add --all && git commit -m \"Release at $(date)\" && git push",
     "test": "webpack --mode development --config webpack.config.test.js && mocha ./.tmp/tests.js",
     "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test",
-    "coveralls": "cross-env NODE_ENV=coverage nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "cross-env NODE_ENV=coverage nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "bundle-analyzer": "webpack --mode production --profile --bundle-analyzer"
   },
   "repository": {
     "type": "git",
