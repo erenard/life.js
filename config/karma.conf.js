@@ -6,20 +6,22 @@ const webpackBaseConfig = require('../config/webpack.base.config')
 module.exports = function (config) {
   config.set({
     basePath: '..',
-    browsers: ['ChromeHeadless'],
+    // browsers: ['ChromeHeadless'],
     frameworks: [
       'mocha'
       // 'chai'
     ],
 
-    files: ['./test/**/*.spec.js'],
+    files: [
+      { pattern: './test/**/*.spec.js', watched: false }
+    ],
 
     preprocessors: {
       './test/**/*.spec.js': ['webpack']
     },
 
     plugins: [
-      'karma-chrome-launcher',
+      // 'karma-chrome-launcher',
       'karma-mocha',
       'karma-webpack'
       // 'karma-chai'
