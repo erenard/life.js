@@ -12,8 +12,6 @@
     "deploy": "cd dist && git add --all && git commit -m \"Release at $(date)\" && git push",
     "test": "karma start config/karma.conf.js --single-run",
     "test:start": "karma start config/karma.conf.js",
-    "cover": "cross-env NODE_ENV=coverage nyc --reporter=lcov --reporter=text npm run test",
-    "coveralls": "cross-env NODE_ENV=coverage nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "bundle-analyzer": "webpack --config config/webpack.config.js --mode production --profile --bundle-analyzer"
   },
   "repository": {
@@ -41,21 +39,17 @@
     "chai": "^4.2.0",
     "coveralls": "^3.0.4",
     "cross-env": "^5.2.0",
-    "css-loader": "^2.1.1",
+    "css-loader": "^3.0.0",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-jsdoc": "^8.0.0",
+    "eslint-plugin-jsdoc": "^8.0.1",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.2.2",
     "file-loader": "^4.0.0",
     "html-webpack-plugin": "^3.2.0",
-    "inject-loader": "^4.0.1",
-    "istanbul": "^0.4.5",
-    "istanbul-instrumenter-loader": "^3.0.0",
-    "json-loader": "^0.5.4",
     "karma": "^4.1.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.2",
@@ -75,20 +69,12 @@
     "webpack-cli": "^3.3.4",
     "webpack-dev-middleware": "^3.7.0",
     "webpack-dev-server": "^3.7.1",
-    "webpack-merge": "^4.2.1",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-merge": "^4.2.1"
   },
   "dependencies": {
     "normalize.css": "^8.0.1",
     "pixi.js": "^4.8.5",
     "stats.js": "^0.17.0",
     "vue": "^2.6.10"
-  },
-  "nyc": {
-    "include": [
-      "app/**/*.js"
-    ],
-    "instrument": false,
-    "sourceMap": false
   }
 }
