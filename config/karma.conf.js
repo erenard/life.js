@@ -1,7 +1,6 @@
 process.env.CHROME_BIN = require('puppeteer').executablePath()
-// const webpack = require('webpack')
-// const path = require('path')
-const webpackBaseConfig = require('../config/webpack.base.config')
+const merge = require('webpack-merge')
+const parts = require('./webpack.parts')
 
 module.exports = function (config) {
   config.set({
@@ -12,10 +11,24 @@ module.exports = function (config) {
       // 'chai'
     ],
 
-    files: ['./test/**/*.spec.js'],
+    files: [
+      // { pattern: './test/**/*.spec.js', watched: false }
+      './test/game/cell.spec.js',
+      './test/game/grid.spec.js',
+      './test/game/renderer.spec.js',
+      './test/game/animation.spec.js',
+      './test/components/rules-editor-vue.spec.js',
+      './test/components/user-interface-vue.spec.js'
+    ],
 
     preprocessors: {
-      './test/**/*.spec.js': ['webpack']
+      // './test/**/*.spec.js': ['webpack']
+      './test/game/cell.spec.js': ['webpack'],
+      './test/game/grid.spec.js': ['webpack'],
+      './test/game/renderer.spec.js': ['webpack'],
+      './test/game/animation.spec.js': ['webpack'],
+      './test/components/rules-editor-vue.spec.js': ['webpack'],
+      './test/components/user-interface-vue.spec.js': ['webpack']
     },
 
     plugins: [
@@ -25,7 +38,11 @@ module.exports = function (config) {
       // 'karma-chai'
     ],
 
-    webpack: webpackBaseConfig,
+    webpack: merge(
+      parts.babel(),
+      parts.vuejs(),
+      parts.resolveModules()
+    ),
 
     webpackMiddleware: {
       stats: 'errors-only'

@@ -1,30 +1,36 @@
-const webpackBaseConfig = require('./webpack.base.config')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const merge = require('webpack-merge')
+const parts = require('./webpack.parts')
+const path = require('path')
 
 const developmentPort = 9000
 
-const config = Object.assign({}, webpackBaseConfig, {
-  devtool: 'eval-cheap-module-source-map',
-  devServer: {
-    compress: false,
-    port: developmentPort
+const config = {
+  entry: { main: './app' },
+  output: {
+    filename: '[name].bundle.js',
+    path: path.join(__dirname, '../dist')
+  },
+  plugins: [
+    new HtmlWebpackPlugin({ template: './app/index.html' })
+  ],
+  module: {
+    rules: [
+      // { test: /\.png$/, use: 'url-loader?limit=100000' },
+      // { test: /\.jpg$/, use: 'file-loader' },
+      { test: /\.ttf$/, use: 'file-loader' }
+    ]
   }
-})
+}
 
 module.exports = function (env, args) {
-  if (args['bundle-analyzer']) {
-    config.plugins.push(new BundleAnalyzerPlugin({
-      analyzerPort: developmentPort
-    }))
-  }
   if (args.mode === 'production') {
-    config.optimization = {
-      minimize: true,
-      minimizer: [new UglifyJsPlugin({
-        parallel: true
-      })]
-    }
+    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.optimization())
   }
-  return config
+  if (args['bundle-analyzer']) {
+    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.analyzeBundles(developmentPort))
+  }
+  if (args.mode === 'development') {
+    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.devServer(developmentPort))
+  }
 }
