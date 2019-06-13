@@ -5,7 +5,7 @@ import sinon from 'sinon'
 
 import stats from 'gui/stats'
 
-import Animation from 'game/animation'
+import Animation from 'render/animation'
 stats.begin = sinon.spy()
 stats.end = sinon.spy()
 
