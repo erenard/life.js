@@ -1,6 +1,6 @@
 import Animation from '../render/animation'
 import Grid from './grid'
-import Renderer from '../render/pixi-renderer'
+import Renderer from '../render/custom-renderer'
 import Rules from './rules'
 
 /**

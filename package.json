@@ -72,9 +72,12 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "chroma-js": "^2.0.3",
+    "gl-matrix": "^3.0.0",
     "normalize.css": "^8.0.1",
     "pixi.js": "^4.8.5",
     "stats.js": "^0.17.0",
+    "twgl.js": "^4.10.1",
     "vue": "^2.6.10"
   }
 }
