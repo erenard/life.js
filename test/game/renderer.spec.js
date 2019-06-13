@@ -3,7 +3,7 @@ import assert from 'assert'
 import sinon from 'sinon'
 import CanvasMock from '../mock/canvas-mock'
 import Grid from 'game/grid'
-import Renderer from 'game/renderer'
+import Renderer from 'game/pixi-renderer'
 
 describe('Renderer', () => {
   describe('render ()', () => {
