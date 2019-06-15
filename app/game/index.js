@@ -12,8 +12,8 @@ import Rules from './rules'
 function Game () {
   const radius = 2
   const _rules = new Rules()
-  const width = 640 // window.innerWidth || 1280
-  const height = 480 // window.innerHeight || 1024
+  const width = window.innerWidth || 1280
+  const height = window.innerHeight || 1024
   const grid = new Grid(Math.floor(width / radius), Math.floor(height / radius), _rules)
   const animation = new Animation()
   let renderer

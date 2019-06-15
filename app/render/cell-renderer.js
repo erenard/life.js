@@ -23,7 +23,7 @@ precision mediump float;
 varying float vAlpha;
 
 void main(void) {
-  gl_FragColor = vec4(1.0, 0.0, 0.0, vAlpha);
+  gl_FragColor = vec4(0.0, 1.0, 0.0, vAlpha);
 }`
 
 /**
@@ -36,18 +36,15 @@ void main(void) {
  * @param {number} cellSize - Cell sprite's size.
  */
 export default function CellRenderer (width, height, viewport, grid, cellSize) {
-  // width = 200
-  // height = 200
-  cellSize = 10
   const canvas = document.createElement('canvas')
   canvas.height = height
   canvas.width = width
   viewport.appendChild(canvas)
 
   const gl = twgl.getContext(canvas, { depth: false, antialiasing: false })
-  const programDraw = twgl.createProgramInfo(gl, [vDraw, fDraw])
-  const columnCount = width / cellSize
-  const rowCount = height / cellSize
+  const drawParticle = twgl.createProgramInfo(gl, [vDraw, fDraw])
+  const columnCount = Math.floor(width / cellSize)
+  const rowCount = Math.floor(height / cellSize)
   const pointPosition = []
   const pointAlpha = []
   for (let column = 0; column < columnCount; column++) {
@@ -70,8 +67,10 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
   twgl.m4.translate(translationMatrix, [0.5, 0.5, 0], translationMatrix)
 
   gl.clearColor(0, 0, 0, 1)
-  gl.useProgram(programDraw.program)
-  twgl.setUniforms(programDraw, {
+  gl.enable(gl.BLEND)
+  gl.blendFunc(gl.SRC_ALPHA, gl.DST_COLOR)
+  gl.useProgram(drawParticle.program)
+  twgl.setUniforms(drawParticle, {
     uPointSize: cellSize,
     uTranslationMatrix: translationMatrix
   })
@@ -86,7 +85,7 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
       // console.log(gl.canvas.width, gl.canvas.height)
       // gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
       // drawing particles
-      twgl.setBuffersAndAttributes(gl, programDraw, pointsBuffer)
+      twgl.setBuffersAndAttributes(gl, drawParticle, pointsBuffer)
       twgl.drawBufferInfo(gl, pointsBuffer, gl.POINTS)
     }
   }
