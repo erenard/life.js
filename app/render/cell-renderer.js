@@ -28,6 +28,10 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
       pointPosition.push(column)
       pointPosition.push(row)
       pointAlpha.push((column + row) % 2)
+
+      const index = grid.xyToIndex(column, row)
+      const cell = grid.cells[index]
+      cell.sprite.alpha = 0
     }
   }
   const pointsObject = {
@@ -35,6 +39,7 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
     aVertexAlpha: { data: pointAlpha, numComponents: 1 }
   }
   const pointsBuffer = twgl.createBufferInfoFromArrays(gl, pointsObject)
+  twgl.setBuffersAndAttributes(gl, drawParticle, pointsBuffer)
 
   const translationMatrix = twgl.m4.identity()
   twgl.m4.translate(translationMatrix, [-1, 1, 0], translationMatrix)
@@ -59,8 +64,9 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
       // twgl.resizeCanvasToDisplaySize(gl.canvas)
       // console.log(gl.canvas.width, gl.canvas.height)
       // gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
+      // updates the particles alpha
+      twgl.setAttribInfoBufferFromArray(gl, pointsBuffer.attribs.aVertexAlpha, grid.cells.map(cell => cell.sprite.alpha))
       // drawing particles
-      twgl.setBuffersAndAttributes(gl, drawParticle, pointsBuffer)
       twgl.drawBufferInfo(gl, pointsBuffer, gl.POINTS)
     }
   }
