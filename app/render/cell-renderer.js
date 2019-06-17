@@ -12,6 +12,9 @@ import fragment from './cell-fragment.glsl'
  * @param {number} cellSize - Cell sprite's size.
  */
 export default function CellRenderer (width, height, viewport, grid, cellSize) {
+  width = Math.floor(width / cellSize) * cellSize
+  height = Math.floor(height / cellSize) * cellSize
+
   const canvas = document.createElement('canvas')
   canvas.height = height
   canvas.width = width
@@ -19,8 +22,8 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
 
   const gl = twgl.getContext(canvas, { depth: false, antialiasing: false })
   const drawParticle = twgl.createProgramInfo(gl, [vertex, fragment])
-  const columnCount = Math.floor(width / cellSize)
-  const rowCount = Math.floor(height / cellSize)
+  const columnCount = width / cellSize
+  const rowCount = height / cellSize
   const pointPosition = []
   const pointAlpha = []
   for (let column = 0; column < columnCount; column++) {
@@ -28,10 +31,6 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
       pointPosition.push(column)
       pointPosition.push(row)
       pointAlpha.push((column + row) % 2)
-
-      const index = grid.xyToIndex(column, row)
-      const cell = grid.cells[index]
-      cell.sprite.alpha = 0
     }
   }
   const pointsObject = {

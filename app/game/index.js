@@ -10,10 +10,10 @@ import Rules from './rules'
  * @returns    {object}  The public methods for the game.
  */
 function Game () {
-  const radius = 2
+  const radius = 3
   const _rules = new Rules()
-  const width = window.innerWidth || 1280
-  const height = window.innerHeight || 1024
+  const width = 600 // window.innerWidth || 1280
+  const height = 300 // window.innerHeight || 1024
   const grid = new Grid(Math.floor(width / radius), Math.floor(height / radius), _rules)
   const animation = new Animation()
   let renderer
