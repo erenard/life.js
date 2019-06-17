@@ -1,30 +1,6 @@
 import * as twgl from 'twgl.js'
-
-// https://github.com/pixijs/pixi.js/tree/master/packages/particles/src
-const vDraw = `
-precision mediump float;
-
-attribute vec2 aVertexPosition;
-attribute float aVertexAlpha;
-
-uniform float uPointSize;
-uniform mat4 uTranslationMatrix;
-
-varying float vAlpha;
-
-void main(void) {
-  vAlpha = aVertexAlpha;
-  gl_Position = uTranslationMatrix * vec4(aVertexPosition, 0.0, 1.0);
-  gl_PointSize = uPointSize;
-}`
-const fDraw = `
-precision mediump float;
-
-varying float vAlpha;
-
-void main(void) {
-  gl_FragColor = vec4(0.0, 1.0, 0.0, vAlpha);
-}`
+import vertex from './cell-vertex.glsl'
+import fragment from './cell-fragment.glsl'
 
 /**
  * Initialize the renderer.
@@ -42,7 +18,7 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
   viewport.appendChild(canvas)
 
   const gl = twgl.getContext(canvas, { depth: false, antialiasing: false })
-  const drawParticle = twgl.createProgramInfo(gl, [vDraw, fDraw])
+  const drawParticle = twgl.createProgramInfo(gl, [vertex, fragment])
   const columnCount = Math.floor(width / cellSize)
   const rowCount = Math.floor(height / cellSize)
   const pointPosition = []
@@ -54,7 +30,6 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
       pointAlpha.push((column + row) % 2)
     }
   }
-  // pointPosition.push(1, 0)
   const pointsObject = {
     aVertexPosition: { data: pointPosition, numComponents: 2 },
     aVertexAlpha: { data: pointAlpha, numComponents: 1 }
