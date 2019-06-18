@@ -2,6 +2,55 @@ import * as twgl from 'twgl.js'
 import vertex from './cell-vertex.glsl'
 import fragment from './cell-fragment.glsl'
 
+function createPoints (width, height, cellSize) {
+  const columnCount = width / cellSize
+  const rowCount = height / cellSize
+  const pointPositions = new Float32Array(rowCount * columnCount * 2)
+  const pointAlphas = new Float32Array(rowCount * columnCount)
+  let positionIndex = 0
+  for (let row = 0; row < rowCount; row++) {
+    for (let column = 0; column < columnCount; column++) {
+      pointPositions[positionIndex++] = column
+      pointPositions[positionIndex++] = row
+      pointAlphas[row * columnCount + column] = (column + row) % 2
+    }
+  }
+  return {
+    aVertexPosition: { data: pointPositions, numComponents: 2 },
+    aVertexAlpha: { data: pointAlphas, numComponents: 1 }
+  }
+}
+
+function createScene (gl, width, height, cellSize) {
+  gl.clearColor(0, 0, 0, 1)
+  gl.enable(gl.BLEND)
+  gl.blendFunc(gl.SRC_ALPHA, gl.DST_COLOR)
+
+  const drawParticle = twgl.createProgramInfo(gl, [vertex, fragment])
+
+  const pointsObject = createPoints(width, height, cellSize)
+
+  const pointsBuffer = twgl.createBufferInfoFromArrays(gl, pointsObject)
+  twgl.setBuffersAndAttributes(gl, drawParticle, pointsBuffer)
+
+  gl.useProgram(drawParticle.program)
+
+  const translationMatrix = twgl.m4.identity()
+  twgl.m4.translate(translationMatrix, [-1, 1, 0], translationMatrix)
+  twgl.m4.scale(translationMatrix, [(2 * cellSize / width), (-2 * cellSize / height), 1.0], translationMatrix)
+  twgl.m4.translate(translationMatrix, [0.5, 0.5, 0], translationMatrix)
+
+  twgl.setUniforms(drawParticle, {
+    uPointSize: cellSize,
+    uTranslationMatrix: translationMatrix
+  })
+
+  return {
+    pointsObject,
+    pointsBuffer
+  }
+}
+
 /**
  * Initialize the renderer.
  *
@@ -21,38 +70,18 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
   viewport.appendChild(canvas)
 
   const gl = twgl.getContext(canvas, { depth: false, antialiasing: false })
-  const drawParticle = twgl.createProgramInfo(gl, [vertex, fragment])
-  const columnCount = width / cellSize
-  const rowCount = height / cellSize
-  const pointPosition = []
-  const pointAlpha = []
-  for (let row = 0; row < rowCount; row++) {
-    for (let column = 0; column < columnCount; column++) {
-      pointPosition.push(column)
-      pointPosition.push(row)
-      pointAlpha.push((column + row) % 2)
+
+  const {
+    pointsObject,
+    pointsBuffer
+  } = createScene(gl, width, height, cellSize)
+
+  function copyPointAlphas () {
+    const pointAlphas = pointsObject.aVertexAlpha.data
+    for (var i = 0, len = pointAlphas.length; i < len; i++) {
+      pointAlphas[i] = grid.cells[i].sprite.alpha
     }
   }
-  const pointsObject = {
-    aVertexPosition: { data: pointPosition, numComponents: 2 },
-    aVertexAlpha: { data: pointAlpha, numComponents: 1 }
-  }
-  const pointsBuffer = twgl.createBufferInfoFromArrays(gl, pointsObject)
-  twgl.setBuffersAndAttributes(gl, drawParticle, pointsBuffer)
-
-  const translationMatrix = twgl.m4.identity()
-  twgl.m4.translate(translationMatrix, [-1, 1, 0], translationMatrix)
-  twgl.m4.scale(translationMatrix, [(2 * cellSize / width), (-2 * cellSize / height), 1.0], translationMatrix)
-  twgl.m4.translate(translationMatrix, [0.5, 0.5, 0], translationMatrix)
-
-  gl.clearColor(0, 0, 0, 1)
-  gl.enable(gl.BLEND)
-  gl.blendFunc(gl.SRC_ALPHA, gl.DST_COLOR)
-  gl.useProgram(drawParticle.program)
-  twgl.setUniforms(drawParticle, {
-    uPointSize: cellSize,
-    uTranslationMatrix: translationMatrix
-  })
 
   return {
     /**
@@ -63,8 +92,9 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
       // twgl.resizeCanvasToDisplaySize(gl.canvas)
       // console.log(gl.canvas.width, gl.canvas.height)
       // gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
+      copyPointAlphas()
       // updates the particles alpha
-      twgl.setAttribInfoBufferFromArray(gl, pointsBuffer.attribs.aVertexAlpha, grid.cells.map(cell => cell.sprite.alpha))
+      twgl.setAttribInfoBufferFromArray(gl, pointsBuffer.attribs.aVertexAlpha, pointsObject.aVertexAlpha.data)
       // drawing particles
       twgl.drawBufferInfo(gl, pointsBuffer, gl.POINTS)
     }
