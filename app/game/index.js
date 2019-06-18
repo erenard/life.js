@@ -1,6 +1,6 @@
-import Animation from './animation'
+import Animation from '../render/animation'
 import Grid from './grid'
-import Renderer from './renderer'
+import Renderer from '../render/cell-renderer'
 import Rules from './rules'
 
 /**

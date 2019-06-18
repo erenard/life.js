@@ -15,8 +15,8 @@ module.exports = function (config) {
       // { pattern: './test/**/*.spec.js', watched: false }
       './test/game/cell.spec.js',
       './test/game/grid.spec.js',
-      './test/game/renderer.spec.js',
-      './test/game/animation.spec.js',
+      './test/render/pixi-renderer.spec.js',
+      './test/render/animation.spec.js',
       './test/components/rules-editor-vue.spec.js',
       './test/components/user-interface-vue.spec.js'
     ],
@@ -25,8 +25,8 @@ module.exports = function (config) {
       // './test/**/*.spec.js': ['webpack']
       './test/game/cell.spec.js': ['webpack'],
       './test/game/grid.spec.js': ['webpack'],
-      './test/game/renderer.spec.js': ['webpack'],
-      './test/game/animation.spec.js': ['webpack'],
+      './test/render/pixi-renderer.spec.js': ['webpack'],
+      './test/render/animation.spec.js': ['webpack'],
       './test/components/rules-editor-vue.spec.js': ['webpack'],
       './test/components/user-interface-vue.spec.js': ['webpack']
     },
