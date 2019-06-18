@@ -26,8 +26,8 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
   const rowCount = height / cellSize
   const pointPosition = []
   const pointAlpha = []
-  for (let column = 0; column < columnCount; column++) {
-    for (let row = 0; row < rowCount; row++) {
+  for (let row = 0; row < rowCount; row++) {
+    for (let column = 0; column < columnCount; column++) {
       pointPosition.push(column)
       pointPosition.push(row)
       pointAlpha.push((column + row) % 2)
