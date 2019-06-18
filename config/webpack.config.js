@@ -25,11 +25,11 @@ const config = {
 }
 
 module.exports = function (env, args) {
-  if (args.mode === 'production') {
-    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.optimization())
-  }
   if (args['bundle-analyzer']) {
     return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.analyzeBundles(developmentPort))
+  }
+  if (args.mode === 'production') {
+    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.optimization())
   }
   if (args.mode === 'development') {
     return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.devServer(developmentPort))
