@@ -13,15 +13,7 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './app/index.html' })
-  ],
-  module: {
-    rules: [
-      // { test: /\.png$/, use: 'url-loader?limit=100000' },
-      // { test: /\.jpg$/, use: 'file-loader' },
-      { test: /\.ttf$/, use: 'file-loader' },
-      { test: /\.glsl$/, use: 'raw-loader' }
-    ]
-  }
+  ]
 }
 
 module.exports = function (env, args) {

@@ -40,6 +40,14 @@ module.exports = {
         'app',
         'node_modules'
       ]
+    },
+    module: {
+      rules: [
+        // { test: /\.png$/, use: 'url-loader?limit=100000' },
+        // { test: /\.jpg$/, use: 'file-loader' },
+        { test: /\.ttf$/, use: 'file-loader' },
+        { test: /\.glsl$/, use: 'raw-loader' }
+      ]
     }
   }),
   vuejs: () => ({
