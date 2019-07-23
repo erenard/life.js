@@ -39,7 +39,7 @@ module.exports = function (config) {
     webpack: merge(
       parts.resolveModules(),
       parts.babel(),
-      parts.vuejs(),
+      parts.vuejs()
     ),
 
     webpackMiddleware: {
