@@ -5,7 +5,7 @@ import AppVue from './components/App.vue'
 const vm = new Vue({
   el: '#app',
   components: {
-    'app': AppVue
+    app: AppVue
   },
   template: '<app />'
 })

@@ -1,5 +1,5 @@
 /**
- * Cell
+ * Cell.
  */
 export default class Cell {
   /**

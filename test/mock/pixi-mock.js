@@ -2,6 +2,7 @@ import sinon from 'sinon'
 
 class Renderer {
   generateTexture () {}
+
   render () {}
 }
 
@@ -17,6 +18,7 @@ class ParticleContainer extends Container {}
 
 class Graphics {
   beginFill () {}
+
   drawRect () {}
 }
 

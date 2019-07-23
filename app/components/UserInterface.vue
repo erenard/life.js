@@ -32,7 +32,7 @@ import RulesEditorVue from './RulesEditor.vue'
 export default {
   name: 'UserInterface',
   components: {
-    'RulesEditor': RulesEditorVue
+    RulesEditor: RulesEditorVue
   },
   props: {
     game: {

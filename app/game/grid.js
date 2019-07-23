@@ -1,7 +1,7 @@
 import Cell from './cell'
 
 /**
- * Implements the game algorithm
+ * Implements the game algorithm.
  */
 export default class {
   /**
