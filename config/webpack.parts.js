@@ -26,14 +26,6 @@ module.exports = {
       port
     }
   }),
-  optimization: () => ({
-    optimization: {
-      minimize: true,
-      minimizer: [new UglifyJsPlugin({
-        parallel: true
-      })]
-    }
-  }),
   resolveModules: () => ({
     resolve: {
       modules: [
