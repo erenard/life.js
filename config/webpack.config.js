@@ -21,7 +21,7 @@ module.exports = function (env, args) {
     return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.analyzeBundles(developmentPort))
   }
   if (args.mode === 'production') {
-    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.optimization())
+    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs())
   }
   if (args.mode === 'development') {
     return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.devServer(developmentPort))

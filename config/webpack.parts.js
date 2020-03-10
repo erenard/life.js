@@ -1,5 +1,4 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
@@ -24,14 +23,6 @@ module.exports = {
     devServer: {
       compress: false,
       port
-    }
-  }),
-  optimization: () => ({
-    optimization: {
-      minimize: true,
-      minimizer: [new UglifyJsPlugin({
-        parallel: true
-      })]
     }
   }),
   resolveModules: () => ({
