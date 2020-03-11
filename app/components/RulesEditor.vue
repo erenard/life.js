@@ -43,6 +43,9 @@
         <option value="b3s23">
           Conway
         </option>
+        <option value="b3s35">
+          Gliders
+        </option>
         <option value="b36s23">
           HighLife
         </option>
