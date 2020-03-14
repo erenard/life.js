@@ -42,8 +42,8 @@ describe('RulesEditor', () => {
       expect(wrapper.find({ ref: 's8' }).element.checked).to.equal(false)
     })
 
-    it('should set the preset to the value', () => {
-      expect(wrapper.find('.preset-select').element.value).to.equal('b78s45')
+    it('should set the custom preset to the value', () => {
+      expect(wrapper.find({ ref: 'customPreset' }).element.value).to.equal('b78s45')
     })
   })
   describe('when a preset is selected', () => {
