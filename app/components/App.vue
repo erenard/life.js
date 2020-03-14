@@ -1,27 +1,42 @@
 <template>
   <div>
     <div ref="viewport" />
-    <user-interface :game="game" />
+    <UserInterfaceVue
+      @reset="reset"
+      @start="game.start"
+      @stop="game.stop"
+      @step="game.step"
+      @random="game.random"
+      @clear="game.clear"
+    >
+      <RulesEditor v-model="game.rules" />
+    </UserInterfaceVue>
   </div>
 </template>
 
 <script>
 import UserInterfaceVue from './UserInterface.vue'
+import RulesEditorVue from './RulesEditor.vue'
 import Game from '../game'
 
 export default {
   name: 'App',
   components: {
-    'user-interface': UserInterfaceVue
+    RulesEditor: RulesEditorVue,
+    UserInterfaceVue: UserInterfaceVue
   },
   data: () => ({
     game: new Game()
   }),
   mounted () {
-    this.game.init(this.$refs.viewport)
-    this.game.rules = 'b3s23'
+    this.reset()
     this.game.random(0.30)
     this.game.start()
+  },
+  methods: {
+    reset (options) {
+      this.game.init(this.$refs.viewport, options)
+    }
   }
 }
 </script>

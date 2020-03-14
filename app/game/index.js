@@ -9,16 +9,15 @@ import Rules from './rules'
  * @class      Game (name)
  * @returns    {object}  The public methods for the game.
  */
-function Game () {
-  const radius = 2
+function Game ({ radius = 2, gridWidth, gridHeight } = {}) {
   const _rules = new Rules()
-  const width = window.innerWidth || 1280
-  const height = window.innerHeight || 1024
+  const width = gridWidth ? gridWidth * radius : window.innerWidth
+  const height = gridHeight ? gridHeight * radius : window.innerHeight
   const grid = new Grid(Math.floor(width / radius), Math.floor(height / radius), _rules)
   const animation = new Animation()
   let renderer
 
-  return {
+  const game = {
     init (viewport) {
       renderer = new Renderer(width, height, viewport, grid, radius)
       animation.init(grid, renderer)
@@ -66,6 +65,8 @@ function Game () {
       return birthPart + survivalPart
     }
   }
+  game.rules = 'b3s23'
+  return game
 }
 
 export default Game
