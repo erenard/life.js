@@ -14,6 +14,27 @@ describe('RulesEditor', () => {
     return wrapper.vm.$nextTick()
   })
 
+  it('should init checkboxes', () => {
+    expect(wrapper.find({ ref: 'b0' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 'b1' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 'b2' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 'b3' }).element.checked).to.equal(true)
+    expect(wrapper.find({ ref: 'b4' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 'b5' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 'b6' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 'b7' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 'b8' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 's0' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 's1' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 's2' }).element.checked).to.equal(true)
+    expect(wrapper.find({ ref: 's3' }).element.checked).to.equal(true)
+    expect(wrapper.find({ ref: 's4' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 's5' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 's6' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 's7' }).element.checked).to.equal(false)
+    expect(wrapper.find({ ref: 's8' }).element.checked).to.equal(false)
+  })
+
   describe('when the value is updated', () => {
     beforeEach(() => {
       wrapper.setProps({
