@@ -40,29 +40,10 @@ function Game ({ radius = 2, gridWidth, gridHeight } = {}) {
       renderer.render()
     },
     set rules (preset) {
-      const birthRegExp = new RegExp('b([0-9]*)', 'g')
-      const birthMatch = birthRegExp.exec(preset)
-      const birthPart = birthMatch ? birthMatch[1] : ''
-
-      const survivalRegExp = new RegExp('s([0-9]*)', 'g')
-      const survivalMatch = survivalRegExp.exec(preset)
-      const survivalPart = survivalMatch ? survivalMatch[1] : ''
-
-      for (let index = 0; index < 9; index++) {
-        const bValue = birthPart.indexOf(index) >= 0
-        const sValue = survivalPart.indexOf(index) >= 0
-        _rules.b[index] = bValue
-        _rules.s[index] = sValue
-      }
+      _rules.preset = preset
     },
     get rules () {
-      let birthPart = 'b'
-      let survivalPart = 's'
-      for (let index = 0; index < 9; index++) {
-        birthPart += _rules.b[index] ? index : ''
-        survivalPart += _rules.s[index] ? index : ''
-      }
-      return birthPart + survivalPart
+      return _rules.preset
     }
   }
   game.rules = 'b3s23'

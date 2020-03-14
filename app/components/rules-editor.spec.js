@@ -48,8 +48,8 @@ describe('RulesEditor', () => {
   })
   describe('when a preset is selected', () => {
     beforeEach(() => {
-      wrapper.find('.preset-select').setValue('b36s23')
-      wrapper.find('.preset-select').trigger('input')
+      wrapper.find({ ref: 'preset' }).setValue('b36s23')
+      wrapper.find({ ref: 'preset' }).trigger('input')
       return wrapper.vm.$nextTick()
     })
     it('should emit the rules', () => {

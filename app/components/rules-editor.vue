@@ -16,6 +16,7 @@
       >
         <input
           :ref="'b' + (index - 1)"
+          v-model="rules.b[index - 1]"
           type="checkbox"
           @change="handleCheckboxInput('b' + (index - 1))"
         >
@@ -35,6 +36,7 @@
       >
         <input
           :ref="'s' + (index - 1)"
+          v-model="rules.s[index - 1]"
           type="checkbox"
           @change="handleCheckboxInput('s' + (index - 1))"
         >
@@ -44,7 +46,7 @@
     <div class="full_width">
       Load a preset:
       <select
-        class="preset-select"
+        ref="preset"
         :value="value"
         @input="handleSelectInput"
       >
@@ -71,6 +73,8 @@
 </template>
 
 <script>
+import Rules from '../game/rules'
+
 const PRESETS = [
   { name: 'Conway', rules: 'b3s23' },
   { name: 'Gliders', rules: 'b3s35' },
@@ -96,50 +100,31 @@ export default {
     }
   },
   data: () => ({
-    presets: PRESETS
+    presets: PRESETS,
+    rules: new Rules()
   }),
   watch: {
-    value (rules) {
-      this.readRules(rules)
+    value: {
+      immediate: true,
+      handler: function (rules) { this.readRules(rules) }
     }
-  },
-  mounted () {
-    this.readRules(this.value)
   },
   methods: {
     readRules (rules) {
-      const birthRegExp = new RegExp('b([0-9]*)', 'g')
-      const birthMatch = birthRegExp.exec(rules)
-      const birthPart = birthMatch ? birthMatch[1] : ''
-
-      const survivalRegExp = new RegExp('s([0-9]*)', 'g')
-      const survivalMatch = survivalRegExp.exec(rules)
-      const survivalPart = survivalMatch ? survivalMatch[1] : ''
-
-      for (let index = 0; index < 9; index++) {
-        const bValue = birthPart.indexOf(index) >= 0
-        const sValue = survivalPart.indexOf(index) >= 0
-        this.$refs['b' + index][0].checked = bValue
-        this.$refs['s' + index][0].checked = sValue
-      }
-
-      if (PRESETS.some(preset => preset.rules === rules)) {
-        this.$refs.customPreset.value = ''
-      } else {
-        this.$refs.customPreset.value = rules
+      this.rules.preset = rules
+      if (this.$refs.customPreset) {
+        if (PRESETS.some(preset => preset.rules === rules)) {
+          this.$refs.customPreset.value = ''
+        } else {
+          this.$refs.customPreset.value = rules
+        }
       }
     },
     handleSelectInput (event) {
       this.$emit('input', event.target.value)
     },
     handleCheckboxInput () {
-      let birthPart = 'b'
-      let survivalPart = 's'
-      for (let index = 0; index < 9; index++) {
-        birthPart += this.$refs['b' + index][0].checked ? index : ''
-        survivalPart += this.$refs['s' + index][0].checked ? index : ''
-      }
-      this.$emit('input', birthPart + survivalPart)
+      this.$emit('input', this.rules.preset)
     }
   }
 }
