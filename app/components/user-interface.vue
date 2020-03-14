@@ -1,20 +1,6 @@
 <template>
   <div class="box">
     <div>
-      <h1>Controls</h1>
-      <button
-        class="ui__play-pause__button"
-        @click="handleClickPause"
-      >
-        {{ pauseButtonLabel }}
-      </button> the game.<br>
-      <button
-        class="ui__step__button"
-        :disabled="isStarted"
-        @click="$emit('step')"
-      >
-        Step
-      </button><br>
       <button
         class="ui__clear__button"
         @click="$emit('clear')"
@@ -41,23 +27,9 @@
 export default {
   name: 'UserInterface',
   data: () => ({
-    isStarted: true,
     randomRatio: 30
   }),
-  computed: {
-    pauseButtonLabel () {
-      return this.isStarted ? 'Pause' : 'Resume'
-    }
-  },
   methods: {
-    handleClickPause () {
-      this.isStarted = !this.isStarted
-      if (this.isStarted) {
-        this.$emit('start')
-      } else {
-        this.$emit('stop')
-      }
-    },
     handleClickRandom () {
       this.$emit('random', this.randomRatio / 100)
     }

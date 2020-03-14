@@ -22,15 +22,6 @@ function Game ({ radius = 2, gridWidth, gridHeight } = {}) {
       renderer = new Renderer(width, height, viewport, grid, radius)
       animation.init(grid, renderer)
     },
-    start () {
-      animation.start()
-    },
-    stop () {
-      animation.stop()
-    },
-    step () {
-      animation.mainLoop()
-    },
     random (ratio) {
       grid.random(ratio)
       renderer.render()
@@ -44,6 +35,19 @@ function Game ({ radius = 2, gridWidth, gridHeight } = {}) {
     },
     get rules () {
       return _rules.preset
+    },
+    get animation () {
+      return animation
+    },
+    get running () {
+      return animation.running
+    },
+    set running (value) {
+      if (value) {
+        animation.start()
+      } else {
+        animation.stop()
+      }
     }
   }
   game.rules = 'b3s23'
