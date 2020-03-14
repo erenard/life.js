@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import UserInterfaceVue from './UserInterface.vue'
-import RulesEditorVue from './RulesEditor.vue'
+import UserInterfaceVue from './user-interface.vue'
+import RulesEditorVue from './rules-editor.vue'
 import Game from '../game'
 
 export default {

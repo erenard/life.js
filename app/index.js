@@ -1,6 +1,6 @@
 import 'normalize.css'
 import Vue from 'vue'
-import AppVue from './components/App.vue'
+import AppVue from './components/game.vue'
 
 const vm = new Vue({
   el: '#app',

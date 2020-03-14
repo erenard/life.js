@@ -1,8 +1,8 @@
 /* global it, describe, beforeEach */
 import { assert, expect } from 'chai'
 
-import Cell from 'game/cell'
-import Rules from 'game/rules'
+import Cell from './cell'
+import Rules from './rules'
 
 describe('Cell', () => {
   let rules

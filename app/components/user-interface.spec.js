@@ -1,7 +1,7 @@
 /* global it, describe, beforeEach */
 import { expect, assert } from 'chai'
 import { shallowMount } from '@vue/test-utils'
-import UserInterface from '../../app/components/UserInterface.vue'
+import UserInterface from './user-interface.vue'
 
 describe('UserInterface.vue', () => {
   let wrapper

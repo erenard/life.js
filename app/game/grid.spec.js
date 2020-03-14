@@ -1,7 +1,7 @@
 /* global it, describe */
 import { assert } from 'chai'
-import Grid from 'game/grid'
-import Rules from 'game/rules'
+import Grid from './grid'
+import Rules from './rules'
 
 const gridSide = 4
 const gridLength = gridSide * gridSide

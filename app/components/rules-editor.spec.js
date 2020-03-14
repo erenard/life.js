@@ -1,7 +1,7 @@
 /* global it, describe, beforeEach */
 import { expect } from 'chai'
 import { shallowMount } from '@vue/test-utils'
-import RulesEditor from '../../app/components/RulesEditor.vue'
+import RulesEditor from './rules-editor.vue'
 
 describe('RulesEditor', () => {
   let wrapper
