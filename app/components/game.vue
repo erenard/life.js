@@ -20,7 +20,6 @@
 import AnimationControl from './animation-control.vue'
 import UserInterface from './user-interface.vue'
 import RulesEditor from './rules-editor.vue'
-import Game from '../game'
 
 export default {
   name: 'App',
@@ -29,12 +28,14 @@ export default {
     RulesEditor,
     UserInterface
   },
-  data: () => ({
-    game: new Game()
-  }),
+  props: {
+    game: {
+      type: Object,
+      required: true
+    }
+  },
   mounted () {
     this.reset()
-    this.game.random(0.30)
   },
   methods: {
     reset (options) {

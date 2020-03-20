@@ -24,11 +24,11 @@ function Game ({ radius = 2, gridWidth, gridHeight } = {}) {
     },
     random (ratio) {
       grid.random(ratio)
-      renderer.render()
+      if (renderer) renderer.render()
     },
     clear () {
       grid.clear()
-      renderer.render()
+      if (renderer) renderer.render()
     },
     set rules (preset) {
       _rules.preset = preset
