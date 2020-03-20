@@ -39,9 +39,6 @@ export default {
 
 <style>
 .box {
-    position: absolute;
-    top: 10px;
-    right: 10px;
     font-family: pixel-8bit;
     font-size: 16px;
     background-color: black;
