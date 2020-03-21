@@ -50,7 +50,6 @@ function Game ({ radius = 2, gridWidth, gridHeight } = {}) {
       }
     }
   }
-  game.rules = 'b3s23'
   return game
 }
 
