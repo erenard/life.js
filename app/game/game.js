@@ -6,29 +6,69 @@ import Rules from './rules'
 /**
  * Public interface for the game.
  *
- * @class      Game (name)
- * @returns    {object}  The public methods for the game.
+ * @class Game (name)
+ * @returns {object}  The public methods for the game.
  */
-function Game ({ radius = 2, gridWidth, gridHeight } = {}) {
+function Game ({ gridWidth = 100, gridHeight = 100, radius = 2, seedRatio = 0.3 } = {}) {
+  let _gridWidth = gridWidth
+  let _gridHeight = gridHeight
+  let _radius = radius
+  let _seedRatio = seedRatio
   const _rules = new Rules()
-  const width = gridWidth ? gridWidth * radius : window.innerWidth
-  const height = gridHeight ? gridHeight * radius : window.innerHeight
-  const grid = new Grid(Math.floor(width / radius), Math.floor(height / radius), _rules)
-  const animation = new Animation()
-  let renderer
+  const _animation = new Animation()
+  let _viewport
+  let _width
+  let _height
+  let _grid
+  let _renderer
 
-  const game = {
-    init (viewport) {
-      renderer = new Renderer(width, height, viewport, grid, radius)
-      animation.init(grid, renderer)
+  function createGrid () {
+    _width = _gridWidth ? _gridWidth * _radius : window.innerWidth
+    _height = _gridHeight ? _gridHeight * _radius : window.innerHeight
+    _grid = new Grid(Math.floor(_width / _radius), Math.floor(_height / _radius), _rules)
+    _grid.random(_seedRatio)
+  }
+
+  createGrid()
+
+  function createRenderer () {
+    _renderer = new Renderer(_width, _height, _viewport, _grid, _radius)
+    _animation.init(_grid, _renderer)
+  }
+
+  return {
+    // eslint-disable-next-line accessor-pairs
+    set viewport (viewport) {
+      _viewport = viewport
+      createRenderer()
+    },
+    get size () {
+      return {
+        gridWidth: _gridWidth,
+        gridHeight: _gridHeight,
+        radius: _radius,
+        seedRatio: _seedRatio
+      }
+    },
+    set size ({ gridWidth = _gridWidth, gridHeight = _gridHeight, radius = _radius, seedRatio = _seedRatio } = {}) {
+      _gridWidth = gridWidth
+      _gridHeight = gridHeight
+      _radius = radius
+      _seedRatio = seedRatio
+      if (_renderer) {
+        _renderer.destroy()
+        _renderer = undefined
+      }
+      createGrid()
+      createRenderer()
     },
     random (ratio) {
-      grid.random(ratio)
-      if (renderer) renderer.render()
+      _grid.random(ratio)
+      if (_renderer) _renderer.render()
     },
     clear () {
-      grid.clear()
-      if (renderer) renderer.render()
+      _grid.clear()
+      if (_renderer) _renderer.render()
     },
     set rules (preset) {
       _rules.preset = preset
@@ -37,20 +77,19 @@ function Game ({ radius = 2, gridWidth, gridHeight } = {}) {
       return _rules.preset
     },
     get animation () {
-      return animation
+      return _animation
     },
     get running () {
-      return animation.running
+      return _animation.running
     },
     set running (value) {
       if (value) {
-        animation.start()
+        _animation.start()
       } else {
-        animation.stop()
+        _animation.stop()
       }
     }
   }
-  return game
 }
 
 export default Game

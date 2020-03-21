@@ -97,6 +97,12 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
       twgl.setAttribInfoBufferFromArray(gl, pointsBuffer.attribs.aVertexAlpha, pointsObject.aVertexAlpha.data)
       // drawing particles
       twgl.drawBufferInfo(gl, pointsBuffer, gl.POINTS)
+    },
+    /**
+     * Destroys the object, and remove the canvas from the DOM.
+     */
+    destroy () {
+      viewport.removeChild(canvas)
     }
   }
 }

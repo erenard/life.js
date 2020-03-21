@@ -6,9 +6,9 @@ import Game from 'game/game'
 const game = new Game({
   gridWidth: 1000,
   gridHeight: 1000,
-  radius: 1
+  radius: 1,
+  seedRatio: 0.3
 })
-game.random(0.30)
 
 const vm = new Vue({
   el: '#app',

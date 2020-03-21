@@ -2,6 +2,12 @@
   <div class="box">
     <div>
       <button
+        class="ui__board__button"
+        @click="$emit('board')"
+      >
+        Change
+      </button> the board.<br>
+      <button
         class="ui__clear__button"
         @click="$emit('clear')"
       >

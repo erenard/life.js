@@ -12,7 +12,9 @@ export default class Cell {
     // 0 or 1, the cell value used to count cells
     this.state = 0
     this.age = 0
-    this.sprite = {}
+    this.sprite = {
+      alpha: 0
+    }
     this.count = 0
   }
 

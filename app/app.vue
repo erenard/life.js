@@ -3,9 +3,9 @@
     <div ref="viewport" />
     <template v-slot:ui>
       <UserInterface
-        @reset="reset"
         @random="game.random"
         @clear="game.clear"
+        @board="changeBoard()"
       >
         <h1>Controls</h1>
         <AnimationControl
@@ -39,11 +39,15 @@ export default {
     }
   },
   mounted () {
-    this.reset()
+    this.game.viewport = this.$refs.viewport
   },
   methods: {
-    reset (options) {
-      this.game.init(this.$refs.viewport, options)
+    changeBoard (options) {
+      this.game.size = {
+        gridWidth: 300,
+        gridHeight: 300,
+        radius: 2
+      }
     }
   }
 }
