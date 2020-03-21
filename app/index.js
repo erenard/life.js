@@ -1,7 +1,7 @@
 import 'normalize.css'
 import Vue from 'vue'
 import AppVue from './app.vue'
-import Game from 'game'
+import Game from 'game/game'
 
 const game = new Game({
   gridWidth: 1000,
