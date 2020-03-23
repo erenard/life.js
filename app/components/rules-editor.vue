@@ -18,7 +18,7 @@
           :ref="'b' + (index - 1)"
           v-model="rules.b[index - 1]"
           type="checkbox"
-          @change="handleCheckboxInput('b' + (index - 1))"
+          @change="handleCheckboxInput()"
         >
         <span class="checkboxLabel">{{ index - 1 }}</span>
       </div>
@@ -38,7 +38,7 @@
           :ref="'s' + (index - 1)"
           v-model="rules.s[index - 1]"
           type="checkbox"
-          @change="handleCheckboxInput('s' + (index - 1))"
+          @change="handleCheckboxInput()"
         >
         <span class="checkboxLabel">{{ index - 1 }}</span>
       </div>
