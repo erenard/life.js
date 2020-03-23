@@ -1,6 +1,11 @@
 <template>
   <Layout>
-    <div ref="viewport" />
+    <template v-slot:default>
+      <div ref="viewport" />
+      <Modal v-model="showRulesEditor">
+        <RulesEditor v-model="game.rules" />
+      </Modal>
+    </template>
     <template v-slot:ui>
       <UserInterface
         @random="game.random"
@@ -12,7 +17,11 @@
           v-model="game.running"
           :animation="game.animation"
         />
-        <RulesEditor v-model="game.rules" />
+        <button
+          @click="showRulesEditor = true"
+        >
+          Rules
+        </button>
       </UserInterface>
     </template>
   </Layout>
@@ -23,6 +32,7 @@ import AnimationControl from './components/animation-control.vue'
 import Layout from './components/layout.vue'
 import UserInterface from './components/user-interface.vue'
 import RulesEditor from './components/rules-editor.vue'
+import Modal from './components/modal.vue'
 
 export default {
   name: 'App',
@@ -30,7 +40,8 @@ export default {
     AnimationControl,
     Layout,
     RulesEditor,
-    UserInterface
+    UserInterface,
+    Modal
   },
   props: {
     game: {
@@ -38,6 +49,9 @@ export default {
       required: true
     }
   },
+  data: () => ({
+    showRulesEditor: false
+  }),
   mounted () {
     this.game.viewport = this.$refs.viewport
   },
