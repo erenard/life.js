@@ -1,5 +1,5 @@
 <template>
-  <div class="rules-editor-container">
+  <div class="box rules-editor-container">
     <div class="full_width">
       <h1>Rules</h1>
     </div>

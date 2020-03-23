@@ -67,4 +67,40 @@ html, body {
   height: 100%;
   overflow: hidden;
 }
+.box {
+    font-family: pixel-8bit;
+    font-size: 16px;
+    background-color: black;
+    color: rgb(0, 127, 0);
+    /*opacity: 0.75;*/
+    width: 16em;
+}
+
+h1, h2, h3 {
+    font-family: subway-ticker;
+    font-weight: normal;
+    color: rgb(127, 255, 127);
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+.box a {
+    color: rgb(127, 255, 127);
+}
+.box button, .box select, .box input {
+    font-family: pixel-8bit;
+    font-size: 16px;
+    background-color: black;
+    color: rgb(127, 255, 127);
+}
 </style>
