@@ -78,7 +78,7 @@
         </button>
       </td>
       <td>
-        {{ width }}x{{ height }} px
+        {{ width }} x {{ height }} px
       </td>
     </tr>
   </table>
@@ -136,8 +136,4 @@ export default {
 }
 </script>
 <style scoped>
-.board-editor {
-  display: table;
-
-}
 </style>

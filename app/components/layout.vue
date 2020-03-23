@@ -1,11 +1,10 @@
 <template>
   <div class="layout">
-    <div class="canvas-container">
-      <slot />
-    </div>
+    <slot />
     <div class="ui-container">
       <slot name="ui" />
     </div>
+    <slot name="modals" />
   </div>
 </template>
 <script>
@@ -15,11 +14,19 @@ export default {
 </script>
 <style scoped>
 .layout {
-  background-color: gray;
+  background-color: black;
   height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+}
+.canvas-container {
+
+}
+.ui-container {
+  top: 0;
+  left: 0;
+  position: fixed;
 }
 </style>

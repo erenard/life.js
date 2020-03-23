@@ -2,19 +2,9 @@
   <Layout>
     <template v-slot:default>
       <div ref="viewport" />
-      <Modal v-model="showRulesEditor">
-        <RulesEditor v-model="game.rules" />
-      </Modal>
-      <Modal v-model="showBoardEditor">
-        <BoardEditor v-model="game.size" />
-      </Modal>
     </template>
     <template v-slot:ui>
-      <UserInterface
-        @random="game.random"
-        @clear="game.clear"
-        @board="changeBoard()"
-      >
+      <UserInterface>
         <h1>Controls</h1>
         <AnimationControl
           v-model="game.running"
@@ -31,6 +21,14 @@
           Board
         </button>
       </UserInterface>
+    </template>
+    <template v-slot:modals>
+      <Modal v-model="showRulesEditor">
+        <RulesEditor v-model="game.rules" />
+      </Modal>
+      <Modal v-model="showBoardEditor">
+        <BoardEditor v-model="game.size" />
+      </Modal>
     </template>
   </Layout>
 </template>
@@ -65,15 +63,6 @@ export default {
   }),
   mounted () {
     this.game.viewport = this.$refs.viewport
-  },
-  methods: {
-    changeBoard (options) {
-      this.game.size = {
-        gridWidth: 300,
-        gridHeight: 300,
-        radius: 2
-      }
-    }
   }
 }
 </script>
@@ -98,25 +87,16 @@ html, body {
     background-color: black;
     color: rgb(0, 127, 0);
     opacity: 0.75;
-    width: 16em;
-}
-
-h1, h2, h3 {
-    font-family: subway-ticker;
-    font-weight: normal;
-    color: rgb(127, 255, 127);
+    border: solid;
+    padding: 5px;
 }
 
 h1 {
+    font-family: subway-ticker;
+    font-weight: normal;
+    color: rgb(127, 255, 127);
     font-size: 32px;
-}
-
-h2 {
-    font-size: 24px;
-}
-
-h3 {
-    font-size: 16px;
+    margin: 8px;
 }
 
 .box a {
@@ -127,5 +107,8 @@ h3 {
     font-size: 16px;
     background-color: black;
     color: rgb(127, 255, 127);
+}
+input[type=checkbox] {
+  vertical-align: text-bottom;
 }
 </style>

@@ -1,49 +1,7 @@
 <template>
-  <div class="box rules-editor-container">
-    <div class="full_width">
-      <h1>Rules</h1>
-    </div>
-    <div
-      class="rules-container birth-rules"
-    >
-      <div class="full_width">
-        Birth rules
-      </div>
-      <div
-        v-for="index of 9"
-        :key="index"
-        class="third_width"
-      >
-        <input
-          :ref="'b' + (index - 1)"
-          v-model="rules.b[index - 1]"
-          type="checkbox"
-          @change="handleCheckboxInput()"
-        >
-        <span class="checkboxLabel">{{ index - 1 }}</span>
-      </div>
-    </div>
-    <div
-      class="rules-container survival-rules"
-    >
-      <div class="full_width">
-        Survival rules
-      </div>
-      <div
-        v-for="index of 9"
-        :key="index"
-        class="third_width"
-      >
-        <input
-          :ref="'s' + (index - 1)"
-          v-model="rules.s[index - 1]"
-          type="checkbox"
-          @change="handleCheckboxInput()"
-        >
-        <span class="checkboxLabel">{{ index - 1 }}</span>
-      </div>
-    </div>
-    <div class="full_width">
+  <div class="box">
+    <h1>Rules</h1>
+    <p>
       Load a preset:
       <select
         ref="preset"
@@ -61,13 +19,46 @@
           Custom
         </option>
       </select>
-    </div>
-    <div class="full_width">
+      <br>
       More info on presets
       <a
         href="http://en.wikipedia.org/wiki/Life-like_cellular_automaton"
         target="_blank"
       >here</a>
+    </p>
+    <p>Birth rules</p>
+    <div class="rules-container birth-rules">
+      <div
+        v-for="index of 9"
+        :key="index"
+        class="rule"
+      >
+        <span class="ruleLabel">
+          <input
+            :ref="'b' + (index - 1)"
+            v-model="rules.b[index - 1]"
+            type="checkbox"
+            @change="handleCheckboxInput()"
+          >
+          {{ index - 1 }}</span>
+      </div>
+    </div>
+    <p>Survival rules</p>
+    <div class="rules-container survival-rules">
+      <div
+        v-for="index of 9"
+        :key="index"
+        class="rule"
+      >
+        <span class="ruleLabel">
+          <input
+            :ref="'s' + (index - 1)"
+            v-model="rules.s[index - 1]"
+            type="checkbox"
+            @change="handleCheckboxInput()"
+          >
+          {{ index - 1 }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -130,27 +121,12 @@ export default {
 }
 </script>
 
-<style>
-.rules-editor-container {
-  display: flex;
-  flex-flow: row wrap;
-  width: 100%;
-}
+<style scoped>
 .rules-container {
-  flex-basis: 50%;
   display: flex;
-  flex-flow: row wrap;
-  align-items: center;
+  flex-wrap: wrap;
 }
-.full_width {
-  flex-basis: 100%;
-}
-.third_width {
-  justify-content: center;
-  align-items: center;
-  flex-basis: 33%;
-}
-.checkboxLabel {
-  vertical-align: text-bottom;
+.rule {
+
 }
 </style>
