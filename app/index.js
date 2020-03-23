@@ -4,9 +4,9 @@ import AppVue from './app.vue'
 import Game from 'game/game'
 
 const game = new Game({
-  gridWidth: 1000,
-  gridHeight: 1000,
-  radius: 1,
+  gridWidth: 400,
+  gridHeight: 400,
+  radius: 2,
   seedRatio: 0.3
 })
 

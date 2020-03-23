@@ -5,6 +5,9 @@
       <Modal v-model="showRulesEditor">
         <RulesEditor v-model="game.rules" />
       </Modal>
+      <Modal v-model="showBoardEditor">
+        <BoardEditor v-model="game.size" />
+      </Modal>
     </template>
     <template v-slot:ui>
       <UserInterface
@@ -22,6 +25,11 @@
         >
           Rules
         </button>
+        <button
+          @click="showBoardEditor = true"
+        >
+          Board
+        </button>
       </UserInterface>
     </template>
   </Layout>
@@ -31,6 +39,7 @@
 import AnimationControl from './components/animation-control.vue'
 import Layout from './components/layout.vue'
 import UserInterface from './components/user-interface.vue'
+import BoardEditor from './components/board-editor.vue'
 import RulesEditor from './components/rules-editor.vue'
 import Modal from './components/modal.vue'
 
@@ -39,6 +48,7 @@ export default {
   components: {
     AnimationControl,
     Layout,
+    BoardEditor,
     RulesEditor,
     UserInterface,
     Modal
@@ -50,6 +60,7 @@ export default {
     }
   },
   data: () => ({
+    showBoardEditor: false,
     showRulesEditor: false
   }),
   mounted () {
@@ -86,7 +97,7 @@ html, body {
     font-size: 16px;
     background-color: black;
     color: rgb(0, 127, 0);
-    /*opacity: 0.75;*/
+    opacity: 0.75;
     width: 16em;
 }
 
