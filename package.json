@@ -37,7 +37,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-istanbul": "^6.0.0",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.9",
+    "coveralls": "^3.1.0",
     "cross-env": "^7.0.2",
     "css-loader": "^3.4.2",
     "eslint": "^6.8.0",
@@ -58,7 +58,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^4.0.2",
     "mocha": "^7.1.0",
-    "nyc": "^15.0.0",
+    "nyc": "^15.1.0",
     "puppeteer": "^2.1.1",
     "raw-loader": "^4.0.1",
     "sinon": "^9.0.3",
@@ -66,7 +66,7 @@
     "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.12",
     "webpack": "^4.44.2",
-    "webpack-bundle-analyzer": "^3.8.0",
+    "webpack-bundle-analyzer": "^3.9.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.11.0",
@@ -75,7 +75,7 @@
   "dependencies": {
     "normalize.css": "^8.0.1",
     "stats.js": "^0.17.0",
-    "twgl.js": "^4.14.2",
+    "twgl.js": "^4.16.1",
     "vue": "^2.6.12"
   }
 }
