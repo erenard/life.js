@@ -80,7 +80,7 @@ describe('RulesEditor', () => {
   })
   describe('when a preset is customized', () => {
     beforeEach(() => {
-      wrapper.findComponent({ ref: 'b0' }).trigger('click')
+      wrapper.findComponent({ ref: 'b0' }).setChecked(true)
       return wrapper.vm.$nextTick()
     })
     it('should emit the rules', () => {
