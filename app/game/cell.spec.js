@@ -1,5 +1,5 @@
 /* global it, describe, beforeEach */
-import { assert, expect } from 'chai'
+import { expect } from 'chai'
 
 import Cell from './cell'
 import Rules from './rules'
@@ -13,11 +13,11 @@ describe('Cell', () => {
     it('should initialize a Cell', () => {
       var cell = new Cell(rules)
       expect(cell).to.deep.equal({
+        rules,
         state: 0,
         age: 0,
-        sprite: {},
-        count: 0,
-        rules
+        sprite: { alpha: 0 },
+        count: 0
       })
     })
   })
@@ -36,7 +36,7 @@ describe('Cell', () => {
       expect(cell).to.deep.equal({
         state: 0,
         age: 0,
-        sprite: {},
+        sprite: { alpha: 0 },
         count: 0,
         rules
       })
@@ -85,14 +85,6 @@ describe('Cell', () => {
       dead.sprite = { alpha: 0 }
       cell.update()
       expect(cell).to.deep.equal(dead)
-    })
-  })
-  describe('get rules ()', () => {
-    it('should return the rules', () => {
-      assert.deepEqual(rules, {
-        b: [false, false, false, false, false, false, false, false, false],
-        s: [false, false, false, false, false, false, false, false, false]
-      })
     })
   })
 })
