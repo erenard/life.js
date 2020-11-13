@@ -1,5 +1,4 @@
-/* global it, describe, beforeEach */
-import { expect } from 'chai'
+import { describe, beforeEach, test, expect } from '@jest/globals'
 import { shallowMount } from '@vue/test-utils'
 import RulesEditor from './rules-editor.vue'
 
@@ -14,25 +13,25 @@ describe('RulesEditor', () => {
     return wrapper.vm.$nextTick()
   })
 
-  it('should init checkboxes', () => {
-    expect(wrapper.findComponent({ ref: 'b0' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 'b1' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 'b2' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 'b3' }).element.checked).to.equal(true)
-    expect(wrapper.findComponent({ ref: 'b4' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 'b5' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 'b6' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 'b7' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 'b8' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 's0' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 's1' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 's2' }).element.checked).to.equal(true)
-    expect(wrapper.findComponent({ ref: 's3' }).element.checked).to.equal(true)
-    expect(wrapper.findComponent({ ref: 's4' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 's5' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 's6' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 's7' }).element.checked).to.equal(false)
-    expect(wrapper.findComponent({ ref: 's8' }).element.checked).to.equal(false)
+  test('should init checkboxes', () => {
+    expect(wrapper.findComponent({ ref: 'b0' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 'b1' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 'b2' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 'b3' }).element.checked).toEqual(true)
+    expect(wrapper.findComponent({ ref: 'b4' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 'b5' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 'b6' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 'b7' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 'b8' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 's0' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 's1' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 's2' }).element.checked).toEqual(true)
+    expect(wrapper.findComponent({ ref: 's3' }).element.checked).toEqual(true)
+    expect(wrapper.findComponent({ ref: 's4' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 's5' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 's6' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 's7' }).element.checked).toEqual(false)
+    expect(wrapper.findComponent({ ref: 's8' }).element.checked).toEqual(false)
   })
 
   describe('when the value is updated', () => {
@@ -42,29 +41,29 @@ describe('RulesEditor', () => {
       })
       return wrapper.vm.$nextTick()
     })
-    it('should set the checkboxes', () => {
-      expect(wrapper.findComponent({ ref: 'b0' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 'b1' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 'b2' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 'b3' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 'b4' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 'b5' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 'b6' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 'b7' }).element.checked).to.equal(true)
-      expect(wrapper.findComponent({ ref: 'b8' }).element.checked).to.equal(true)
-      expect(wrapper.findComponent({ ref: 's0' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 's1' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 's2' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 's3' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 's4' }).element.checked).to.equal(true)
-      expect(wrapper.findComponent({ ref: 's5' }).element.checked).to.equal(true)
-      expect(wrapper.findComponent({ ref: 's6' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 's7' }).element.checked).to.equal(false)
-      expect(wrapper.findComponent({ ref: 's8' }).element.checked).to.equal(false)
+    test('should set the checkboxes', () => {
+      expect(wrapper.findComponent({ ref: 'b0' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 'b1' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 'b2' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 'b3' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 'b4' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 'b5' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 'b6' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 'b7' }).element.checked).toEqual(true)
+      expect(wrapper.findComponent({ ref: 'b8' }).element.checked).toEqual(true)
+      expect(wrapper.findComponent({ ref: 's0' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 's1' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 's2' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 's3' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 's4' }).element.checked).toEqual(true)
+      expect(wrapper.findComponent({ ref: 's5' }).element.checked).toEqual(true)
+      expect(wrapper.findComponent({ ref: 's6' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 's7' }).element.checked).toEqual(false)
+      expect(wrapper.findComponent({ ref: 's8' }).element.checked).toEqual(false)
     })
 
-    it('should set the custom preset to the value', () => {
-      expect(wrapper.findComponent({ ref: 'customPreset' }).element.value).to.equal('b78s45')
+    test('should set the custom preset to the value', () => {
+      expect(wrapper.findComponent({ ref: 'customPreset' }).element.value).toEqual('b78s45')
     })
   })
   describe('when a preset is selected', () => {
@@ -73,9 +72,9 @@ describe('RulesEditor', () => {
       wrapper.findComponent({ ref: 'preset' }).trigger('input')
       return wrapper.vm.$nextTick()
     })
-    it('should emit the rules', () => {
+    test('should emit the rules', () => {
       expect(wrapper.emitted('input'))
-      expect(wrapper.emitted('input')[0]).to.deep.equal(['b36s23'])
+      expect(wrapper.emitted('input')[0]).toEqual(['b36s23'])
     })
   })
   describe('when a preset is customized', () => {
@@ -83,8 +82,8 @@ describe('RulesEditor', () => {
       wrapper.findComponent({ ref: 'b0' }).setChecked(true)
       return wrapper.vm.$nextTick()
     })
-    it('should emit the rules', () => {
-      expect(wrapper.emitted('input')[0]).to.deep.equal(['b03s23'])
+    test('should emit the rules', () => {
+      expect(wrapper.emitted('input')[0]).toEqual(['b03s23'])
     })
   })
 })

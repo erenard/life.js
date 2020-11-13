@@ -1,9 +1,16 @@
 import Stats from 'stats.js'
 
-const stats = new Stats()
-document.body.appendChild(stats.dom)
+let stats
 
 export default {
-  begin: stats.begin,
-  end: stats.end
+  init: () => {
+    stats = new Stats()
+    document.body.appendChild(stats.dom)
+  },
+  begin: () => {
+    if (stats) stats.begin()
+  },
+  end: () => {
+    if (stats) stats.end()
+  }
 }

@@ -17,13 +17,16 @@ const config = {
 }
 
 module.exports = function (env, args) {
+  const mandatoryParts = [parts.resolveModules(), parts.babel(), parts.vuejs()]
+  const optionalParts = []
+
   if (env && env['bundle-analyzer']) {
-    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.analyzeBundles(developmentPort))
+    optionalParts.push(parts.analyzeBundles(developmentPort))
   }
-  if (args && args.mode === 'production') {
-    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs())
+
+  if (env && env.WEBPACK_SERVE) {
+    optionalParts.push(parts.devServer(developmentPort))
   }
-  if (args && args.mode === 'development') {
-    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.devServer(developmentPort))
-  }
+
+  return merge(config, ...mandatoryParts, ...optionalParts)
 }
