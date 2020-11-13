@@ -9,7 +9,9 @@
       class="ui__step__button"
       :disabled="value"
       @click="animation.mainLoop()"
-    >Step</button>
+    >
+      Step
+    </button>
   </div>
 </template>
 

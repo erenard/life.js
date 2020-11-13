@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const parts = require('./webpack.parts')
 const path = require('path')
 
@@ -17,13 +17,16 @@ const config = {
 }
 
 module.exports = function (env, args) {
-  if (args['bundle-analyzer']) {
-    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.analyzeBundles(developmentPort))
+  const mandatoryParts = [parts.resolveModules(), parts.babel(), parts.vuejs()]
+  const optionalParts = []
+
+  if (env && env['bundle-analyzer']) {
+    optionalParts.push(parts.analyzeBundles(developmentPort))
   }
-  if (args.mode === 'production') {
-    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs())
+
+  if (env && env.WEBPACK_SERVE) {
+    optionalParts.push(parts.devServer(developmentPort))
   }
-  if (args.mode === 'development') {
-    return merge(config, parts.resolveModules(), parts.babel(), parts.vuejs(), parts.devServer(developmentPort))
-  }
+
+  return merge(config, ...mandatoryParts, ...optionalParts)
 }

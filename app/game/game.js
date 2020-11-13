@@ -6,6 +6,11 @@ import Rules from './rules'
 /**
  * Public interface for the game.
  *
+ * @param {object} root0 - Game options.
+ * @param {number} root0.gridWidth - Grid width.
+ * @param {number} root0.gridHeight - Grid height.
+ * @param {number} root0.radius - Cell size in pixel.
+ * @param {number} root0.seedRatio - Filling ratio of the initial grid.
  * @class Game (name)
  * @returns {object}  The public methods for the game.
  */

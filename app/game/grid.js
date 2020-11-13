@@ -62,7 +62,7 @@ export default class {
     for (let i = this.length - (this.sizeX + 1); i < this.length; i++) {
       this.cells[i].count = this.countNeighboursSafe(i)
     }
-    /* Phase 2, filp the cells state */
+    /* Phase 2, flip the cell' states */
     let i = this.length
     while (i--) {
       this.cells[i].update()

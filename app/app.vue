@@ -1,13 +1,13 @@
 <template>
   <Layout>
-    <template v-slot:default>
+    <template #default>
       <div ref="viewport" />
     </template>
-    <template v-slot:ui>
+    <template #ui>
       <UserInterface>
         <h1>Controls</h1>
         <AnimationControl
-          v-model="game.running"
+          v-model="running"
           :animation="game.animation"
         />
         <button
@@ -22,12 +22,12 @@
         </button>
       </UserInterface>
     </template>
-    <template v-slot:modals>
+    <template #modals>
       <Modal v-model="showRulesEditor">
-        <RulesEditor v-model="game.rules" />
+        <RulesEditor v-model="rules" />
       </Modal>
       <Modal v-model="showBoardEditor">
-        <BoardEditor v-model="game.size" />
+        <BoardEditor v-model="size" />
       </Modal>
     </template>
   </Layout>
@@ -61,8 +61,19 @@ export default {
     showBoardEditor: false,
     showRulesEditor: false
   }),
+  computed: {
+    rules () {
+      return this.game.rules
+    },
+    running () {
+      return this.game.running
+    },
+    size () {
+      return this.game.size
+    }
+  },
   mounted () {
-    this.game.viewport = this.$refs.viewport
+    this.$emit('viewport', this.$refs.viewport)
   }
 }
 </script>

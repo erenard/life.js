@@ -1,6 +1,4 @@
-/* global it, describe, beforeEach */
-import { expect } from 'chai'
-
+import { describe, beforeEach, test, expect } from '@jest/globals'
 import Cell from './cell'
 import Rules from './rules'
 
@@ -10,9 +8,9 @@ describe('Cell', () => {
     rules = new Rules()
   })
   describe('new ()', () => {
-    it('should initialize a Cell', () => {
+    test('should initialize a Cell', () => {
       var cell = new Cell(rules)
-      expect(cell).to.deep.equal({
+      expect(cell).toEqual({
         rules,
         state: 0,
         age: 0,
@@ -22,18 +20,18 @@ describe('Cell', () => {
     })
   })
   describe('get isLiving ()', () => {
-    it('should return {state === 1}', () => {
+    test('should return {state === 1}', () => {
       const cell = new Cell(rules)
-      expect(cell.isLiving).to.equal(false)
+      expect(cell.isLiving).toBeFalsy()
       cell.state = 1
-      expect(cell.isLiving).to.equal(true)
+      expect(cell.isLiving).toBeTruthy()
     })
   })
   describe('update ()', () => {
-    it('should keep a cell state', () => {
+    test('should keep a cell state', () => {
       var cell = new Cell(rules)
       cell.update()
-      expect(cell).to.deep.equal({
+      expect(cell).toEqual({
         state: 0,
         age: 0,
         sprite: { alpha: 0 },
@@ -41,12 +39,12 @@ describe('Cell', () => {
         rules
       })
     })
-    it('should reborn a cell', () => {
+    test('should reborn a cell', () => {
       var cell = new Cell(rules)
       cell.sprite = {}
       rules.b[0] = true
       cell.update()
-      expect(cell).to.deep.equal({
+      expect(cell).toEqual({
         state: 1,
         age: 0,
         sprite: { alpha: 0.5 },
@@ -54,37 +52,37 @@ describe('Cell', () => {
         rules
       })
     })
-    it('should increment a living cell age', () => {
+    test('should increment a living cell age', () => {
       var cell = new Cell(rules)
       cell.sprite = {}
       cell.state = 1
       rules.s[0] = true
       cell.update()
-      expect(cell.age).to.be.equal(1)
+      expect(cell.age).toEqual(1)
     })
-    it('should keep a dead cell age', () => {
+    test('should keep a dead cell age', () => {
       var cell = new Cell(rules)
       cell.sprite = {}
       cell.update()
-      expect(cell.age).to.be.equal(0)
+      expect(cell.age).toEqual(0)
     })
-    it('should update the opacity at age == 5', () => {
+    test('should update the opacity at age == 5', () => {
       var cell = new Cell(rules)
       cell.state = 1
       cell.sprite = {}
       cell.age = 4
       rules.s[0] = true
       cell.update()
-      expect(cell.sprite.alpha).to.be.equal(1)
+      expect(cell.sprite.alpha).toEqual(1)
     })
-    it('should kill a cell', () => {
+    test('should kill a cell', () => {
       var cell = new Cell(rules)
       cell.state = 1
       cell.sprite = {}
       var dead = new Cell(rules)
       dead.sprite = { alpha: 0 }
       cell.update()
-      expect(cell).to.deep.equal(dead)
+      expect(cell).toEqual(dead)
     })
   })
 })

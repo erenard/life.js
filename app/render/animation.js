@@ -13,6 +13,7 @@ export default class Animation {
   }
 
   init (grid, renderer) {
+    stats.init()
     this.grid = grid
     this.renderer = renderer
   }

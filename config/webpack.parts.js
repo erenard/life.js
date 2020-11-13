@@ -22,7 +22,8 @@ module.exports = {
     devtool: 'eval-cheap-module-source-map',
     devServer: {
       compress: false,
-      port
+      port,
+      contentBase: './dist'
     }
   }),
   resolveModules: () => ({

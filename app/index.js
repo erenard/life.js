@@ -18,7 +18,12 @@ const vm = new Vue({
   data: () => ({
     game
   }),
-  template: '<app :game="game" />'
+  methods: {
+    setViewport (viewport) {
+      game.viewport = viewport
+    }
+  },
+  template: '<app :game="game" @viewport="setViewport" />'
 })
 
 export default vm

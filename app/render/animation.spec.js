@@ -1,71 +1,81 @@
-/* global it, describe */
+import { describe, test, expect, jest, afterEach } from '@jest/globals'
+import stats from '../gui/stats'
 
-import { assert } from 'chai'
-import sinon from 'sinon'
+import Animation from '../render/animation'
 
-import stats from 'gui/stats'
-
-import Animation from 'render/animation'
-stats.begin = sinon.spy()
-stats.end = sinon.spy()
+jest.mock('../gui/stats')
 
 describe('Animation', () => {
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
   const grid = {
-    update: sinon.spy()
+    update: jest.fn()
   }
   const renderer = {
-    render: sinon.spy()
+    render: jest.fn()
   }
 
   describe('new ()', () => {
-    it('should initialize the Animation', () => {
+    test('should initialize the Animation', () => {
       const animation = new Animation()
       animation.init(grid, renderer)
-      assert.equal(animation.running, false)
+      expect(animation.running).toEqual(false)
     })
   })
 
   describe('mainLoop ()', () => {
-    it('should call grid.update() before renderer.render()', () => {
+    test('should call grid.update() before renderer.render()', () => {
+      const calls = []
+      grid.update.mockImplementation(() => {
+        calls.push('grid.update')
+      })
+      renderer.render.mockImplementation(() => {
+        calls.push('renderer.render')
+      })
       const animation = new Animation()
       animation.init(grid, renderer)
       //
       animation.mainLoop()
       //
-      grid.update.calledBefore(renderer.render)
+      expect(calls).toEqual(['grid.update', 'renderer.render'])
     })
   })
 
   describe('start ()', () => {
-    it('should set running to true', () => {
+    test('should set running to true', () => {
       const animation = new Animation()
       animation.start()
-      assert(animation.running)
+      expect(animation.running).toBeTruthy()
     })
-    it('should start the animation', () => {
+    test('should start the animation', () => {
       const animation = new Animation()
-      animation.animate = sinon.spy()
+      animation.animate = jest.fn()
       animation.start()
-      assert(animation.animate.calledOnce)
+      expect(animation.animate).toBeCalledTimes(1)
     })
   })
 
   describe('stop ()', () => {
-    it('should set running to false', () => {
+    test('should set running to false', () => {
       const animation = new Animation()
       animation.init(grid, renderer)
       animation.running = true
       animation.stop()
-      assert(!animation.running)
+      expect(!animation.running).toBeTruthy()
     })
   })
 
   describe('animate ()', () => {
-    it('should measure the mainLoop execution time', () => {
+    test('should measure the mainLoop execution time', () => {
       const animation = new Animation()
+      animation.start()
+      expect(stats.begin).toBeCalledTimes(1)
+      expect(stats.end).toBeCalledTimes(1)
       animation.animate()
-      assert(stats.begin.calledOnce)
-      assert(stats.end.calledOnce)
+      expect(stats.begin).toBeCalledTimes(2)
+      expect(stats.end).toBeCalledTimes(2)
     })
   })
 })
