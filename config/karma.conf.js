@@ -1,5 +1,5 @@
 process.env.CHROME_BIN = require('puppeteer').executablePath()
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const parts = require('./webpack.parts')
 
 module.exports = function (config) {
