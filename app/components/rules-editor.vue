@@ -24,6 +24,7 @@
       <a
         href="http://en.wikipedia.org/wiki/Life-like_cellular_automaton"
         target="_blank"
+        rel="noopener noreferrer"
       >here</a>
     </p>
     <p>Birth rules</p>
