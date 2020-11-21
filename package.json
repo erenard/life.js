@@ -11,6 +11,7 @@
     "prepare": "git clone https://github.com/erenard/life.js.git --branch gh-pages dist",
     "deploy": "cd dist && git add --all && git commit -m \"Release at $(date)\" && git push",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:start": "jest --watchAll",
     "bundle-analyzer": "webpack --config config/webpack.config.js --mode production --profile --env bundle-analyzer"
   },
@@ -75,6 +76,7 @@
     "vue": "^2.6.12"
   },
   "jest": {
+    "coverageDirectory": "coverage",
     "transform": {
       "^.+\\.js$": "babel-jest",
       ".*\\.(vue)$": "vue-jest"
