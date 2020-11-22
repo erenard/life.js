@@ -9,7 +9,7 @@ const config = {
   entry: { main: './app' },
   output: {
     filename: '[name].bundle.js',
-    path: path.join(__dirname, '../dist')
+    path: path.join(__dirname, 'dist')
   },
   plugins: [
     new HtmlWebpackPlugin({ template: './app/index.html' })
