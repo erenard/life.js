@@ -37,8 +37,8 @@ module.exports = {
       rules: [
         // { test: /\.png$/, use: 'url-loader?limit=100000' },
         // { test: /\.jpg$/, use: 'file-loader' },
-        { test: /\.ttf$/, use: 'file-loader' },
-        { test: /\.glsl$/, use: 'raw-loader' }
+        { test: /\.ttf$/, type: 'asset/resource', use: 'file-loader' },
+        { test: /\.glsl$/, type: 'asset/resource', use: 'raw-loader' }
       ]
     }
   }),

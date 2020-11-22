@@ -4,14 +4,14 @@
   "description": "Conway game of life",
   "main": "app/index.js",
   "scripts": {
-    "build": "webpack --config config/webpack.config.js --mode production",
+    "build": "webpack --config webpack.config.js --mode production",
     "electron": "electron app/electron.js",
-    "start": "webpack serve --config config/webpack.config.js",
+    "start": "webpack serve --config webpack.config.js",
     "lint": "eslint . --ext .js,.vue --cache --fix",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:start": "jest --watchAll",
-    "bundle-analyzer": "webpack --config config/webpack.config.js --mode production --profile --env bundle-analyzer"
+    "bundle-analyzer": "webpack --config webpack.config.js --mode production --profile --env bundle-analyzer"
   },
   "repository": {
     "type": "git",
