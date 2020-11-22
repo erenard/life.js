@@ -62,14 +62,29 @@ export default {
     showRulesEditor: false
   }),
   computed: {
-    rules () {
-      return this.game.rules
+    rules: {
+      get () {
+        return this.game.rules
+      },
+      set (rules) {
+        this.$emit('rules', rules)
+      }
     },
-    running () {
-      return this.game.running
+    running: {
+      get () {
+        return this.game.running
+      },
+      set (running) {
+        this.$emit('running', running)
+      }
     },
-    size () {
-      return this.game.size
+    size: {
+      get () {
+        return this.game.size
+      },
+      set (size) {
+        this.$emit('size', size)
+      }
     }
   },
   mounted () {
