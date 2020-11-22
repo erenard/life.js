@@ -1,7 +1,5 @@
 /node_modules
 /dist
-/.tmp
-/.nyc_output
 /coverage
 .eslintcache
 test-report.xml
