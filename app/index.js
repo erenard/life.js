@@ -1,7 +1,7 @@
 import 'normalize.css'
 import Vue from 'vue'
 import AppVue from './app.vue'
-import Game from 'game/game'
+import Game from './game/game'
 
 const game = new Game({
   gridWidth: 400,
@@ -19,11 +19,27 @@ const vm = new Vue({
     game
   }),
   methods: {
+    setRules (rules) {
+      game.rules = rules
+    },
+    setRunning (running) {
+      game.running = running
+    },
+    setSize (size) {
+      console.log('setSize', size)
+      game.size = size
+    },
     setViewport (viewport) {
       game.viewport = viewport
     }
   },
-  template: '<app :game="game" @viewport="setViewport" />'
+  template: `<app
+    :game="game"
+    @rules="setRules"
+    @running="setRunning"
+    @size="setSize"
+    @viewport="setViewport"
+  />`
 })
 
 export default vm
