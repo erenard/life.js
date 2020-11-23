@@ -54,7 +54,9 @@ module.exports = {
     },
     plugins: [
       new VueLoaderPlugin(),
-      new MiniCssExtractPlugin()
+      new MiniCssExtractPlugin({
+        filename: '[name].[contenthash].css'
+      })
     ],
     module: {
       rules: [

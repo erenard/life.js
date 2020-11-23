@@ -9,7 +9,7 @@ const port = 9000
 const config = {
   entry: { main: './app' },
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].[contenthash].js',
     path: path.join(__dirname, 'dist'),
     publicPath: '/'
   },
