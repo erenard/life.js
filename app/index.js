@@ -6,7 +6,9 @@ const vm = new Vue({
   components: {
     app: AppVue
   },
-  template: '<app />'
+  render (h) {
+    return h('app')
+  }
 })
 
 export default vm
