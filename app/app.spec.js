@@ -1,53 +1,49 @@
-import { describe, beforeEach, test, expect, afterEach } from '@jest/globals'
+import { describe, beforeEach, test, expect, afterEach, jest } from '@jest/globals'
 import { shallowMount } from '@vue/test-utils'
-import AppVue from './app.vue'
+import AppVue, { game } from './app.vue'
+
+// Do not touch the next line
+jest.mock('./game/game.js')
 
 describe('AppVue', () => {
-  const game = {
-    animation: {},
-    rules: 'b1s1',
-    running: true,
-    size: {}
-  }
-
   let wrapper
 
   async function createWrapper () {
     wrapper = shallowMount(AppVue, {
-      propsData: {
-        game
-      }
     })
     await wrapper.vm.$nextTick()
   }
 
   beforeEach(async () => {
+    game.mockReturnValues()
     await createWrapper()
   })
 
   afterEach(async () => {
+    jest.resetAllMocks()
     if (wrapper) wrapper.destroy()
   })
 
   describe('when mounted', () => {
-    test('should emit the viewport element', () => {
-      expect(wrapper.emitted('viewport')[0][0]).toEqual(wrapper.vm.$refs.viewport)
+    test('should emit the viewport element', async () => {
+      expect(game.setViewportMock).toHaveBeenCalledTimes(1)
     })
   })
 
   describe.each([
-    ['animationcontrol', 'start', 'running', true],
-    ['animationcontrol', 'stop', 'running', false],
-    ['ruleseditor', 'change', 'rules', 'my_rules'],
-    ['boardeditor', 'change', 'size', { size: 'my_size' }]
-  ])('when %s %s', (componentName, title, eventName, payload) => {
+    ['animationcontrol', 'running', game.setRunningMock, true],
+    ['animationcontrol', 'running', game.setRunningMock, false],
+    ['ruleseditor', 'rules', game.setRulesMock, 'my_rules'],
+    ['boardeditor', 'size', game.setSizeMock, { size: 'my_size' }]
+  ])('when %s change %s', (componentName, title, mock, payload) => {
     beforeEach(async () => {
       wrapper.find(`${componentName}-stub`).vm.$emit('input', payload)
       await wrapper.vm.$nextTick()
     })
 
-    test(`should emit('${eventName}', ${payload})`, async () => {
-      expect(wrapper.emitted(eventName)[0]).toEqual([payload])
+    test(`should set ${title} to ${payload}`, async () => {
+      expect(mock).toHaveBeenCalledTimes(1)
+      expect(mock).toHaveBeenCalledWith(payload)
     })
   })
 })

@@ -8,16 +8,12 @@
         <h1>Controls</h1>
         <AnimationControl
           v-model="running"
-          :animation="game.animation"
+          :animation="animation"
         />
-        <button
-          @click="showRulesEditor = true"
-        >
+        <button @click="showRulesEditor = true">
           Rules
         </button>
-        <button
-          @click="showBoardEditor = true"
-        >
+        <button @click="showBoardEditor = true">
           Board
         </button>
       </UserInterface>
@@ -40,6 +36,14 @@ import UserInterface from './components/user-interface.vue'
 import BoardEditor from './components/board-editor.vue'
 import RulesEditor from './components/rules-editor.vue'
 import Modal from './components/modal.vue'
+import Game from './game/game'
+
+export const game = new Game({
+  gridWidth: 400,
+  gridHeight: 400,
+  radius: 2,
+  seedRatio: 0.3
+})
 
 export default {
   name: 'App',
@@ -51,44 +55,41 @@ export default {
     UserInterface,
     Modal
   },
-  props: {
-    game: {
-      type: Object,
-      required: true
-    }
-  },
   data: () => ({
     showBoardEditor: false,
     showRulesEditor: false
   }),
   computed: {
+    animation () {
+      return game.animation
+    },
     rules: {
       get () {
-        return this.game.rules
+        return game.rules
       },
       set (rules) {
-        this.$emit('rules', rules)
+        game.rules = rules
       }
     },
     running: {
       get () {
-        return this.game.running
+        return game.running
       },
       set (running) {
-        this.$emit('running', running)
+        game.running = running
       }
     },
     size: {
       get () {
-        return this.game.size
+        return game.size
       },
       set (size) {
-        this.$emit('size', size)
+        game.size = size
       }
     }
   },
   mounted () {
-    this.$emit('viewport', this.$refs.viewport)
+    game.viewport = this.$refs.viewport
   }
 }
 </script>
