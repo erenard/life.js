@@ -1,4 +1,3 @@
-import 'normalize.css'
 import Vue from 'vue'
 import AppVue from './app.vue'
 import Game from './game/game'

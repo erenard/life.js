@@ -94,6 +94,8 @@ export default {
 </script>
 
 <style>
+@import 'normalize.css';
+
 @font-face {
     font-family: subway-ticker;
     src: url(assets/subway-ticker.ttf);
