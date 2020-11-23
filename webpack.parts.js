@@ -1,8 +1,9 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
-  analyzeBundles: port => ({
+  analyzeBundles: ({ port }) => ({
     plugins: [new BundleAnalyzerPlugin({
       analyzerPort: port
     })]
@@ -18,16 +19,18 @@ module.exports = {
       ]
     }
   }),
-  devServer: port => ({
+  devServer: ({ port }) => ({
     devtool: 'eval-cheap-module-source-map',
     devServer: {
       compress: false,
       port,
-      contentBase: './dist'
+      contentBase: './dist',
+      quiet: true
     }
   }),
   resolveModules: () => ({
     resolve: {
+      extensions: ['.js'],
       modules: [
         'app',
         'node_modules'
@@ -42,18 +45,29 @@ module.exports = {
       ]
     }
   }),
-  vuejs: () => ({
+  vuejs: ({ isDev }) => ({
     resolve: {
+      extensions: ['.vue'],
       alias: {
-        vue: 'vue/dist/vue.esm.js'
+        vue: isDev ? 'vue/dist/vue.runtime.js' : 'vue/dist/vue.runtime.min.js'
       }
     },
     plugins: [
-      new VueLoaderPlugin()
+      new VueLoaderPlugin(),
+      new MiniCssExtractPlugin({
+        filename: '[name].[contenthash].css'
+      })
     ],
     module: {
       rules: [
-        { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+
+        {
+          test: /\.css$/,
+          use: [
+            isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+            { loader: 'css-loader', options: { sourceMap: isDev } }
+          ]
+        },
         { test: /\.vue$/, use: 'vue-loader' }
       ]
     }
