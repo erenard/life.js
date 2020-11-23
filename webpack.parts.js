@@ -25,7 +25,7 @@ module.exports = {
       compress: false,
       port,
       contentBase: './dist',
-      hot: true
+      quiet: true
     }
   }),
   resolveModules: () => ({
