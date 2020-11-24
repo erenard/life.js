@@ -390,12 +390,12 @@ template {
 
 @font-face {
     font-family: subway-ticker;
-    src: url(/life.jsedc9360680ecd0794b88a6854faaa35d.ttf);
+    src: url(/life.js/edc9360680ecd0794b88a6854faaa35d.ttf);
 }
 @font-face {
     font-family: pixel-8bit;
     /* Font author: http://www.04.jp.org/ */
-    src: url(/life.jsed67d9fa50d78d4e95986d3d090c436d.ttf);
+    src: url(/life.js/ed67d9fa50d78d4e95986d3d090c436d.ttf);
 }
 html, body {
   height: 100%;
