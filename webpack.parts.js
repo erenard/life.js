@@ -26,7 +26,7 @@ module.exports = {
     output: {
       filename: '[name].[contenthash].js',
       path: path.join(__dirname, 'dist'),
-      publicPath: isDev ? '/' : '/life.js'
+      publicPath: isDev ? '/' : '/life.js/'
     },
     plugins: [
       new FriendlyErrorsWebpackPlugin(),
