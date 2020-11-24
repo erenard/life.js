@@ -1,6 +1,7 @@
 import * as twgl from 'twgl.js'
 import vertex from './cell-vertex.glsl'
 import fragment from './cell-fragment.glsl'
+import { getAlpha } from '../game/binary-cell.js'
 
 function createPoints (width, height, cellSize) {
   const columnCount = width / cellSize
@@ -79,7 +80,7 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
   function copyPointAlphas () {
     const pointAlphas = pointsObject.aVertexAlpha.data
     for (var i = 0, len = pointAlphas.length; i < len; i++) {
-      pointAlphas[i] = grid.cells[i].sprite.alpha
+      pointAlphas[i] = getAlpha(grid.cells[i])
     }
   }
 

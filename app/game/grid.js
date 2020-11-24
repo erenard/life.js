@@ -1,4 +1,9 @@
-import Cell from './cell'
+import {
+  getState,
+  setState,
+  updateCell,
+  setCount
+} from './binary-cell.js'
 
 /**
  * Implements the game algorithm.
@@ -15,34 +20,31 @@ export default class {
     this.sizeX = sizeX
     this.sizeY = sizeY
     this.length = sizeX * sizeY
+    this.rules = rules
     /* game board initialisation */
-    this.cells = new Array(this.length)
-    let i = this.length
-    while (i--) {
-      this.cells[i] = new Cell(rules)
-    }
+    this.cells = new Uint8Array(this.length)
   }
 
   countNeighboursSafe (i) {
-    return this.getCellAt(i - this.sizeX - 1).state +
-    this.getCellAt(i - this.sizeX).state +
-    this.getCellAt(i - this.sizeX + 1).state +
-    this.getCellAt(i - 1).state +
-    this.getCellAt(i + 1).state +
-    this.getCellAt(i + this.sizeX - 1).state +
-    this.getCellAt(i + this.sizeX).state +
-    this.getCellAt(i + this.sizeX + 1).state
+    return getState(this.getCellAt(i - this.sizeX - 1)) +
+    getState(this.getCellAt(i - this.sizeX)) +
+    getState(this.getCellAt(i - this.sizeX + 1)) +
+    getState(this.getCellAt(i - 1)) +
+    getState(this.getCellAt(i + 1)) +
+    getState(this.getCellAt(i + this.sizeX - 1)) +
+    getState(this.getCellAt(i + this.sizeX)) +
+    getState(this.getCellAt(i + this.sizeX + 1))
   }
 
   countNeighboursUnsafe (i) {
-    return this.cells[i - this.sizeX - 1].state +
-    this.cells[i - this.sizeX].state +
-    this.cells[i - this.sizeX + 1].state +
-    this.cells[i - 1].state +
-    this.cells[i + 1].state +
-    this.cells[i + this.sizeX - 1].state +
-    this.cells[i + this.sizeX].state +
-    this.cells[i + this.sizeX + 1].state
+    return getState(this.cells[i - this.sizeX - 1]) +
+    getState(this.cells[i - this.sizeX]) +
+    getState(this.cells[i - this.sizeX + 1]) +
+    getState(this.cells[i - 1]) +
+    getState(this.cells[i + 1]) +
+    getState(this.cells[i + this.sizeX - 1]) +
+    getState(this.cells[i + this.sizeX]) +
+    getState(this.cells[i + this.sizeX + 1])
   }
 
   /**
@@ -52,20 +54,20 @@ export default class {
   update () {
     /* Phase 1, plant new cells and mark cells for death where appropriate */
     for (let i = 0; i < this.sizeX + 1; i++) {
-      this.cells[i].count = this.countNeighboursSafe(this.length + i)
+      this.cells[i] = setCount(this.cells[i], this.countNeighboursSafe(this.length + i))
     }
 
     for (let i = this.sizeX + 1; i < this.length - (this.sizeX + 1); i++) {
-      this.cells[i].count = this.countNeighboursUnsafe(i)
+      this.cells[i] = setCount(this.cells[i], this.countNeighboursUnsafe(i))
     }
 
     for (let i = this.length - (this.sizeX + 1); i < this.length; i++) {
-      this.cells[i].count = this.countNeighboursSafe(i)
+      this.cells[i] = setCount(this.cells[i], this.countNeighboursSafe(i))
     }
     /* Phase 2, flip the cell' states */
     let i = this.length
     while (i--) {
-      this.cells[i].update()
+      this.cells[i] = updateCell(this.cells[i], this.rules)
     }
   }
 
@@ -76,12 +78,8 @@ export default class {
    */
   random (ratio) {
     let i = this.length
-    let cell
     while (i--) {
-      if (Math.random() + ratio >= 1) {
-        cell = this.cells[i]
-        cell.isLiving = true
-      }
+      this.cells[i] = setState(this.cells[i], Math.random() + ratio >= 1)
     }
   }
 
@@ -90,10 +88,8 @@ export default class {
    */
   clear () {
     let i = this.length
-    var cell
     while (i--) {
-      cell = this.cells[i]
-      cell.isLiving = false
+      this.cells[i] = setState(this.cells[i], 0)
     }
   }
 
