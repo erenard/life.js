@@ -1,29 +1,15 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { merge } = require('webpack-merge')
 const parts = require('./webpack.parts')
-const path = require('path')
 
 const port = 9000
 
 const config = {
-  entry: { main: './app' },
-  output: {
-    filename: '[name].[contenthash].js',
-    path: path.join(__dirname, 'dist'),
-    publicPath: '/'
-  },
-  plugins: [
-    new FriendlyErrorsWebpackPlugin(),
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({ template: './app/index.html' })
-  ]
+  entry: { main: './app' }
 }
 
 module.exports = function (env, args) {
   const isDev = args.mode !== 'production'
-  const mandatoryParts = [parts.resolveModules(), parts.babel(), parts.vuejs({ isDev })]
+  const mandatoryParts = [parts.baseConfig({ isDev }), parts.vuejs({ isDev })]
   const optionalParts = []
 
   if (env && env['bundle-analyzer']) {
