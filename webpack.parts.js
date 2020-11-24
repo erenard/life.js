@@ -31,7 +31,7 @@ module.exports = {
     plugins: [
       new FriendlyErrorsWebpackPlugin(),
       new CleanWebpackPlugin(),
-      new HtmlWebpackPlugin({ template: './app/index.html' })
+      new HtmlWebpackPlugin({ favicon: './app/assets/favicon.ico', template: './app/index.html' })
     ],
     resolve: {
       extensions: ['.js'],
@@ -50,7 +50,11 @@ module.exports = {
         // { test: /\.png$/, use: 'url-loader?limit=100000' },
         // { test: /\.jpg$/, use: 'file-loader' },
         { test: /\.ttf$/, use: 'file-loader' },
-        { test: /\.glsl$/, use: 'raw-loader' }
+        { test: /\.glsl$/, use: 'raw-loader' },
+        {
+          test: /favicon\.ico$/,
+          use: 'file-loader?name=[name].[ext]'
+        }
       ]
     }
   }),
