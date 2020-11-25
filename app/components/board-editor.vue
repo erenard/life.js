@@ -11,9 +11,10 @@
       </td>
       <td>
         <input
-          :value="value.gridWidth"
+          :value="board.gridWidth"
           type="text"
           style="width: 4em;"
+          class="grid-width"
           @input="setWidth"
         >
       </td>
@@ -24,9 +25,10 @@
       </td>
       <td>
         <input
-          :value="value.gridHeight"
+          :value="board.gridHeight"
           type="text"
           style="width: 4em;"
+          class="grid-height"
           @input="setHeight"
         >
       </td>
@@ -37,7 +39,8 @@
       </td>
       <td>
         <select
-          :value="value.radius"
+          :value="board.cellRadius"
+          class="cell-radius"
           @input="setRadius"
         >
           <option value="1">
@@ -67,73 +70,71 @@
           :value="seedPercent"
           type="text"
           style="width: 2em;"
+          class="seed-percent"
           @input="setSeedPercent"
         >
       </td>
     </tr>
     <tr>
       <td>
-        <button @click="fitScreen()">
+        <button
+          class="fit-screen"
+          @click="fitScreen()"
+        >
           Fit screen
         </button>
       </td>
-      <td>
+      <td class="pixel-sizes">
         {{ width }} x {{ height }} px
       </td>
     </tr>
   </table>
 </template>
 <script>
+import Board from '../game/board.js'
+
 export default {
   name: 'BoardEditor',
   props: {
-    value: {
+    board: {
       type: Object,
       required: true
     }
   },
   computed: {
     height () {
-      return this.value.gridHeight * this.value.radius
+      return this.board.gridHeight * this.board.cellRadius
     },
     width () {
-      return this.value.gridWidth * this.value.radius
+      return this.board.gridWidth * this.board.cellRadius
     },
     seedPercent () {
-      return this.value.seedRatio * 100
+      return this.board.seedRatio * 100
     }
   },
   methods: {
     fitScreen () {
-      const gridWidth = Math.floor(window.innerWidth / this.value.radius)
-      const gridHeight = Math.floor(window.innerHeight / this.value.radius)
-      this.$emit('input', { gridHeight, gridWidth })
+      const gridWidth = Math.floor(window.innerWidth / this.board.cellRadius)
+      const gridHeight = Math.floor(window.innerHeight / this.board.cellRadius)
+      this.$emit('input', new Board({ ...this.board, gridHeight, gridWidth }))
     },
     setSeedPercent (event) {
-      this.$emit('input', {
-        seedRatio: event.target.value / 100
-      })
+      const value = event.target.value * 1
+      this.$emit('input', new Board({ ...this.board, seedRatio: value / 100 }))
     },
     setRadius (event) {
       const value = event.target.value * 1
-      this.$emit('input', {
-        radius: value
-      })
+      this.$emit('input', new Board({ ...this.board, cellRadius: value }))
     },
     setHeight (event) {
       const value = event.target.value * 1
-      this.$emit('input', {
-        gridHeight: value >= 10 ? value : 10
-      })
+      this.$emit('input', new Board({ ...this.board, gridHeight: Math.max(value, 10) }))
     },
     setWidth (event) {
       const value = event.target.value * 1
-      this.$emit('input', {
-        gridWidth: value >= 10 ? value : 10
-      })
+      this.$emit('input', new Board({ ...this.board, gridWidth: Math.max(value, 10) }
+      ))
     }
   }
 }
 </script>
-<style scoped>
-</style>

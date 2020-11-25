@@ -34,7 +34,7 @@ describe('RulesEditor', () => {
     expect(wrapper.findComponent({ ref: 's8' }).element.checked).toEqual(false)
   })
 
-  describe('when the value is updated', () => {
+  describe('when the value is updated to a custom preset', () => {
     beforeEach(() => {
       wrapper.setProps({
         value: 'b78s45'
@@ -65,7 +65,21 @@ describe('RulesEditor', () => {
     test('should set the custom preset to the value', () => {
       expect(wrapper.findComponent({ ref: 'customPreset' }).element.value).toEqual('b78s45')
     })
+
+    describe('when the value is updated to a known preset', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          value: 'b3s23'
+        })
+        return wrapper.vm.$nextTick()
+      })
+
+      test('should set the custom preset to ""', () => {
+        expect(wrapper.findComponent({ ref: 'customPreset' }).element.value).toEqual('')
+      })
+    })
   })
+
   describe('when a preset is selected', () => {
     beforeEach(() => {
       wrapper.findComponent({ ref: 'preset' }).setValue('b36s23')
@@ -84,6 +98,15 @@ describe('RulesEditor', () => {
     })
     test('should emit the rules', () => {
       expect(wrapper.emitted('input')[0]).toEqual(['b03s23'])
+    })
+    describe('when a preset is decustomized', () => {
+      beforeEach(() => {
+        wrapper.findComponent({ ref: 'b0' }).setChecked(false)
+        return wrapper.vm.$nextTick()
+      })
+      test('should emit the rules', () => {
+        expect(wrapper.emitted('input')[1]).toEqual(['b3s23'])
+      })
     })
   })
 })

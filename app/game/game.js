@@ -2,25 +2,20 @@ import Animation from '../render/animation'
 import Grid from './grid'
 import Renderer from '../render/cell-renderer'
 import Rules from './rules'
+import Board from './board'
 
 /**
  * Public interface for the game.
  *
- * @param {object} root0 - Game options.
- * @param {number} root0.gridWidth - Grid width.
- * @param {number} root0.gridHeight - Grid height.
- * @param {number} root0.radius - Cell size in pixel.
- * @param {number} root0.seedRatio - Filling ratio of the initial grid.
+ * @param {Board} board - Game board.
+ * @param {Rules} rules - Game rules.
  * @class Game (name)
  * @returns {object}  The public methods for the game.
  */
-function Game ({ gridWidth = 100, gridHeight = 100, radius = 2, seedRatio = 0.3 } = {}) {
-  let _gridWidth = gridWidth
-  let _gridHeight = gridHeight
-  let _radius = radius
-  let _seedRatio = seedRatio
-  const _rules = new Rules()
+function Game (board = new Board(), rules = new Rules()) {
   const _animation = new Animation()
+  const _board = board
+  const _rules = rules
   let _viewport
   let _width
   let _height
@@ -28,16 +23,16 @@ function Game ({ gridWidth = 100, gridHeight = 100, radius = 2, seedRatio = 0.3 
   let _renderer
 
   function createGrid () {
-    _width = _gridWidth ? _gridWidth * _radius : window.innerWidth
-    _height = _gridHeight ? _gridHeight * _radius : window.innerHeight
-    _grid = new Grid(Math.floor(_width / _radius), Math.floor(_height / _radius), _rules)
-    _grid.random(_seedRatio)
+    _width = _board.gridWidth * _board.cellRadius
+    _height = _board.gridHeight * _board.cellRadius
+    _grid = new Grid(Math.floor(_width / _board.cellRadius), Math.floor(_height / _board.cellRadius), rules)
+    _grid.random(_board.seedRatio)
   }
 
   createGrid()
 
   function createRenderer () {
-    _renderer = new Renderer(_width, _height, _viewport, _grid, _radius)
+    _renderer = new Renderer(_width, _height, _viewport, _grid, _board.cellRadius)
     _animation.init(_grid, _renderer)
   }
 
@@ -49,17 +44,17 @@ function Game ({ gridWidth = 100, gridHeight = 100, radius = 2, seedRatio = 0.3 
     },
     get size () {
       return {
-        gridWidth: _gridWidth,
-        gridHeight: _gridHeight,
-        radius: _radius,
-        seedRatio: _seedRatio
+        gridWidth: _board.gridWidth,
+        gridHeight: _board.gridHeight,
+        radius: _board.radius,
+        seedRatio: _board.seedRatio
       }
     },
-    set size ({ gridWidth = _gridWidth, gridHeight = _gridHeight, radius = _radius, seedRatio = _seedRatio } = {}) {
-      _gridWidth = gridWidth
-      _gridHeight = gridHeight
-      _radius = radius
-      _seedRatio = seedRatio
+    set size (board) {
+      _board.gridWidth = board.gridWidth
+      _board.gridHeight = board.gridHeight
+      _board.cellRadius = board.cellRadius
+      _board.seedRatio = board.seedRatio
       if (_renderer) {
         _renderer.destroy()
         _renderer = undefined

@@ -10,8 +10,8 @@
       >
         <option
           v-for="preset in presets"
-          :key="preset.rules"
-          :value="preset.rules"
+          :key="preset.value"
+          :value="preset.value"
         >
           {{ preset.name }}
         </option>
@@ -68,20 +68,20 @@
 import Rules from '../game/rules'
 
 const PRESETS = [
-  { name: 'Conway', rules: 'b3s23' },
-  { name: 'Gliders', rules: 'b3s35' },
-  { name: 'HighLife', rules: 'b36s23' },
-  { name: 'Replicator', rules: 'b1357s1357' },
-  { name: 'Seeds', rules: 'b2s' },
-  { name: 'Self-replic.', rules: 'b25s2' },
-  { name: 'No death', rules: 'b3s012345678' },
-  { name: '34 Life', rules: 'b34s34' },
-  { name: 'Diamoeba', rules: 'b35678s5678' },
-  { name: '2x2', rules: 'b36s125' },
-  { name: 'Day&amp;Night', rules: 'b3678s34678' },
-  { name: 'Morley', rules: 'b368s245' },
-  { name: 'Islands', rules: 'b4567s5678' },
-  { name: 'Blobs', rules: 'b4567s4567' }
+  { name: 'Conway', value: 'b3s23' },
+  { name: 'Gliders', value: 'b3s35' },
+  { name: 'HighLife', value: 'b36s23' },
+  { name: 'Replicator', value: 'b1357s1357' },
+  { name: 'Seeds', value: 'b2s' },
+  { name: 'Self-replic.', value: 'b25s2' },
+  { name: 'No death', value: 'b3s012345678' },
+  { name: '34 Life', value: 'b34s34' },
+  { name: 'Diamoeba', value: 'b35678s5678' },
+  { name: '2x2', value: 'b36s125' },
+  { name: 'Day&amp;Night', value: 'b3678s34678' },
+  { name: 'Morley', value: 'b368s245' },
+  { name: 'Islands', value: 'b4567s5678' },
+  { name: 'Blobs', value: 'b4567s4567' }
 ]
 export default {
   name: 'RulesEditor',
@@ -98,17 +98,17 @@ export default {
   watch: {
     value: {
       immediate: true,
-      handler: function (rules) { this.readRules(rules) }
+      handler: function (preset) { this.readPreset(preset) }
     }
   },
   methods: {
-    readRules (rules) {
-      this.rules.preset = rules
+    readPreset (value) {
+      this.rules.preset = value
       if (this.$refs.customPreset) {
-        if (PRESETS.some(preset => preset.rules === rules)) {
+        if (PRESETS.some(preset => preset.value === value)) {
           this.$refs.customPreset.value = ''
         } else {
-          this.$refs.customPreset.value = rules
+          this.$refs.customPreset.value = value
         }
       }
     },

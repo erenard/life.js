@@ -7,8 +7,8 @@
     /> the game.<br>
     <button
       class="ui__step__button"
-      :disabled="value"
-      @click="animation.mainLoop()"
+      :disabled="running"
+      @click="handleClickStep"
     >
       Step
     </button>
@@ -19,26 +19,22 @@
 export default {
   name: 'Animator',
   props: {
-    animation: {
-      type: Object,
-      required: true
-    },
-    value: {
+    running: {
       type: Boolean,
       required: true
     }
   },
   computed: {
     pauseButtonLabel () {
-      return this.value ? 'Pause' : 'Resume'
+      return this.running ? 'Pause' : 'Resume'
     }
-  },
-  mounted () {
-    this.$emit('input', true)
   },
   methods: {
     handleClickPause () {
-      this.$emit('input', !this.value)
+      this.$emit('input', !this.running)
+    },
+    handleClickStep () {
+      this.$emit('step')
     }
   }
 }
