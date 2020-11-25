@@ -1,8 +1,12 @@
 import { jest } from '@jest/globals'
 
+import Board from '../board.js'
+
 export default function Game () {
   const obj = {
-    getAnimationMock: jest.fn(),
+    animation: {
+      mainLoop: jest.fn()
+    },
     setViewportMock: jest.fn(),
     getSizeMock: jest.fn(),
     setSizeMock: jest.fn(),
@@ -13,15 +17,10 @@ export default function Game () {
   }
 
   obj.mockReturnValues = function () {
-    obj.getAnimationMock.mockReturnValue({})
-    obj.getSizeMock.mockReturnValue({})
+    obj.getSizeMock.mockReturnValue(new Board())
     obj.getRunningMock.mockReturnValue(true)
     obj.getRulesMock.mockReturnValue('b0s0')
   }
-
-  Object.defineProperty(obj, 'animation', {
-    get: obj.getAnimationMock
-  })
 
   // eslint-disable-next-line accessor-pairs
   Object.defineProperty(obj, 'viewport', {

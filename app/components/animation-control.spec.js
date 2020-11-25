@@ -9,27 +9,17 @@ describe('AnimationControl', () => {
 
   let wrapper
 
-  async function createWrapper (value = false) {
+  async function createWrapper (running = false) {
     wrapper = shallowMount(AnimationControl, {
       propsData: {
         animation,
-        value
+        running
       }
     })
     await wrapper.vm.$nextTick()
   }
 
-  describe('when mounted', () => {
-    beforeEach(async () => {
-      await createWrapper()
-    })
-
-    test('should emit input(true)', () => {
-      expect(wrapper.emitted('input')[0]).toEqual([true])
-    })
-  })
-
-  describe('when the animation is started', () => {
+  describe('when the animation is running', () => {
     beforeEach(async () => {
       await createWrapper(true)
     })
@@ -40,7 +30,7 @@ describe('AnimationControl', () => {
 
     test('should emit "stop" when hitting the pause button', () => {
       wrapper.find('.ui__play-pause__button').trigger('click')
-      expect(wrapper.emitted('input')[1]).toEqual([false])
+      expect(wrapper.emitted('input')[0]).toEqual([false])
     })
   })
 
@@ -55,12 +45,12 @@ describe('AnimationControl', () => {
 
     test('should emit "start" when hitting the resume button', () => {
       wrapper.find('.ui__play-pause__button').trigger('click')
-      expect(wrapper.emitted('input')[1]).toEqual([true])
+      expect(wrapper.emitted('input')[0]).toEqual([true])
     })
 
     test('should emit "step" when hitting the button', () => {
       wrapper.find('.ui__step__button').trigger('click')
-      expect(animation.mainLoop).toBeCalledTimes(1)
+      expect(wrapper.emitted('step')[0]).toEqual([])
     })
   })
 })
