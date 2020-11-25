@@ -389,44 +389,47 @@ template {
 
 
 @font-face {
-    font-family: subway-ticker;
-    src: url(/life.js/edc9360680ecd0794b88a6854faaa35d.ttf);
+  font-family: subway-ticker;
+  src: url(/life.js/edc9360680ecd0794b88a6854faaa35d.ttf);
 }
 @font-face {
-    font-family: pixel-8bit;
-    /* Font author: http://www.04.jp.org/ */
-    src: url(/life.js/ed67d9fa50d78d4e95986d3d090c436d.ttf);
+  font-family: pixel-8bit;
+  /* Font author: http://www.04.jp.org/ */
+  src: url(/life.js/ed67d9fa50d78d4e95986d3d090c436d.ttf);
 }
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
 .box {
-    font-family: pixel-8bit;
-    font-size: 16px;
-    background-color: black;
-    color: rgb(0, 127, 0);
-    opacity: 0.75;
-    border: solid;
-    padding: 5px;
+  font-family: pixel-8bit;
+  font-size: 16px;
+  background-color: black;
+  color: rgb(0, 127, 0);
+  opacity: 0.75;
+  border: solid;
+  padding: 5px;
 }
 h1 {
-    font-family: subway-ticker;
-    font-weight: normal;
-    color: rgb(127, 255, 127);
-    font-size: 32px;
-    margin: 8px;
+  font-family: subway-ticker;
+  font-weight: normal;
+  color: rgb(127, 255, 127);
+  font-size: 32px;
+  margin: 8px;
 }
 .box a {
-    color: rgb(127, 255, 127);
+  color: rgb(127, 255, 127);
 }
-.box button, .box select, .box input {
-    font-family: pixel-8bit;
-    font-size: 16px;
-    background-color: black;
-    color: rgb(127, 255, 127);
+.box button,
+.box select,
+.box input {
+  font-family: pixel-8bit;
+  font-size: 16px;
+  background-color: black;
+  color: rgb(127, 255, 127);
 }
-input[type=checkbox] {
+input[type='checkbox'] {
   vertical-align: text-bottom;
 }
 
