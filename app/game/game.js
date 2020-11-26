@@ -46,7 +46,7 @@ function Game (board = new Board(), rules = new Rules()) {
       return {
         gridWidth: _board.gridWidth,
         gridHeight: _board.gridHeight,
-        radius: _board.radius,
+        cellRadius: _board.cellRadius,
         seedRatio: _board.seedRatio
       }
     },
