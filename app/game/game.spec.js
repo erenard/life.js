@@ -4,10 +4,10 @@ import Game from './game'
 import Grid from './grid'
 import Rules from './rules'
 import Animation from '../render/animation'
-import Renderer from '../render/cell-renderer'
+import Renderer from '../render/renderer'
 
 jest.mock('../render/animation')
-jest.mock('../render/cell-renderer')
+jest.mock('../render/renderer')
 jest.mock('./grid')
 
 describe('Game', () => {
