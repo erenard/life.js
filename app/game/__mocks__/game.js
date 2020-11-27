@@ -4,12 +4,10 @@ import Board from '../board.js'
 
 export default function Game () {
   const obj = {
-    animation: {
-      mainLoop: jest.fn()
-    },
+    step: jest.fn(),
     setViewportMock: jest.fn(),
-    getSizeMock: jest.fn(),
-    setSizeMock: jest.fn(),
+    getBoardMock: jest.fn(),
+    setBoardMock: jest.fn(),
     getRunningMock: jest.fn(),
     setRunningMock: jest.fn(),
     getRulesMock: jest.fn(),
@@ -17,7 +15,7 @@ export default function Game () {
   }
 
   obj.mockReturnValues = function () {
-    obj.getSizeMock.mockReturnValue(new Board())
+    obj.getBoardMock.mockReturnValue(new Board())
     obj.getRunningMock.mockReturnValue(true)
     obj.getRulesMock.mockReturnValue('b0s0')
   }
@@ -27,9 +25,9 @@ export default function Game () {
     set: obj.setViewportMock
   })
 
-  Object.defineProperty(obj, 'size', {
-    get: obj.getSizeMock,
-    set: obj.setSizeMock
+  Object.defineProperty(obj, 'board', {
+    get: obj.getBoardMock,
+    set: obj.setBoardMock
   })
 
   Object.defineProperty(obj, 'running', {

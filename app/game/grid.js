@@ -12,14 +12,13 @@ export default class {
   /**
    * Initialize the grid.
    *
-   * @param {number} sizeX - Game board's width.
-   * @param {number} sizeY - Game board's height.
+   * @param {Board} board - Game board's.
    * @param {Rules} rules - Birth and sruvival rules.
    */
-  constructor (sizeX, sizeY, rules) {
-    this.sizeX = sizeX
-    this.sizeY = sizeY
-    this.length = sizeX * sizeY
+  constructor (board, rules) {
+    this.sizeX = board.gridWidth
+    this.sizeY = board.gridHeight
+    this.length = this.sizeX * this.sizeY
     this.rules = rules
     /* game board initialisation */
     this.cells = new Uint8Array(this.length)
