@@ -55,15 +55,13 @@ function createScene (gl, width, height, cellSize) {
 /**
  * Initialize the renderer.
  *
- * @param {number} width - Width of the renderer viewport.
- * @param {number} height - Height of the renderer viewport.
  * @param {Element} viewport - DOM element to containing the viewport.
  * @param {Grid} grid - Simulation's model.
- * @param {number} cellSize - Cell sprite's size.
+ * @param {Board} board - The game's board.
  */
-export default function CellRenderer (width, height, viewport, grid, cellSize) {
-  width = Math.floor(width / cellSize) * cellSize
-  height = Math.floor(height / cellSize) * cellSize
+export default function CellRenderer (viewport, grid, board) {
+  const width = board.pixelWidth
+  const height = board.pixelHeight
 
   const canvas = document.createElement('canvas')
   canvas.height = height
@@ -75,11 +73,11 @@ export default function CellRenderer (width, height, viewport, grid, cellSize) {
   const {
     pointsObject,
     pointsBuffer
-  } = createScene(gl, width, height, cellSize)
+  } = createScene(gl, width, height, board.cellRadius)
 
   function copyPointAlphas () {
     const pointAlphas = pointsObject.aVertexAlpha.data
-    for (var i = 0, len = pointAlphas.length; i < len; i++) {
+    for (let i = 0, len = pointAlphas.length; i < len; i++) {
       pointAlphas[i] = getAlpha(grid.cells[i])
     }
   }

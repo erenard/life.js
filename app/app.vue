@@ -58,10 +58,10 @@ export default {
     Modal
   },
   data: () => ({
-    board: game.size,
+    board: game.board,
     showBoardEditor: false,
     preset: game.rules,
-    running: true,
+    running: false,
     showRulesEditor: false
   }),
   mounted () {
@@ -70,11 +70,11 @@ export default {
   },
   methods: {
     stepAnimate () {
-      game.animation.mainLoop()
+      game.step()
     },
-    updateBoard (size) {
-      game.size = size
-      this.board = size
+    updateBoard (board) {
+      game.board = board
+      this.board = board
     },
     updateRunning (running) {
       game.running = running

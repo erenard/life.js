@@ -5,4 +5,12 @@ export default class Board {
     this.seedRatio = seedRatio
     this.cellRadius = cellRadius
   }
+
+  get pixelWidth () {
+    return this.gridWidth * this.cellRadius
+  }
+
+  get pixelHeight () {
+    return this.gridHeight * this.cellRadius
+  }
 }

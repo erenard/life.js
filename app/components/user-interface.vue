@@ -5,12 +5,7 @@
 </template>
 
 <script>
-
 export default {
   name: 'UserInterface'
 }
 </script>
-
-<style>
-
-</style>

@@ -33,13 +33,13 @@ describe('AppVue', () => {
       expect(game.setRunningMock).toHaveBeenCalledWith(true)
     })
     test('should pass running to the animation-control', () => {
-      expect(wrapper.find('animationcontrol-stub').props('running')).toEqual(true)
+      expect(wrapper.find('animationcontrol-stub').props('running')).toEqual(wrapper.vm.running)
     })
     test('should pass board to the board-editor', () => {
-      expect(wrapper.find('boardeditor-stub').props('board')).toEqual(new Board())
+      expect(wrapper.find('boardeditor-stub').props('board')).toEqual(wrapper.vm.board)
     })
     test('should pass value to the rules-editor', () => {
-      expect(wrapper.find('ruleseditor-stub').props('value')).toEqual('b0s0')
+      expect(wrapper.find('ruleseditor-stub').props('value')).toEqual(wrapper.vm.preset)
     })
   })
 
@@ -47,7 +47,7 @@ describe('AppVue', () => {
     ['animationcontrol', 'running', game.setRunningMock, true],
     ['animationcontrol', 'running', game.setRunningMock, false],
     ['ruleseditor', 'rules', game.setRulesMock, 'my_rules'],
-    ['boardeditor', 'size', game.setSizeMock, new Board({ cellRadius: 5 })]
+    ['boardeditor', 'board', game.setBoardMock, new Board({ cellRadius: 5 })]
   ])('when %s change %s', (componentName, title, mock, payload) => {
     beforeEach(async () => {
       wrapper.find(`${componentName}-stub`).vm.$emit('input', payload)
@@ -65,8 +65,8 @@ describe('AppVue', () => {
       await wrapper.vm.$nextTick()
     })
 
-    test('should call game.animation.mainLoop', async () => {
-      expect(game.animation.mainLoop).toHaveBeenCalledTimes(1)
+    test('should call game.step', async () => {
+      expect(game.step).toHaveBeenCalledTimes(1)
     })
   })
 })
