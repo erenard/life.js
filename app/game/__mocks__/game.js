@@ -14,7 +14,7 @@ export default function Game () {
     setRulesMock: jest.fn()
   }
 
-  obj.mockReturnValues = function () {
+  obj.setupMocks = function () {
     obj.getBoardMock.mockReturnValue(new Board())
     obj.getRunningMock.mockReturnValue(true)
     obj.getRulesMock.mockReturnValue('b0s0')
@@ -22,22 +22,26 @@ export default function Game () {
 
   // eslint-disable-next-line accessor-pairs
   Object.defineProperty(obj, 'viewport', {
-    set: obj.setViewportMock
+    set: obj.setViewportMock,
+    enumerable: true
   })
 
   Object.defineProperty(obj, 'board', {
     get: obj.getBoardMock,
-    set: obj.setBoardMock
+    set: obj.setBoardMock,
+    enumerable: true
   })
 
   Object.defineProperty(obj, 'running', {
     get: obj.getRunningMock,
-    set: obj.setRunningMock
+    set: obj.setRunningMock,
+    enumerable: true
   })
 
   Object.defineProperty(obj, 'rules', {
     get: obj.getRulesMock,
-    set: obj.setRulesMock
+    set: obj.setRulesMock,
+    enumerable: true
   })
 
   return obj

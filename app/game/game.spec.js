@@ -8,11 +8,13 @@ import Renderer from '../render/renderer'
 
 jest.mock('../render/animation')
 jest.mock('../render/renderer')
-jest.mock('./grid')
+jest.mock('./grid-no-worker')
 
 describe('Game', () => {
-  let game
-  beforeEach(() => {
+  let game, GridImplementation
+  beforeEach(async () => {
+    await Grid.load('no-worker')
+    GridImplementation = Grid.get()
     game = new Game()
   })
   afterEach(() => {
@@ -32,7 +34,7 @@ describe('Game', () => {
     expect(game.running).toEqual(new Animation().running)
   })
   test('should create a grid', () => {
-    expect(Grid).toHaveBeenCalledTimes(1)
+    expect(GridImplementation).toHaveBeenCalledTimes(1)
   })
   test('should randomize fill the grid', () => {
     expect(game._grid.random).toHaveBeenCalledTimes(1)
@@ -69,7 +71,7 @@ describe('Game', () => {
         expect(game.board).toEqual(board)
       })
       test('create a grid', () => {
-        expect(Grid).toHaveBeenCalledTimes(2)
+        expect(GridImplementation).toHaveBeenCalledTimes(2)
       })
 
       test('create a renderer', () => {

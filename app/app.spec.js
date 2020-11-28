@@ -1,6 +1,6 @@
 import { describe, beforeEach, test, expect, afterEach, jest } from '@jest/globals'
 import { shallowMount } from '@vue/test-utils'
-import AppVue, { game } from './app.vue'
+import AppVue, { game, gameLoading } from './app.vue'
 import Board from './game/board.js'
 
 // Do not touch the next line
@@ -15,12 +15,13 @@ describe('AppVue', () => {
   }
 
   beforeEach(async () => {
-    game.mockReturnValues()
+    await gameLoading
     await createWrapper()
   })
 
   afterEach(async () => {
     jest.resetAllMocks()
+    if (game) game.setupMocks()
     if (wrapper) wrapper.destroy()
   })
 
@@ -44,18 +45,20 @@ describe('AppVue', () => {
   })
 
   describe.each([
-    ['animationcontrol', 'running', game.setRunningMock, true],
-    ['animationcontrol', 'running', game.setRunningMock, false],
-    ['ruleseditor', 'rules', game.setRulesMock, 'my_rules'],
-    ['boardeditor', 'board', game.setBoardMock, new Board({ cellRadius: 5 })]
-  ])('when %s change %s', (componentName, title, mock, payload) => {
+    ['animationcontrol', 'running', 'setRunningMock', false, true],
+    ['animationcontrol', 'running', 'setRunningMock', true, false],
+    ['ruleseditor', 'preset', 'setRulesMock', 'b3s23', 'my_rules'],
+    ['boardeditor', 'board', 'setBoardMock', new Board(), new Board({ cellRadius: 5 })]
+  ])('when %s change %s', (componentName, propName, mockName, initialValue, changedValue) => {
     beforeEach(async () => {
-      wrapper.find(`${componentName}-stub`).vm.$emit('input', payload)
+      wrapper.vm[propName] = initialValue
+      await wrapper.vm.$nextTick()
+      wrapper.find(`${componentName}-stub`).vm.$emit('input', changedValue)
       await wrapper.vm.$nextTick()
     })
 
-    test(`should set ${title} to ${payload}`, async () => {
-      expect(mock).toHaveBeenCalledWith(payload)
+    test(`should set ${propName} from ${initialValue} to ${changedValue}`, async () => {
+      expect(game[mockName]).toHaveBeenCalledWith(changedValue)
     })
   })
 
