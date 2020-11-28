@@ -32,7 +32,6 @@
       <div
         v-for="index of 9"
         :key="index"
-        class="rule"
       >
         <span class="ruleLabel">
           <input
@@ -49,7 +48,6 @@
       <div
         v-for="index of 9"
         :key="index"
-        class="rule"
       >
         <span class="ruleLabel">
           <input
@@ -126,8 +124,5 @@ export default {
 .rules-container {
   display: flex;
   flex-wrap: wrap;
-}
-.rule {
-
 }
 </style>
