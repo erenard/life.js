@@ -4,7 +4,7 @@
       <div ref="viewport" />
     </template>
     <template #ui>
-      <UserInterface>
+      <div class="box">
         <h1>Controls</h1>
         <AnimationControl
           :running="running"
@@ -17,7 +17,7 @@
         <button @click="showBoardEditor = true">
           Board
         </button>
-      </UserInterface>
+      </div>
     </template>
     <template #modals>
       <Modal v-model="showRulesEditor">
@@ -41,7 +41,6 @@
 <script>
 import AnimationControl from './components/animation-control.vue'
 import Layout from './components/layout.vue'
-import UserInterface from './components/user-interface.vue'
 import BoardEditor from './components/board-editor.vue'
 import RulesEditor from './components/rules-editor.vue'
 import Modal from './components/modal.vue'
@@ -61,7 +60,6 @@ export default {
     Layout,
     BoardEditor,
     RulesEditor,
-    UserInterface,
     Modal
   },
   data: () => ({
@@ -116,7 +114,7 @@ body {
   overflow: hidden;
 }
 .box {
-  font-family: pixel-8bit;
+  font-family: pixel-8bit, monospace;
   font-size: 16px;
   background-color: black;
   color: rgb(0, 127, 0);
@@ -126,7 +124,7 @@ body {
 }
 
 h1 {
-  font-family: subway-ticker;
+  font-family: subway-ticker, monospace;
   font-weight: normal;
   color: rgb(127, 255, 127);
   font-size: 32px;
@@ -139,7 +137,7 @@ h1 {
 .box button,
 .box select,
 .box input {
-  font-family: pixel-8bit;
+  font-family: pixel-8bit, monospace;
   font-size: 16px;
   background-color: black;
   color: rgb(127, 255, 127);

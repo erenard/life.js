@@ -1,4 +1,4 @@
-<template>
+<template functionnal>
   <div class="layout">
     <slot />
     <div class="ui-container">
@@ -20,9 +20,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.canvas-container {
-
 }
 .ui-container {
   top: 0;
