@@ -7,8 +7,6 @@
   align-items: center;
   justify-content: center;
 }
-.canvas-container[data-v-0aa660b7] {
-}
 .ui-container[data-v-0aa660b7] {
   top: 0;
   left: 0;
@@ -19,8 +17,6 @@
 .rules-container[data-v-54fdd450] {
   display: flex;
   flex-wrap: wrap;
-}
-.rule[data-v-54fdd450] {
 }
 
 
@@ -403,7 +399,7 @@ body {
   overflow: hidden;
 }
 .box {
-  font-family: pixel-8bit;
+  font-family: pixel-8bit, monospace;
   font-size: 16px;
   background-color: black;
   color: rgb(0, 127, 0);
@@ -412,7 +408,7 @@ body {
   padding: 5px;
 }
 h1 {
-  font-family: subway-ticker;
+  font-family: subway-ticker, monospace;
   font-weight: normal;
   color: rgb(127, 255, 127);
   font-size: 32px;
@@ -424,7 +420,7 @@ h1 {
 .box button,
 .box select,
 .box input {
-  font-family: pixel-8bit;
+  font-family: pixel-8bit, monospace;
   font-size: 16px;
   background-color: black;
   color: rgb(127, 255, 127);
