@@ -59,7 +59,7 @@ function createScene (gl, width, height, cellSize) {
  * @param {Grid} grid - Simulation's model.
  * @param {Board} board - The game's board.
  */
-export default function CellRenderer (viewport, grid, board) {
+export default function Renderer (viewport, grid, board) {
   const width = board.pixelWidth
   const height = board.pixelHeight
 

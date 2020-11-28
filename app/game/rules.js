@@ -25,8 +25,8 @@ export default class Rules {
     const survivalPart = survivalMatch ? survivalMatch[1] : ''
 
     for (let index = 0; index < 9; index++) {
-      const bValue = birthPart.indexOf(index) >= 0
-      const sValue = survivalPart.indexOf(index) >= 0
+      const bValue = birthPart.indexOf(`${index}`) >= 0
+      const sValue = survivalPart.indexOf(`${index}`) >= 0
       this.b[index] = bValue
       this.s[index] = sValue
     }

@@ -51,20 +51,21 @@ export default class {
    * update the game board.
    */
   update () {
+    let i
     /* Phase 1, plant new cells and mark cells for death where appropriate */
-    for (let i = 0; i < this.sizeX + 1; i++) {
+    for (i = 0; i < this.sizeX + 1; i++) {
       this.cells[i] = setCount(this.cells[i], this.countNeighboursSafe(this.length + i))
     }
 
-    for (let i = this.sizeX + 1; i < this.length - (this.sizeX + 1); i++) {
+    for (i = this.sizeX + 1; i < this.length - (this.sizeX + 1); i++) {
       this.cells[i] = setCount(this.cells[i], this.countNeighboursUnsafe(i))
     }
 
-    for (let i = this.length - (this.sizeX + 1); i < this.length; i++) {
+    for (i = this.length - (this.sizeX + 1); i < this.length; i++) {
       this.cells[i] = setCount(this.cells[i], this.countNeighboursSafe(i))
     }
     /* Phase 2, flip the cell' states */
-    let i = this.length
+    i = this.length
     while (i--) {
       this.cells[i] = updateCell(this.cells[i], this.rules)
     }
