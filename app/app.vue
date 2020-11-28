@@ -22,12 +22,14 @@
     <template #modals>
       <Modal v-model="showRulesEditor">
         <RulesEditor
+          v-if="preset"
           :value="preset"
           @input="updatePreset"
         />
       </Modal>
       <Modal v-model="showBoardEditor">
         <BoardEditor
+          v-if="board"
           :board="board"
           @input="updateBoard"
         />
@@ -44,8 +46,13 @@ import BoardEditor from './components/board-editor.vue'
 import RulesEditor from './components/rules-editor.vue'
 import Modal from './components/modal.vue'
 import Game from './game/game'
+import Grid from './game/grid'
 
-export const game = new Game()
+export const gameLoading = Grid.load('no-worker').then(() => {
+  return new Game()
+})
+
+export let game
 
 export default {
   name: 'App',
@@ -58,13 +65,16 @@ export default {
     Modal
   },
   data: () => ({
-    board: game.board,
+    board: undefined,
     showBoardEditor: false,
-    preset: game.rules,
+    preset: undefined,
     running: false,
     showRulesEditor: false
   }),
-  mounted () {
+  async mounted () {
+    game = await gameLoading
+    this.board = game.board
+    this.preset = game.rules
     game.viewport = this.$refs.viewport
     game.running = true
   },

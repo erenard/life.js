@@ -23,8 +23,9 @@ export default class Game {
     this.createGrid()
   }
 
-  createGrid () {
-    this._grid = new Grid(this._board, this._rules)
+  async createGrid () {
+    const GridImplementation = Grid.get()
+    this._grid = new GridImplementation(this._board, this._rules)
     this._grid.random(this._board.seedRatio)
   }
 
