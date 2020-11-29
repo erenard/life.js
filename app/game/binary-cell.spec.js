@@ -11,66 +11,57 @@ import {
 } from './binary-cell.js'
 import Rules from './rules'
 
-describe('getState', () => {
-  test('should return the state', () => {
-    expect(getState(0)).toEqual(0)
-    expect(getState(0xff)).toEqual(1)
+describe.each([
+  [0x00],
+  [0xff]
+])('form the cell: %i', (cell) => {
+  describe.each([
+    [0b0],
+    [0b1]
+  ])('(get/set)State', (value) => {
+    test(`should set and get the value ${value}`, () => {
+      const newCell = setState(cell, value)
+      expect(getState(newCell)).toEqual(value)
+    })
+    test('should keep the others values', () => {
+      const count = getCount(cell)
+      const age = getAge(cell)
+      const newCell = setState(cell, value)
+      expect(getCount(newCell)).toEqual(count)
+      expect(getAge(newCell)).toEqual(age)
+    })
   })
-})
 
-describe('setState(0)', () => {
-  test('should set the 7nth bit to 0', () => {
-    expect(setState(0, 0)).toEqual(0)
-    expect(setState(0xff, 0)).toEqual(0b01111111)
+  describe('(get/set)Count', () => {
+    for (let value = 0; value < 16; value++) {
+      test(`should set and get the ${value}`, () => {
+        const newCell = setCount(cell, value)
+        expect(getCount(newCell)).toEqual(value)
+      })
+      test('should keep the others values', () => {
+        const state = getState(cell)
+        const age = getAge(cell)
+        const newCell = setCount(cell, value)
+        expect(getState(newCell)).toEqual(state)
+        expect(getAge(newCell)).toEqual(age)
+      })
+    }
   })
-})
 
-describe('setState(1)', () => {
-  test('should set the 7nth bit to 1', () => {
-    expect(setState(0, 1)).toEqual(0b10000000)
-    expect(setState(0xff, 1)).toEqual(0xff)
-  })
-})
-
-describe('getCount', () => {
-  test('should return the Count', () => {
-    expect(getCount(0)).toEqual(0)
-    expect(getCount(0xff)).toEqual(0x0f)
-  })
-})
-
-describe('setCount(0)', () => {
-  test('should set the 8 first bits to 0', () => {
-    expect(setCount(0, 0)).toEqual(0)
-    expect(setCount(0xff, 0)).toEqual(0xf0)
-  })
-})
-
-describe('setCount(0xf)', () => {
-  test('should set the 8 first bits to 1', () => {
-    expect(setCount(0, 0xf)).toEqual(0x0f)
-    expect(setCount(0xff, 0xf)).toEqual(0xff)
-  })
-})
-
-describe('getAge', () => {
-  test('should return the Age', () => {
-    expect(getAge(0)).toEqual(0)
-    expect(getAge(0xff)).toEqual(0b111)
-  })
-})
-
-describe('setAge(0)', () => {
-  test('should set the 8 first bits to 0', () => {
-    expect(setAge(0, 0)).toEqual(0)
-    expect(setAge(0xff, 0)).toEqual(0b10001111)
-  })
-})
-
-describe('setAge(0xf)', () => {
-  test('should set the 8 first bits to 1', () => {
-    expect(setAge(0, 0xf)).toEqual(0b01110000)
-    expect(setAge(0xff, 0xf)).toEqual(0xff)
+  describe('(get/set)Age', () => {
+    for (let value = 0; value < 8; value++) {
+      test(`should set and get the ${value}`, () => {
+        const newCell = setAge(cell, value)
+        expect(getAge(newCell)).toEqual(value)
+      })
+      test('should keep the others values', () => {
+        const state = getState(cell)
+        const count = getCount(cell)
+        const newCell = setAge(cell, value)
+        expect(getState(newCell)).toEqual(state)
+        expect(getCount(newCell)).toEqual(count)
+      })
+    }
   })
 })
 
@@ -93,10 +84,13 @@ describe('updateCell', () => {
   })
 })
 
-describe('getAlpha', () => {
+describe.each([
+  [0x00, 0, 0],
+  [0x00, 7, 0.5],
+  [0xff, 0, 0.5],
+  [0xff, 7, 1]
+])('getAlpha %i %i %i', (cell, age, alpha) => {
   test('should return the Alpha', () => {
-    expect(getAlpha(0)).toEqual(0)
-    expect(getAlpha(0b10000000)).toEqual(0.5)
-    expect(getAlpha(0b11110000)).toEqual(1)
+    expect(getAlpha(setAge(cell, age))).toEqual(alpha)
   })
 })

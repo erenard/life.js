@@ -8,27 +8,27 @@
  */
 
 export function getState (cell) {
-  return (cell & 0b10000000) >> 7
+  return cell & 0b00000001
 }
 
 export function setState (cell, state) {
-  return (cell & 0b01111111) | ((state & 0b1) << 7)
+  return (cell & 0b11111110) | (state & 0b1)
 }
 
 export function getCount (cell) {
-  return cell & 0x0f
+  return (cell >> 1) & 0x0f
 }
 
 export function setCount (cell, count) {
-  return (cell & 0xf0) | (count & 0x0f)
+  return (cell & 0b11100001) | ((count & 0x0f) << 1)
 }
 
 export function getAge (cell) {
-  return (cell & 0b01110000) >> 4
+  return (cell & 0b11100000) >> 5
 }
 
 export function setAge (cell, age) {
-  return (cell & 0b10001111) | ((age & 0b111) << 4)
+  return (cell & 0b00011111) | ((age & 0b111) << 5)
 }
 
 export function updateCell (cell, rules) {
