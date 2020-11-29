@@ -44,9 +44,35 @@ describe('AppVue', () => {
     })
   })
 
+  describe('when animation control emits "running"', () => {
+    beforeEach(async () => {
+      wrapper.find('animationcontrol-stub').vm.$emit('running')
+      wrapper.find('animationcontrol-stub').vm.$emit('running')
+      await wrapper.vm.$nextTick()
+    })
+
+    test('should set switch the running state', async () => {
+      expect(game.setRunningMock).toHaveBeenCalledTimes(3)
+      expect(game.setRunningMock).toHaveBeenNthCalledWith(2, false)
+      expect(game.setRunningMock).toHaveBeenNthCalledWith(3, true)
+    })
+  })
+
+  describe('when animation control emits "benchmark"', () => {
+    beforeEach(async () => {
+      wrapper.find('animationcontrol-stub').vm.$emit('benchmark')
+      wrapper.find('animationcontrol-stub').vm.$emit('benchmark')
+      await wrapper.vm.$nextTick()
+    })
+
+    test('should set switch the benchmark mode', async () => {
+      expect(game.setBenchmarkMock).toHaveBeenCalledTimes(2)
+      expect(game.setBenchmarkMock).toHaveBeenNthCalledWith(1, true)
+      expect(game.setBenchmarkMock).toHaveBeenNthCalledWith(2, false)
+    })
+  })
+
   describe.each([
-    ['animationcontrol', 'running', 'setRunningMock', false, true],
-    ['animationcontrol', 'running', 'setRunningMock', true, false],
     ['ruleseditor', 'preset', 'setRulesMock', 'b3s23', 'my_rules'],
     ['boardeditor', 'board', 'setBoardMock', new Board(), new Board({ cellRadius: 5 })]
   ])('when %s change %s', (componentName, propName, mockName, initialValue, changedValue) => {

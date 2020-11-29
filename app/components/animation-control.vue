@@ -6,8 +6,15 @@
       v-text="pauseButtonLabel"
     /> the game.<br>
     <button
+      v-if="running"
+      class="ui__benchmark__button"
+      @click="handleClickBenchmark"
+    >
+      Benchmark
+    </button>
+    <button
+      v-else
       class="ui__step__button"
-      :disabled="running"
       @click="handleClickStep"
     >
       Step
@@ -31,10 +38,13 @@ export default {
   },
   methods: {
     handleClickPause () {
-      this.$emit('input', !this.running)
+      this.$emit('running')
     },
     handleClickStep () {
       this.$emit('step')
+    },
+    handleClickBenchmark () {
+      this.$emit('benchmark')
     }
   }
 }

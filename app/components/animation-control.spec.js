@@ -30,7 +30,20 @@ describe('AnimationControl', () => {
 
     test('should emit "stop" when hitting the pause button', () => {
       wrapper.find('.ui__play-pause__button').trigger('click')
-      expect(wrapper.emitted('input')[0]).toEqual([false])
+      expect(wrapper.emitted('running')).toEqual([[]])
+    })
+
+    test('should emit "benchmark" when hitting the benchmark button', () => {
+      wrapper.find('.ui__benchmark__button').trigger('click')
+      expect(wrapper.emitted('benchmark')).toEqual([[]])
+    })
+
+    test('should show the benchmark button', () => {
+      expect(wrapper.find('.ui__benchmark__button').exists()).toBe(true)
+    })
+
+    test('should hide the step button', () => {
+      expect(wrapper.find('.ui__step__button').exists()).toBe(false)
     })
   })
 
@@ -45,12 +58,20 @@ describe('AnimationControl', () => {
 
     test('should emit "start" when hitting the resume button', () => {
       wrapper.find('.ui__play-pause__button').trigger('click')
-      expect(wrapper.emitted('input')[0]).toEqual([true])
+      expect(wrapper.emitted('running')).toEqual([[]])
     })
 
     test('should emit "step" when hitting the button', () => {
       wrapper.find('.ui__step__button').trigger('click')
       expect(wrapper.emitted('step')[0]).toEqual([])
+    })
+
+    test('should hide the benchmark button', () => {
+      expect(wrapper.find('.ui__benchmark__button').exists()).toBe(false)
+    })
+
+    test('should show the step button', () => {
+      expect(wrapper.find('.ui__step__button').exists()).toBe(true)
     })
   })
 })
