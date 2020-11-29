@@ -2,7 +2,7 @@
  * 60fps timer, using the browser capability if available.
  * Source: http://paulirish.com/2011/requestanimationframe-for-smart-animating/.
  */
-var requestAnimationFrame = (function () {
+const requestAnimationFrame = (function () {
 // shim layer with setTimeout fallback
   if (window.requestAnimationFrame) {
     return window.requestAnimationFrame

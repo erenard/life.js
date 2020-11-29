@@ -8,7 +8,9 @@
         <h1>Controls</h1>
         <AnimationControl
           :running="running"
-          @input="updateRunning"
+          :benchmarking="benchmarking"
+          @running="switchRunning"
+          @benchmarking="switchBenchmarking"
           @step="stepAnimate"
         />
         <button @click="showRulesEditor = true">
@@ -63,10 +65,11 @@ export default {
     Modal
   },
   data: () => ({
+    benchmarking: false,
     board: undefined,
-    showBoardEditor: false,
     preset: undefined,
     running: false,
+    showBoardEditor: false,
     showRulesEditor: false
   }),
   async mounted () {
@@ -74,7 +77,7 @@ export default {
     this.board = game.board
     this.preset = game.rules
     game.viewport = this.$refs.viewport
-    game.running = true
+    this.switchRunning()
   },
   methods: {
     stepAnimate () {
@@ -84,9 +87,15 @@ export default {
       game.board = board
       this.board = board
     },
-    updateRunning (running) {
+    switchRunning () {
+      const running = !this.running
       game.running = running
       this.running = running
+    },
+    switchBenchmarking () {
+      const benchmarking = !this.benchmarking
+      game.benchmarking = benchmarking
+      this.benchmarking = benchmarking
     },
     updatePreset (preset) {
       game.rules = preset

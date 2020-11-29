@@ -10,6 +10,7 @@ export default class Animation {
     this.grid = null
     this.renderer = null
     this.running = false
+    this.benchmarking = false
   }
 
   init (grid, renderer) {
@@ -39,12 +40,25 @@ export default class Animation {
     }
   }
 
+  benchmark () {
+    if (this.running) {
+      let frames = 100
+      while (frames--) {
+        stats.begin()
+        this.grid.update()
+        stats.end()
+      }
+      requestAnimationFrame(this.benchmark.bind(this))
+    }
+  }
+
   /**
    * Initialize and start the animator.
    */
   start () {
     this.running = true
-    this.animate()
+    if (this.benchmarking) this.benchmark()
+    else this.animate()
   }
 
   /**

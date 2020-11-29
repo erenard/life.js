@@ -85,4 +85,9 @@ export default class Game {
       this._animation.stop()
     }
   }
+
+  // eslint-disable-next-line accessor-pairs
+  set benchmarking (value) {
+    this._animation.benchmarking = value
+  }
 }
