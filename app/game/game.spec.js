@@ -52,6 +52,18 @@ describe('Game', () => {
       expect(game._animation.init).toHaveBeenCalledTimes(1)
     })
   })
+
+  describe('set benchmark mode', () => {
+    test('should set to true animation benchmarking', () => {
+      game.benchmarking = true
+      expect(game._animation.benchmarking).toEqual(true)
+    })
+    test('should set to false animation benchmarking', () => {
+      game.benchmarking = false
+      expect(game._animation.benchmarking).toEqual(false)
+    })
+  })
+
   describe('board accessors', () => {
     describe('getter', () => {
       let board

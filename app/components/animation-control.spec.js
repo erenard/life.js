@@ -1,19 +1,16 @@
-import { describe, beforeEach, test, expect, jest } from '@jest/globals'
+import { describe, beforeEach, test, expect } from '@jest/globals'
 import { shallowMount } from '@vue/test-utils'
 import AnimationControl from './animation-control.vue'
 
 describe('AnimationControl', () => {
-  const animation = {
-    mainLoop: jest.fn()
-  }
-
   let wrapper
 
-  async function createWrapper (running = false) {
+  async function createWrapper (propsData) {
     wrapper = shallowMount(AnimationControl, {
       propsData: {
-        animation,
-        running
+        running: false,
+        benchmarking: false,
+        ...propsData
       }
     })
     await wrapper.vm.$nextTick()
@@ -21,7 +18,9 @@ describe('AnimationControl', () => {
 
   describe('when the animation is running', () => {
     beforeEach(async () => {
-      await createWrapper(true)
+      await createWrapper({
+        running: true
+      })
     })
 
     test('should display Pause', () => {
@@ -35,11 +34,7 @@ describe('AnimationControl', () => {
 
     test('should emit "benchmark" when hitting the benchmark button', () => {
       wrapper.find('.ui__benchmark__button').trigger('click')
-      expect(wrapper.emitted('benchmark')).toEqual([[]])
-    })
-
-    test('should show the benchmark button', () => {
-      expect(wrapper.find('.ui__benchmark__button').exists()).toBe(true)
+      expect(wrapper.emitted('benchmarking')).toEqual([[]])
     })
 
     test('should hide the step button', () => {
@@ -66,12 +61,31 @@ describe('AnimationControl', () => {
       expect(wrapper.emitted('step')[0]).toEqual([])
     })
 
-    test('should hide the benchmark button', () => {
-      expect(wrapper.find('.ui__benchmark__button').exists()).toBe(false)
-    })
-
     test('should show the step button', () => {
       expect(wrapper.find('.ui__step__button').exists()).toBe(true)
+    })
+  })
+
+  describe('the benchmark button', () => {
+    describe('when not benchmarking', () => {
+      beforeEach(async () => {
+        await createWrapper()
+      })
+
+      test('should display off', () => {
+        expect(wrapper.find('.ui__benchmark__button').text()).toEqual('benchmark: off')
+      })
+    })
+    describe('when benchmarking', () => {
+      beforeEach(async () => {
+        await createWrapper({
+          benchmarking: true
+        })
+      })
+
+      test('should display on', () => {
+        expect(wrapper.find('.ui__benchmark__button').text()).toEqual('benchmark: on')
+      })
     })
   })
 })

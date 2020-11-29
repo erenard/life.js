@@ -10,7 +10,7 @@ export default function Game () {
     setBoardMock: jest.fn(),
     getRunningMock: jest.fn(),
     setRunningMock: jest.fn(),
-    setBenchmarkMock: jest.fn(),
+    setBenchmarkingMock: jest.fn(),
     getRulesMock: jest.fn(),
     setRulesMock: jest.fn()
   }
@@ -40,8 +40,8 @@ export default function Game () {
   })
 
   // eslint-disable-next-line accessor-pairs
-  Object.defineProperty(obj, 'benchmark', {
-    set: obj.setBenchmarkMock,
+  Object.defineProperty(obj, 'benchmarking', {
+    set: obj.setBenchmarkingMock,
     enumerable: true
   })
 

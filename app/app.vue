@@ -8,8 +8,9 @@
         <h1>Controls</h1>
         <AnimationControl
           :running="running"
+          :benchmarking="benchmarking"
           @running="switchRunning"
-          @benchmark="switchBenchmark"
+          @benchmarking="switchBenchmarking"
           @step="stepAnimate"
         />
         <button @click="showRulesEditor = true">
@@ -64,7 +65,7 @@ export default {
     Modal
   },
   data: () => ({
-    benchmark: false,
+    benchmarking: false,
     board: undefined,
     preset: undefined,
     running: false,
@@ -91,10 +92,10 @@ export default {
       game.running = running
       this.running = running
     },
-    switchBenchmark () {
-      const benchmark = !this.benchmark
-      game.benchmark = benchmark
-      this.benchmark = benchmark
+    switchBenchmarking () {
+      const benchmarking = !this.benchmarking
+      game.benchmarking = benchmarking
+      this.benchmarking = benchmarking
     },
     updatePreset (preset) {
       game.rules = preset

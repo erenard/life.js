@@ -6,19 +6,17 @@
       v-text="pauseButtonLabel"
     /> the game.<br>
     <button
-      v-if="running"
-      class="ui__benchmark__button"
-      @click="handleClickBenchmark"
-    >
-      Benchmark
-    </button>
-    <button
-      v-else
+      v-if="!running"
       class="ui__step__button"
       @click="handleClickStep"
     >
       Step
     </button>
+    <button
+      class="ui__benchmark__button"
+      @click="handleClickBenchmark"
+      v-text="benchmarkButtonLabel"
+    />
   </div>
 </template>
 
@@ -29,11 +27,18 @@ export default {
     running: {
       type: Boolean,
       required: true
+    },
+    benchmarking: {
+      type: Boolean,
+      required: true
     }
   },
   computed: {
     pauseButtonLabel () {
       return this.running ? 'Pause' : 'Resume'
+    },
+    benchmarkButtonLabel () {
+      return `benchmark: ${this.benchmarking ? 'on' : 'off'}`
     }
   },
   methods: {
@@ -44,7 +49,7 @@ export default {
       this.$emit('step')
     },
     handleClickBenchmark () {
-      this.$emit('benchmark')
+      this.$emit('benchmarking')
     }
   }
 }
