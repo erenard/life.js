@@ -1,34 +1,33 @@
-/*
- The cell state is stored on 8 bits:
- SAAACCCC
- |  |   |
- |  |   \__4 bits: neighbourgs count, binary integer
- |  \__3 bits: age, binary integer
- \__ 1 bit: state flag, 1: alive, 0: dead
+/**
+ * The cell state is stored on 8 bits:
+ * CCCCAAAS
+ * CCCC: 4 bits: neighbourgs count
+ * AAA: 3 bits: age
+ * S: 1 bit: dead or alive state flag.
  */
 
 export function getState (cell) {
-  return (cell & 0b10000000) >> 7
+  return cell & 0b00000001
 }
 
 export function setState (cell, state) {
-  return (cell & 0b01111111) | ((state & 0b1) << 7)
+  return (cell & 0b11111110) | (state & 0b1)
 }
 
 export function getCount (cell) {
-  return cell & 0x0f
+  return (cell & 0xf0) >> 4
 }
 
 export function setCount (cell, count) {
-  return (cell & 0xf0) | (count & 0x0f)
+  return (cell & 0x0f) | ((count & 0x0f) << 4)
 }
 
 export function getAge (cell) {
-  return (cell & 0b01110000) >> 4
+  return (cell & 0b00001110) >> 1
 }
 
 export function setAge (cell, age) {
-  return (cell & 0b10001111) | ((age & 0b111) << 4)
+  return (cell & 0b11110001) | ((age & 0b111) << 1)
 }
 
 export function updateCell (cell, rules) {
