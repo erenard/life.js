@@ -1,7 +1,13 @@
 import * as twgl from 'twgl.js'
 import vertex from './cell-vertex.glsl'
 import fragment from './cell-fragment.glsl'
-import { getAlpha } from '../game/binary-cell.js'
+
+import BinaryCell from '../game/binary-cell.js'
+
+const binaryCell = BinaryCell()
+
+const getEvenAlpha = binaryCell.getEvenAlpha
+const getOddAlpha = binaryCell.getOddAlpha
 
 function createPoints (width, height, cellSize) {
   const columnCount = width / cellSize
@@ -75,7 +81,7 @@ export default function Renderer (viewport, grid, board) {
     pointsBuffer
   } = createScene(gl, width, height, board.cellRadius)
 
-  function copyPointAlphas () {
+  function copyPointAlphas (getAlpha) {
     const pointAlphas = pointsObject.aVertexAlpha.data
     for (let i = 0, len = pointAlphas.length; i < len; i++) {
       pointAlphas[i] = getAlpha(grid.cells[i])
@@ -85,13 +91,15 @@ export default function Renderer (viewport, grid, board) {
   return {
     /**
      * Draws the game board with each cells.
+     *
+     * @param {boolean} isEvenFrame - When true: write the even frame.
      */
-    render () {
+    render (isEvenFrame) {
       gl.clear(gl.COLOR_BUFFER_BIT)
       // twgl.resizeCanvasToDisplaySize(gl.canvas)
       // console.log(gl.canvas.width, gl.canvas.height)
       // gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
-      copyPointAlphas()
+      copyPointAlphas(isEvenFrame ? getEvenAlpha : getOddAlpha)
       // updates the particles alpha
       twgl.setAttribInfoBufferFromArray(gl, pointsBuffer.attribs.aVertexAlpha, pointsObject.aVertexAlpha.data)
       // drawing particles

@@ -1,9 +1,13 @@
-import {
-  getState,
-  setState,
-  updateCell,
-  setCount
-} from './binary-cell.js'
+import BinaryCell from './binary-cell.js'
+
+const binaryCell = BinaryCell()
+
+const getEvenState = binaryCell.getEvenState
+const getOddState = binaryCell.getOddState
+const setEvenState = binaryCell.setEvenState
+const setOddState = binaryCell.setOddState
+const updateEven = binaryCell.updateEven
+const updateOdd = binaryCell.updateOdd
 
 /**
  * Implements the game algorithm.
@@ -19,12 +23,13 @@ export default class {
     this.sizeX = board.gridWidth
     this.sizeY = board.gridHeight
     this.length = this.sizeX * this.sizeY
-    this.rules = rules
+    this.rules = rules.binary
     /* game board initialisation */
     this.cells = new Uint8Array(this.length)
   }
 
-  countNeighboursSafe (i) {
+  countNeighboursSafe (i, isEvenFrame) {
+    const getState = isEvenFrame ? getEvenState : getOddState
     return getState(this.getCellAt(i - this.sizeX - 1)) +
     getState(this.getCellAt(i - this.sizeX)) +
     getState(this.getCellAt(i - this.sizeX + 1)) +
@@ -35,7 +40,8 @@ export default class {
     getState(this.getCellAt(i + this.sizeX + 1))
   }
 
-  countNeighboursUnsafe (i) {
+  countNeighboursUnsafe (i, isEvenFrame) {
+    const getState = isEvenFrame ? getEvenState : getOddState
     return getState(this.cells[i - this.sizeX - 1]) +
     getState(this.cells[i - this.sizeX]) +
     getState(this.cells[i - this.sizeX + 1]) +
@@ -49,25 +55,22 @@ export default class {
   /**
    * Game of life algorithm,
    * update the game board.
+   *
+   * @param {boolean} isEvenFrame - When true: read the even frame, write the odd one.
    */
-  update () {
+  update (isEvenFrame) {
+    const updateCell = isEvenFrame ? updateOdd : updateEven
     let i
-    /* Phase 1, plant new cells and mark cells for death where appropriate */
     for (i = 0; i < this.sizeX + 1; i++) {
-      this.cells[i] = setCount(this.cells[i], this.countNeighboursSafe(this.length + i))
+      this.cells[i] = updateCell(this.cells[i], this.countNeighboursSafe(this.length + i, isEvenFrame), this.rules)
     }
 
     for (i = this.sizeX + 1; i < this.length - (this.sizeX + 1); i++) {
-      this.cells[i] = setCount(this.cells[i], this.countNeighboursUnsafe(i))
+      this.cells[i] = updateCell(this.cells[i], this.countNeighboursUnsafe(i, isEvenFrame), this.rules)
     }
 
     for (i = this.length - (this.sizeX + 1); i < this.length; i++) {
-      this.cells[i] = setCount(this.cells[i], this.countNeighboursSafe(i))
-    }
-    /* Phase 2, flip the cell' states */
-    i = this.length
-    while (i--) {
-      this.cells[i] = updateCell(this.cells[i], this.rules)
+      this.cells[i] = updateCell(this.cells[i], this.countNeighboursSafe(i, isEvenFrame), this.rules)
     }
   }
 
@@ -75,8 +78,10 @@ export default class {
    * Fill the game board with cells.
    *
    * @param {number} ratio - Filling ratio from 0.0 to 1.0.
+   * @param {boolean} isEvenFrame - When true: write the even frame.
    */
-  random (ratio) {
+  random (ratio, isEvenFrame) {
+    const setState = isEvenFrame ? setEvenState : setOddState
     let i = this.length
     while (i--) {
       this.cells[i] = setState(this.cells[i], Math.random() + ratio >= 1)
@@ -85,8 +90,11 @@ export default class {
 
   /**
    * Clear the game board.
+   *
+   * @param {boolean} isEvenFrame - When true: write the even frame.
    */
-  clear () {
+  clear (isEvenFrame) {
+    const setState = isEvenFrame ? setEvenState : setOddState
     let i = this.length
     while (i--) {
       this.cells[i] = setState(this.cells[i], 0)
@@ -125,5 +133,17 @@ export default class {
 
   xyToIndex (x, y) {
     return (this.sizeX * y + x) % this.length
+  }
+
+  log (fn, title) {
+    const lines = []
+    for (let y = 0; y < this.sizeY; y++) {
+      lines[y] = []
+      for (let x = 0; x < this.sizeX; x++) {
+        lines[y][x] = fn(this.cells[this.xyToIndex(x, y)])
+      }
+    }
+    console.log(title)
+    console.table(lines)
   }
 }

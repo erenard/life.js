@@ -11,25 +11,29 @@ export default class Animation {
     this.renderer = null
     this.running = false
     this.benchmarking = false
+    this.isEvenFrame = false
   }
 
   init (grid, renderer) {
     stats.init()
     this.grid = grid
     this.renderer = renderer
+    this.isEvenFrame = false
   }
 
+  /**
+   * Wrap the process of updating the game and drawing it.
+   */
   mainLoop () {
-    // This function will wrap the whole process of updating the game and drawing it
     if (this.grid && this.renderer) {
-      this.grid.update()
-      this.renderer.render()
+      this.grid.update(this.isEvenFrame)
+      this.isEvenFrame = !this.isEvenFrame
+      this.renderer.render(this.isEvenFrame)
     }
   }
 
   /**
-   * The loop itself, running if used to stop
-   * or continue the animation.
+   * RequestAnimationFrame callback for animation.
    */
   animate () {
     if (this.running) {
@@ -40,13 +44,17 @@ export default class Animation {
     }
   }
 
+  /**
+   * RequestAnimationFrame callback for benchmarking.
+   */
   benchmark () {
     if (this.running) {
       let frames = 100
       while (frames--) {
         stats.begin()
-        this.grid.update()
+        this.grid.update(this.isEvenFrame)
         stats.end()
+        this.isEvenFrame = !this.isEvenFrame
       }
       requestAnimationFrame(this.benchmark.bind(this))
     }

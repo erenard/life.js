@@ -1,11 +1,23 @@
 import { describe, beforeEach, test, expect } from '@jest/globals'
 
 import Grid from './grid'
+import BinaryCell from './binary-cell.js'
 import Rules from './rules'
-import {
-  getState,
-  setState
-} from './binary-cell.js'
+
+const binaryCell = BinaryCell()
+
+const getEvenState = binaryCell.getEvenState
+const getOddState = binaryCell.getOddState
+const setEvenState = binaryCell.setEvenState
+const setOddState = binaryCell.setOddState
+const getEvenAge = binaryCell.getEvenAge
+const getOddAge = binaryCell.getOddAge
+const setEvenAge = binaryCell.setEvenAge
+const setOddAge = binaryCell.setOddAge
+const updateEven = binaryCell.updateEven
+const updateOdd = binaryCell.updateOdd
+const getEvenAlpha = binaryCell.getEvenAlpha
+const getOddAlpha = binaryCell.getOddAlpha
 
 const gridSide = 4
 const gridLength = gridSide * gridSide
@@ -44,41 +56,40 @@ describe.each([
       const grid = new GridImplementation({ gridWidth: gridSide, gridHeight: gridSide }, new Rules())
       grid.random(1)
       for (let i = 0; i < gridLength; i++) {
-        expect(getState(grid.Cells[i])).toEqual(1)
+        expect(getOddState(grid.Cells[i])).toEqual(1)
       }
     })
     test('should leave the grid empty when ratio = 0', () => {
       const grid = new GridImplementation({ gridWidth: gridSide, gridHeight: gridSide }, new Rules())
       grid.random(0)
       for (let i = 0; i < gridLength; i++) {
-        expect(getState(grid.Cells[i])).toEqual(0)
+        expect(getOddState(grid.Cells[i])).toEqual(0)
       }
     })
   })
   describe('clear ()', () => {
     test('should clear the grid', () => {
       const grid = new GridImplementation({ gridWidth: gridSide, gridHeight: gridSide }, new Rules())
-      grid.Cells[0] = setState(grid.Cells[0], 0)
-      grid.Cells[1] = setState(grid.Cells[1], 1)
+      grid.Cells[0] = setOddState(grid.Cells[0], 0)
+      grid.Cells[1] = setOddState(grid.Cells[1], 1)
       grid.clear()
       for (let i = 0; i < gridLength; i++) {
-        expect(getState(grid.Cells[i])).toEqual(0)
+        expect(getOddState(grid.Cells[i])).toEqual(0)
       }
     })
   })
   describe('update ()', () => {
     test('should update the grid', () => {
-      const rules = new Rules()
-      const grid = new GridImplementation({ gridWidth: 5, gridHeight: 5 }, rules)
-      grid.Cells[grid.xyToIndex(2, 1)] = setState(grid.Cells[grid.xyToIndex(2, 1)], 1)
-      grid.Cells[grid.xyToIndex(2, 2)] = setState(grid.Cells[grid.xyToIndex(2, 2)], 1)
-      grid.Cells[grid.xyToIndex(2, 3)] = setState(grid.Cells[grid.xyToIndex(2, 3)], 1)
-      grid.update()
-      expect(getState(grid.Cells[grid.xyToIndex(2, 1)])).toEqual(0)
-      expect(getState(grid.Cells[grid.xyToIndex(2, 3)])).toEqual(0)
-      expect(getState(grid.Cells[grid.xyToIndex(2, 2)])).toEqual(1)
-      expect(getState(grid.Cells[grid.xyToIndex(1, 2)])).toEqual(1)
-      expect(getState(grid.Cells[grid.xyToIndex(3, 2)])).toEqual(1)
+      const grid = new GridImplementation({ gridWidth: 5, gridHeight: 5 }, new Rules())
+      grid.Cells[grid.xyToIndex(2, 1)] = setOddState(grid.Cells[grid.xyToIndex(2, 1)], 1)
+      grid.Cells[grid.xyToIndex(2, 2)] = setOddState(grid.Cells[grid.xyToIndex(2, 2)], 1)
+      grid.Cells[grid.xyToIndex(2, 3)] = setOddState(grid.Cells[grid.xyToIndex(2, 3)], 1)
+      grid.update(false)
+      expect(getEvenState(grid.Cells[grid.xyToIndex(2, 1)])).toEqual(0)
+      expect(getEvenState(grid.Cells[grid.xyToIndex(2, 3)])).toEqual(0)
+      expect(getEvenState(grid.Cells[grid.xyToIndex(2, 2)])).toEqual(1)
+      expect(getEvenState(grid.Cells[grid.xyToIndex(1, 2)])).toEqual(1)
+      expect(getEvenState(grid.Cells[grid.xyToIndex(3, 2)])).toEqual(1)
     })
   })
   describe('xyToIndex ()', () => {
@@ -106,22 +117,22 @@ describe.each([
     beforeEach(() => {
       // https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#/media/File:Game_of_life_infinite2.svg
       grid = new GridImplementation({ gridWidth: 20, gridHeight: 20 }, new Rules())
-      grid.Cells[grid.xyToIndex(1, 1)] = setState(grid.Cells[grid.xyToIndex(1, 1)], 1)
-      grid.Cells[grid.xyToIndex(2, 1)] = setState(grid.Cells[grid.xyToIndex(2, 1)], 1)
-      grid.Cells[grid.xyToIndex(3, 1)] = setState(grid.Cells[grid.xyToIndex(3, 1)], 1)
-      grid.Cells[grid.xyToIndex(5, 1)] = setState(grid.Cells[grid.xyToIndex(5, 1)], 1)
-      grid.Cells[grid.xyToIndex(1, 2)] = setState(grid.Cells[grid.xyToIndex(1, 2)], 1)
-      grid.Cells[grid.xyToIndex(4, 3)] = setState(grid.Cells[grid.xyToIndex(4, 3)], 1)
-      grid.Cells[grid.xyToIndex(5, 3)] = setState(grid.Cells[grid.xyToIndex(5, 3)], 1)
-      grid.Cells[grid.xyToIndex(2, 4)] = setState(grid.Cells[grid.xyToIndex(2, 4)], 1)
-      grid.Cells[grid.xyToIndex(3, 4)] = setState(grid.Cells[grid.xyToIndex(3, 4)], 1)
-      grid.Cells[grid.xyToIndex(5, 4)] = setState(grid.Cells[grid.xyToIndex(5, 4)], 1)
-      grid.Cells[grid.xyToIndex(1, 5)] = setState(grid.Cells[grid.xyToIndex(1, 5)], 1)
-      grid.Cells[grid.xyToIndex(3, 5)] = setState(grid.Cells[grid.xyToIndex(3, 5)], 1)
-      grid.Cells[grid.xyToIndex(5, 5)] = setState(grid.Cells[grid.xyToIndex(5, 5)], 1)
+      grid.Cells[grid.xyToIndex(1, 1)] = setOddState(grid.Cells[grid.xyToIndex(1, 1)], 1)
+      grid.Cells[grid.xyToIndex(2, 1)] = setOddState(grid.Cells[grid.xyToIndex(2, 1)], 1)
+      grid.Cells[grid.xyToIndex(3, 1)] = setOddState(grid.Cells[grid.xyToIndex(3, 1)], 1)
+      grid.Cells[grid.xyToIndex(5, 1)] = setOddState(grid.Cells[grid.xyToIndex(5, 1)], 1)
+      grid.Cells[grid.xyToIndex(1, 2)] = setOddState(grid.Cells[grid.xyToIndex(1, 2)], 1)
+      grid.Cells[grid.xyToIndex(4, 3)] = setOddState(grid.Cells[grid.xyToIndex(4, 3)], 1)
+      grid.Cells[grid.xyToIndex(5, 3)] = setOddState(grid.Cells[grid.xyToIndex(5, 3)], 1)
+      grid.Cells[grid.xyToIndex(2, 4)] = setOddState(grid.Cells[grid.xyToIndex(2, 4)], 1)
+      grid.Cells[grid.xyToIndex(3, 4)] = setOddState(grid.Cells[grid.xyToIndex(3, 4)], 1)
+      grid.Cells[grid.xyToIndex(5, 4)] = setOddState(grid.Cells[grid.xyToIndex(5, 4)], 1)
+      grid.Cells[grid.xyToIndex(1, 5)] = setOddState(grid.Cells[grid.xyToIndex(1, 5)], 1)
+      grid.Cells[grid.xyToIndex(3, 5)] = setOddState(grid.Cells[grid.xyToIndex(3, 5)], 1)
+      grid.Cells[grid.xyToIndex(5, 5)] = setOddState(grid.Cells[grid.xyToIndex(5, 5)], 1)
     })
     test('initial state', () => {
-      expect(Array.from(grid.Cells.map(cell => getState(cell)))).toEqual([
+      expect(Array.from(grid.Cells.map(cell => getOddState(cell)))).toEqual([
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -145,7 +156,12 @@ describe.each([
       ])
     })
     test('after 10 generations', () => {
-      for (let i = 0; i < 10; i++) grid.update()
+      let isEven = false
+      for (let i = 0; i < 10; i++) {
+        grid.update(isEven)
+        isEven = !isEven
+      }
+      const getState = isEven ? getEvenState : getOddState
       expect(Array.from(grid.Cells.map(cell => getState(cell)))).toEqual([
         1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
         1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -170,7 +186,12 @@ describe.each([
       ])
     })
     test('after 50 generations', () => {
-      for (let i = 0; i < 50; i++) grid.update()
+      let isEven = false
+      for (let i = 0; i < 50; i++) {
+        grid.update(isEven)
+        isEven = !isEven
+      }
+      const getState = isEven ? getEvenState : getOddState
       expect(Array.from(grid.Cells.map(cell => getState(cell)))).toEqual([
         0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
         1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

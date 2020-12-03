@@ -31,4 +31,15 @@ export default class Rules {
       this.s[index] = sValue
     }
   }
+
+  get binary () {
+    let result = 0
+    for (let i = 8; i >= 0; i--) {
+      result = result << 1 | (this.s[i] ? 1 : 0)
+    }
+    for (let i = 8; i >= 0; i--) {
+      result = result << 1 | (this.b[i] ? 1 : 0)
+    }
+    return result
+  }
 }

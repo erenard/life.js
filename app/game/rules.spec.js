@@ -9,4 +9,12 @@ describe('Rules', () => {
       s: [false, false, true, true, false, false, false, false, false]
     })
   })
+  test('get preset', () => {
+    const rules = new Rules()
+    expect(rules.preset).toEqual('b3s23')
+  })
+  test('get binary', () => {
+    const rules = new Rules()
+    expect(rules.binary).toEqual(6152)
+  })
 })
