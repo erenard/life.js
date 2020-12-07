@@ -49,7 +49,10 @@ import Modal from './components/modal.vue'
 import Game from './game/game'
 import Grid from './game/grid'
 
-export const gameLoading = Grid.load('no-worker').then(() => {
+const gridName = typeof SharedArrayBuffer !== 'undefined' ? 'one-worker' : 'no-worker'
+console.log(`Using ${gridName} grid implementation.`)
+
+export const gameLoading = Grid.load(gridName).then(() => {
   return new Game()
 })
 
