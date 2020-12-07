@@ -34,7 +34,7 @@ describe('Animation', () => {
   })
 
   describe('mainLoop ()', () => {
-    test('should call grid.update() before renderer.render()', () => {
+    test('should call grid.update() before renderer.render()', async () => {
       const calls = []
       grid.update.mockImplementation(() => {
         calls.push('grid.update')
@@ -43,19 +43,19 @@ describe('Animation', () => {
         calls.push('renderer.render')
       })
       //
-      animation.mainLoop()
+      await animation.mainLoop()
       //
       expect(calls).toEqual(['grid.update', 'renderer.render'])
     })
-    test('do nothing when grid is uninitialized', () => {
+    test('do nothing when grid is uninitialized', async () => {
       animation.grid = null
-      animation.mainLoop()
+      await animation.mainLoop()
       expect(grid.update).not.toHaveBeenCalled()
       expect(renderer.render).not.toHaveBeenCalled()
     })
-    test('do nothing when renderer is uninitialized', () => {
+    test('do nothing when renderer is uninitialized', async () => {
       animation.renderer = null
-      animation.mainLoop()
+      await animation.mainLoop()
       expect(grid.update).not.toHaveBeenCalled()
       expect(renderer.render).not.toHaveBeenCalled()
     })
@@ -67,13 +67,13 @@ describe('Animation', () => {
       animation.init(grid, renderer)
       animation.running = true
       animation.stop()
-      expect(!animation.running).toBeTruthy()
+      expect(animation.running).toBeFalsy()
     })
   })
 
   describe('start ()', () => {
-    test('should set running to true', () => {
-      animation.start()
+    test('should set running to true', async () => {
+      await animation.start()
       expect(animation.running).toBeTruthy()
     })
   })
@@ -83,9 +83,9 @@ describe('Animation', () => {
       animation.benchmarking = true
     })
     describe('start ()', () => {
-      test('should start the benchmark', () => {
+      test('should start the benchmark', async () => {
         animation.benchmark = jest.fn()
-        animation.start()
+        await animation.start()
         expect(animation.benchmark).toBeCalledTimes(1)
       })
     })
@@ -95,9 +95,9 @@ describe('Animation', () => {
       animation.benchmarking = false
     })
     describe('start ()', () => {
-      test('should start the animation', () => {
+      test('should start the animation', async () => {
         animation.animate = jest.fn()
-        animation.start()
+        await animation.start()
         expect(animation.animate).toBeCalledTimes(1)
       })
     })
@@ -109,8 +109,8 @@ describe('Animation', () => {
     })
 
     describe('animate ()', () => {
-      test('should measure the mainLoop execution time', () => {
-        animation.animate()
+      test('should measure the mainLoop execution time', async () => {
+        await animation.animate()
         expect(grid.update).toBeCalledTimes(1)
         expect(renderer.render).toBeCalledTimes(1)
         expect(stats.begin).toBeCalledTimes(1)
@@ -120,8 +120,8 @@ describe('Animation', () => {
     })
 
     describe('benchmark ()', () => {
-      test('should measure the 100 update execution time', () => {
-        animation.benchmark()
+      test('should measure the 100 update execution time', async () => {
+        await animation.benchmark()
         expect(grid.update).toBeCalledTimes(100)
         expect(renderer.render).toBeCalledTimes(0)
         expect(stats.begin).toBeCalledTimes(100)
@@ -137,8 +137,8 @@ describe('Animation', () => {
     })
 
     describe('animate ()', () => {
-      test('should measure the mainLoop execution time', () => {
-        animation.animate()
+      test('should measure the mainLoop execution time', async () => {
+        await animation.animate()
         expect(grid.update).toBeCalledTimes(0)
         expect(renderer.render).toBeCalledTimes(0)
         expect(stats.begin).toBeCalledTimes(0)
@@ -148,8 +148,8 @@ describe('Animation', () => {
     })
 
     describe('benchmark ()', () => {
-      test('should measure the 100 update execution time', () => {
-        animation.benchmark()
+      test('should measure the 100 update execution time', async () => {
+        await animation.benchmark()
         expect(grid.update).toBeCalledTimes(0)
         expect(renderer.render).toBeCalledTimes(0)
         expect(stats.begin).toBeCalledTimes(0)
