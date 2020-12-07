@@ -21,24 +21,6 @@ export default class {
   }
 
   /**
-   * Expose the game board.
-   */
-  get Cells () {
-    return this.cells
-  }
-
-  /**
-   * Expose the board's size.
-   */
-  get Size () {
-    return {
-      x: this.sizeX,
-      y: this.sizeY,
-      length: this.length
-    }
-  }
-
-  /**
    * Game of life algorithm,
    * update the game board.
    */

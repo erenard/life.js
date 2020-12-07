@@ -42,24 +42,6 @@ export default class {
   }
 
   /**
-   * Expose the game board.
-   */
-  get Cells () {
-    return this.cells
-  }
-
-  /**
-   * Expose the board's size.
-   */
-  get Size () {
-    return {
-      x: this.sizeX,
-      y: this.sizeY,
-      length: this.length
-    }
-  }
-
-  /**
    * Fill the game board with cells.
    *
    * @param {number} ratio - Filling ratio from 0.0 to 1.0.
