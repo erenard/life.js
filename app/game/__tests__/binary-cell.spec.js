@@ -9,7 +9,7 @@ import {
   getAge,
   setAge
 } from './binary-cell.js'
-import Rules from './rules'
+import Rules from '../rules'
 
 describe.each([
   [0x00],

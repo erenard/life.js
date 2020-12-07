@@ -8,7 +8,7 @@ import Renderer from '../render/renderer'
 
 jest.mock('../render/animation')
 jest.mock('../render/renderer')
-jest.mock('./grid-no-worker')
+jest.mock('./grid/grid-no-worker')
 
 describe('Game', () => {
   let game, GridImplementation

@@ -1,7 +1,6 @@
 const path = require('path')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
@@ -29,7 +28,7 @@ module.exports = {
       publicPath: isDev ? '/' : '/life.js/'
     },
     plugins: [
-      new FriendlyErrorsWebpackPlugin(),
+      // new FriendlyErrorsWebpackPlugin(),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({ favicon: './app/assets/favicon.ico', template: './app/index.html' })
     ],

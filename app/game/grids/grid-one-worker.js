@@ -1,4 +1,4 @@
-import { setState } from './binary-cell.js'
+import { random, clear, indexToXy, xyToIndex } from './grid-utils.js'
 
 import Worker from './grid-one-worker.worker.js'
 
@@ -10,7 +10,7 @@ export default class {
    * Initialize the grid.
    *
    * @param {Board} board - Game board's.
-   * @param {Rules} rules - Birth and sruvival rules.
+   * @param {Rules} rules - Birth and survival rules.
    */
   constructor (board, rules) {
     this.sizeX = board.gridWidth
@@ -42,28 +42,6 @@ export default class {
   }
 
   /**
-   * Fill the game board with cells.
-   *
-   * @param {number} ratio - Filling ratio from 0.0 to 1.0.
-   */
-  random (ratio) {
-    let i = this.length
-    while (i--) {
-      this.cells[i] = setState(this.cells[i], Math.random() + ratio >= 1)
-    }
-  }
-
-  /**
-   * Clear the game board.
-   */
-  clear () {
-    let i = this.length
-    while (i--) {
-      this.cells[i] = setState(this.cells[i], 0)
-    }
-  }
-
-  /**
    * Expose the game board.
    */
   get Cells () {
@@ -81,15 +59,27 @@ export default class {
     }
   }
 
+  /**
+   * Fill the game board with cells.
+   *
+   * @param {number} ratio - Filling ratio from 0.0 to 1.0.
+   */
+  random (ratio) {
+    random(this.cells, this.length, this.ratio)
+  }
+
+  /**
+   * Clear the game board.
+   */
+  clear () {
+    clear(this.cells, this.length)
+  }
+
   indexToXy (i) {
-    i = i % this.length
-    return {
-      x: i % this.sizeX,
-      y: Math.floor(i / this.sizeX)
-    }
+    return indexToXy(this.length, this.sizeX, i)
   }
 
   xyToIndex (x, y) {
-    return (this.sizeX * y + x) % this.length
+    return xyToIndex(this.length, this.sizeX, x, y)
   }
 }
