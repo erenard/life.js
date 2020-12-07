@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals'
-import Rules from './rules'
+import Rules from '../rules'
 
 describe('Rules', () => {
   test('should initalize with Conway\'s rules', () => {

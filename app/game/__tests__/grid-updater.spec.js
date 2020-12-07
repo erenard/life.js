@@ -1,10 +1,10 @@
 import { describe, beforeEach, test, expect } from '@jest/globals'
 
-import update from './grid-updater.js'
-import { xyToIndex } from './grid-utils.js'
+import update from '../grid-updater.js'
+import { xyToIndex } from '../grid-utils.js'
 
 import Rules from '../rules'
-import { getState, setState } from './binary-cell.js'
+import { getState, setState } from '../binary-cell.js'
 
 describe('Grid updater', () => {
   const rules = new Rules()

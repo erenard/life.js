@@ -5,8 +5,8 @@ import {
 /**
  * Fill the game board with cells.
  *
- * @param cells
- * @param length
+ * @param {UInt8Array} cells - Cells array.
+ * @param {number} length - Cells array size.
  * @param {number} ratio - Filling ratio from 0.0 to 1.0.
  */
 export function random (cells, length, ratio) {
@@ -19,8 +19,8 @@ export function random (cells, length, ratio) {
 /**
  * Clear the game board.
  *
- * @param cells
- * @param length
+ * @param {UInt8Array} cells - Cells array.
+ * @param {number} length - Cells array size.
  */
 export function clear (cells, length) {
   let i = length

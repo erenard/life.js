@@ -18,7 +18,7 @@ module.exports = {
       compress: false,
       port,
       contentBase: './dist',
-      quiet: true
+      quiet: false
     }
   }),
   baseConfig: ({ isDev }) => ({
@@ -28,7 +28,6 @@ module.exports = {
       publicPath: isDev ? '/' : '/life.js/'
     },
     plugins: [
-      // new FriendlyErrorsWebpackPlugin(),
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({ favicon: './app/assets/favicon.ico', template: './app/index.html' })
     ],

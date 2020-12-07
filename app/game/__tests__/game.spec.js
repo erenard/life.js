@@ -1,14 +1,14 @@
 import { describe, beforeEach, afterEach, test, expect, jest } from '@jest/globals'
-import Board from './board'
-import Game from './game'
-import Grid from './grid'
-import Rules from './rules'
-import Animation from '../render/animation'
-import Renderer from '../render/renderer'
+import Board from '../board'
+import Game from '../game'
+import Grid from '../grids'
+import Rules from '../rules'
+import Animation from '../../render/animation'
+import Renderer from '../../render/renderer'
 
-jest.mock('../render/animation')
-jest.mock('../render/renderer')
-jest.mock('./grid/grid-no-worker')
+jest.mock('../../render/animation')
+jest.mock('../../render/renderer')
+jest.mock('../grids/grid-no-worker')
 
 describe('Game', () => {
   let game, GridImplementation

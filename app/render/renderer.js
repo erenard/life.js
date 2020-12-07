@@ -78,6 +78,7 @@ export default function Renderer (viewport, grid, board) {
   function copyPointAlphas () {
     const pointAlphas = pointsObject.aVertexAlpha.data
     for (let i = 0, len = pointAlphas.length; i < len; i++) {
+      // console.log(grid.cells[i])
       pointAlphas[i] = getAlpha(grid.cells[i])
     }
   }

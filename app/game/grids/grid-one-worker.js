@@ -1,6 +1,6 @@
-import { random, clear, indexToXy, xyToIndex } from './grid-utils.js'
+import { random, clear, indexToXy, xyToIndex } from '../grid-utils.js'
 
-import Worker from './grid-one-worker.worker.js'
+import Worker from '../workers/grid-one-worker.worker.js'
 
 /**
  * Implements the game algorithm.
@@ -65,7 +65,7 @@ export default class {
    * @param {number} ratio - Filling ratio from 0.0 to 1.0.
    */
   random (ratio) {
-    random(this.cells, this.length, this.ratio)
+    random(this.cells, this.length, ratio)
   }
 
   /**

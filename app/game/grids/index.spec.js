@@ -3,7 +3,7 @@ import { describe, beforeEach, test, expect, jest } from '@jest/globals'
 import Grid from '.'
 import Rules from '../rules'
 
-jest.mock('./grid-one-worker.worker.js')
+jest.mock('../workers/grid-one-worker.worker.js')
 
 const gridSide = 4
 const gridLength = gridSide * gridSide

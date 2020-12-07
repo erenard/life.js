@@ -8,7 +8,7 @@ import {
   setCount,
   getAge,
   setAge
-} from './binary-cell.js'
+} from '../binary-cell.js'
 import Rules from '../rules'
 
 describe.each([

@@ -1,5 +1,5 @@
-import update from './grid-updater.js'
-import { random, clear, indexToXy, xyToIndex } from './grid-utils.js'
+import update from '../grid-updater.js'
+import { random, clear, indexToXy, xyToIndex } from '../grid-utils.js'
 
 /**
  * Implements the game algorithm.
@@ -52,7 +52,7 @@ export default class {
    * @param {number} ratio - Filling ratio from 0.0 to 1.0.
    */
   random (ratio) {
-    random(this.cells, this.length, this.ratio)
+    random(this.cells, this.length, ratio)
   }
 
   /**

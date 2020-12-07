@@ -1,11 +1,11 @@
 import { describe, beforeEach, test, expect } from '@jest/globals'
 
-import { random, clear, indexToXy, xyToIndex } from './grid-utils.js'
+import { random, clear, indexToXy, xyToIndex } from '../grid-utils.js'
 
 import {
   getState,
   setState
-} from './binary-cell.js'
+} from '../binary-cell.js'
 
 const gridSide = 4
 const gridLength = gridSide * gridSide

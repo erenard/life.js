@@ -1,4 +1,4 @@
-import update from './grid-updater.js'
+import update from '../grid-updater.js'
 
 let cells, buffer, sizeX, sizeY, length, rules
 
