@@ -11,7 +11,8 @@ const gridSide = 4
 const gridLength = gridSide * gridSide
 
 describe.each([
-  ['No worker', 'no-worker']
+  ['No worker', 'no-worker'],
+  ['One worker', 'one-worker']
 ])('Grid: "%s"', (title, name) => {
   let GridImplementation
   beforeEach(async () => {
