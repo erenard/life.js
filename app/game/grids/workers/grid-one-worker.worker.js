@@ -5,7 +5,6 @@ let cells, sizeX, length, rules
 addEventListener('message', event => {
   const type = event.data.type
   const data = event.data
-
   switch (type) {
     case 'init':
       cells = new Uint8Array(data.buffer)
@@ -15,7 +14,7 @@ addEventListener('message', event => {
       break
     case 'update':
       update(cells, length, sizeX, rules)
-      postMessage('render')
+      postMessage({ type: 'render' })
       break
     case 'rules':
       rules = data.rules
