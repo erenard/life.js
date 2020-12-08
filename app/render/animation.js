@@ -19,10 +19,10 @@ export default class Animation {
     this.renderer = renderer
   }
 
-  mainLoop () {
+  async mainLoop () {
     // This function will wrap the whole process of updating the game and drawing it
     if (this.grid && this.renderer) {
-      this.grid.update()
+      await this.grid.update()
       this.renderer.render()
     }
   }
@@ -31,21 +31,21 @@ export default class Animation {
    * The loop itself, running if used to stop
    * or continue the animation.
    */
-  animate () {
+  async animate () {
     if (this.running) {
       stats.begin()
-      this.mainLoop()
+      await this.mainLoop()
       stats.end()
       requestAnimationFrame(this.animate.bind(this))
     }
   }
 
-  benchmark () {
+  async benchmark () {
     if (this.running) {
       let frames = 100
       while (frames--) {
         stats.begin()
-        this.grid.update()
+        await this.grid.update()
         stats.end()
       }
       requestAnimationFrame(this.benchmark.bind(this))
@@ -55,10 +55,10 @@ export default class Animation {
   /**
    * Initialize and start the animator.
    */
-  start () {
+  async start () {
     this.running = true
-    if (this.benchmarking) this.benchmark()
-    else this.animate()
+    if (this.benchmarking) await this.benchmark()
+    else await this.animate()
   }
 
   /**

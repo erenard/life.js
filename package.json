@@ -72,10 +72,10 @@
     "webpack-bundle-analyzer": "^4.1.0",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^5.4.0"
+    "webpack-merge": "^5.4.0",
+    "worker-loader": "^3.0.6"
   },
   "dependencies": {
-    "friendly-errors-webpack-plugin": "^1.7.0",
     "normalize.css": "^8.0.1",
     "stats.js": "^0.17.0",
     "twgl.js": "^4.17.0",

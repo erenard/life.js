@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@jest/globals'
-import Board from './board'
+import Board from '../board'
 
 describe('Board', () => {
   describe('constructor', () => {

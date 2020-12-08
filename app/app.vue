@@ -49,7 +49,7 @@ import Modal from './components/modal.vue'
 import Game from './game/game'
 import Grid from './game/grid'
 
-export const gameLoading = Grid.load('no-worker').then(() => {
+export const gameLoading = Grid.load().then(() => {
   return new Game()
 })
 
