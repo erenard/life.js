@@ -1,11 +1,10 @@
-import { random, clear, indexToXy, xyToIndex } from '../grid-utils.js'
-
-import Worker from '../workers/grid-one-worker.worker.js'
+import AbstractGrid from './abstract-grid.js'
+import Worker from './workers/grid-one-worker.worker.js'
 
 /**
  * Implements the game algorithm.
  */
-export default class {
+export default class extends AbstractGrid {
   /**
    * Initialize the grid.
    *
@@ -13,10 +12,7 @@ export default class {
    * @param {Rules} rules - Birth and survival rules.
    */
   constructor (board, rules) {
-    this.sizeX = board.gridWidth
-    this.sizeY = board.gridHeight
-    this.length = this.sizeX * this.sizeY
-    this.rules = rules
+    super(board, rules)
     /* game board initialisation */
     this.buffer = new SharedArrayBuffer(Uint8Array.BYTES_PER_ELEMENT * this.length)
     this.worker = new Worker()
@@ -39,29 +35,5 @@ export default class {
     await new Promise(resolve => {
       this.messageSub = resolve
     })
-  }
-
-  /**
-   * Fill the game board with cells.
-   *
-   * @param {number} ratio - Filling ratio from 0.0 to 1.0.
-   */
-  random (ratio) {
-    random(this.cells, this.length, ratio)
-  }
-
-  /**
-   * Clear the game board.
-   */
-  clear () {
-    clear(this.cells, this.length)
-  }
-
-  indexToXy (i) {
-    return indexToXy(this.length, this.sizeX, i)
-  }
-
-  xyToIndex (x, y) {
-    return xyToIndex(this.length, this.sizeX, x, y)
   }
 }

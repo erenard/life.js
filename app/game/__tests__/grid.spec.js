@@ -1,10 +1,10 @@
 import { describe, beforeEach, afterEach, test, expect, jest } from '@jest/globals'
 import { random, clear, indexToXy, xyToIndex } from '../grid-utils.js'
 
-import Grid from '.'
+import Grid from '../grid'
 import Rules from '../rules'
 
-jest.mock('../workers/grid-one-worker.worker.js')
+jest.mock('../grids/workers/grid-one-worker.worker.js')
 jest.mock('../grid-utils.js')
 jest.mock('../grid-updater.js')
 

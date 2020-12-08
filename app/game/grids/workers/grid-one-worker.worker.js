@@ -1,6 +1,6 @@
-import update from '../grid-updater.js'
+import update from '../../grid-updater.js'
 
-let cells, buffer, sizeX, sizeY, length, rules
+let cells, sizeX, length, rules
 
 addEventListener('message', event => {
   const type = event.data.type
@@ -8,11 +8,9 @@ addEventListener('message', event => {
 
   switch (type) {
     case 'init':
-      buffer = data.buffer
-      cells = new Uint8Array(buffer)
+      cells = new Uint8Array(data.buffer)
       sizeX = data.board.gridWidth
-      sizeY = data.board.gridHeight
-      length = sizeX * sizeY
+      length = sizeX * sizeX
       rules = data.rules
       break
     case 'update':

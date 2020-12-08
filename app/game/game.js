@@ -1,5 +1,5 @@
 import Animation from '../render/animation'
-import Grid from './grids'
+import Grid from './grid'
 import Renderer from '../render/renderer'
 import Rules from './rules'
 import Board from './board'

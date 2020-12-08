@@ -47,12 +47,9 @@ import BoardEditor from './components/board-editor.vue'
 import RulesEditor from './components/rules-editor.vue'
 import Modal from './components/modal.vue'
 import Game from './game/game'
-import Grid from './game/grids'
+import Grid from './game/grid'
 
-const gridName = typeof SharedArrayBuffer !== 'undefined' ? 'one-worker' : 'no-worker'
-console.log(`Using ${gridName} grid implementation.`)
-
-export const gameLoading = Grid.load(gridName).then(() => {
+export const gameLoading = Grid.load().then(() => {
   return new Game()
 })
 
