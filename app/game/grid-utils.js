@@ -40,3 +40,7 @@ export function indexToXy (length, sizeX, i) {
 export function xyToIndex (length, sizeX, x, y) {
   return (sizeX * y + x) % length
 }
+
+export function resurect (cells, i) {
+  cells[i] = setState(cells[i], 1)
+}

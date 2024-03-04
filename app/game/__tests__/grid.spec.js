@@ -1,5 +1,5 @@
 import { describe, beforeEach, afterEach, test, expect, jest } from '@jest/globals'
-import { random, clear, indexToXy, xyToIndex } from '../grid-utils.js'
+import { random, clear, indexToXy, xyToIndex, resurect } from '../grid-utils.js'
 
 import Grid from '../grid'
 import Rules from '../rules'
@@ -56,6 +56,15 @@ describe.each([
       const grid = new GridImplementation({ gridWidth: gridSide, gridHeight: gridSide }, new Rules())
       grid.xyToIndex(2, 2)
       expect(xyToIndex).toBeCalledWith(grid.length, grid.sizeX, 2, 2)
+    })
+  })
+  describe('resurectCell ()', () => {
+    test('should call resurect with instance parameters', () => {
+      const grid = new GridImplementation({ gridWidth: gridSide, gridHeight: gridSide }, new Rules())
+      xyToIndex.mockReturnValue(4)
+      grid.resurectCell(2, 2)
+      expect(xyToIndex).toBeCalledWith(grid.length, grid.sizeX, 2, 2)
+      expect(resurect).toBeCalledWith(grid.cells, 4)
     })
   })
 })

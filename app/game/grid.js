@@ -5,7 +5,6 @@ const defaultName = typeof SharedArrayBuffer !== 'undefined' ? 'one-worker' : 'n
 const Grid = {
 
   load: async function (name = defaultName) {
-    console.log(`Load ${name} grid.`)
     implementation = await import(`./grids/grid-${name}`)
   },
 

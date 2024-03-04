@@ -38,6 +38,22 @@ export default class Game {
     this._animation.mainLoop()
   }
 
+  /**
+   * Add a cell to the grid.
+   *
+   * @param {number} x - Mouse x coordinate in pixels, relative to the viewport element.
+   * @param {number} y - Mouse y coordinate in pixels, relative to the viewport element.
+   */
+  addCellAtPixel (x, y) {
+    this._grid.resurectCell(...this._board.pixelToCellCoordinates(x, y))
+    this._renderer.render()
+  }
+
+  /**
+   * Set the viewport.
+   *
+   * @param {Element} viewport - Viewport DOM element.
+   */
   // eslint-disable-next-line accessor-pairs
   set viewport (viewport) {
     this._viewport = viewport

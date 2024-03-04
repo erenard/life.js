@@ -13,4 +13,18 @@ export default class Board {
   get pixelHeight () {
     return this.gridHeight * this.cellRadius
   }
+
+  /**
+   * Convert pixel coordinates to cell coordinates.
+   *
+   * @param {number} x - Mouse x coordinate in pixels, relative to the board.
+   * @param {number} y - Mouse y coordinate in pixels, relative to the board.
+   * @returns {[number, number]} - Cell coordinates.
+   */
+  pixelToCellCoordinates (x, y) {
+    return [
+      Math.floor(x / this.cellRadius),
+      Math.floor(y / this.cellRadius)
+    ]
+  }
 }

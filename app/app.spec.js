@@ -106,4 +106,13 @@ describe('AppVue', () => {
       expect(game.step).toHaveBeenCalledTimes(1)
     })
   })
+
+  describe('moving the mouse with left button pressed in the viewport', () => {
+    beforeEach(async () => {
+      await wrapper.find('div').trigger('mousemove', { x: 0, y: 0, buttons: 1 })
+    })
+    test('should call game.mouseDown', () => {
+      expect(game.addCellAtPixel).toHaveBeenCalledTimes(1)
+    })
+  })
 })

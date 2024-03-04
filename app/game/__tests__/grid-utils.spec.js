@@ -1,6 +1,6 @@
 import { describe, beforeEach, test, expect } from '@jest/globals'
 
-import { random, clear, indexToXy, xyToIndex } from '../grid-utils.js'
+import { random, clear, indexToXy, xyToIndex, resurect } from '../grid-utils.js'
 
 import {
   getState,
@@ -57,6 +57,15 @@ describe('Grid utils', () => {
       expect(indexToXy(gridLength, gridSide, 1 + gridSide * 1)).toEqual({ x: 1, y: 1 })
       expect(indexToXy(gridLength, gridSide, 3 + gridSide * 0)).toEqual({ x: 3, y: 0 })
       expect(indexToXy(gridLength, gridSide, 0 + gridSide * 3)).toEqual({ x: 0, y: 3 })
+    })
+  })
+  describe('resurectCell ()', () => {
+    test('should resurect cell', () => {
+      cells[0] = setState(cells[0], 0)
+      cells[1] = setState(cells[1], 0)
+      resurect(cells, 0)
+      expect(getState(cells[0])).toEqual(1)
+      expect(getState(cells[1])).toEqual(0)
     })
   })
 })

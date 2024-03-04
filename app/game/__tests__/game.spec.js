@@ -148,4 +148,15 @@ describe('Game', () => {
       expect(game._animation.mainLoop).toHaveBeenCalledTimes(1)
     })
   })
+  describe('addCellAtPixel method', () => {
+    beforeEach(() => {
+      game._grid.resurectCell = jest.fn()
+      game._renderer = { render: jest.fn() }
+      game.addCellAtPixel({ x: 0, y: 0 })
+    })
+    test('should call grid.addCellAtPixel', () => {
+      expect(game._grid.resurectCell).toHaveBeenCalledTimes(1)
+      expect(game._renderer.render).toHaveBeenCalledTimes(1)
+    })
+  })
 })

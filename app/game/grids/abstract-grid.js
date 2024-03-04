@@ -1,5 +1,5 @@
 import update from '../grid-updater.js'
-import { random, clear, indexToXy, xyToIndex } from '../grid-utils.js'
+import { random, clear, indexToXy, xyToIndex, resurect } from '../grid-utils.js'
 
 /**
  * Implements the game algorithm.
@@ -48,5 +48,9 @@ export default class {
 
   xyToIndex (x, y) {
     return xyToIndex(this.length, this.sizeX, x, y)
+  }
+
+  resurectCell (x, y) {
+    resurect(this.cells, this.xyToIndex(x, y))
   }
 }

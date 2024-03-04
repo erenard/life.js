@@ -4,6 +4,7 @@ import Board from '../board.js'
 
 export default function Game () {
   const obj = {
+    addCellAtPixel: jest.fn(),
     step: jest.fn(),
     setViewportMock: jest.fn(),
     getBoardMock: jest.fn(),

@@ -42,4 +42,9 @@ describe('Board', () => {
       expect(new Board().pixelHeight).toEqual(800)
     })
   })
+  describe('pixelToCellCoordinates', () => {
+    test('should convert pixel coordinates to cell coordinates', () => {
+      expect(new Board().pixelToCellCoordinates(100, 100)).toEqual([50, 50])
+    })
+  })
 })

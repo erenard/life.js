@@ -1,7 +1,10 @@
 <template>
   <Layout>
     <template #default>
-      <div ref="viewport" />
+      <div
+        ref="viewport"
+        @mousemove="handleMouseMove"
+      />
     </template>
     <template #ui>
       <div class="box">
@@ -80,6 +83,9 @@ export default {
     this.switchRunning()
   },
   methods: {
+    handleMouseMove (mouseEvent) {
+      if (mouseEvent.buttons === 1) game.addCellAtPixel(mouseEvent.offsetX, mouseEvent.offsetY)
+    },
     stepAnimate () {
       game.step()
     },
