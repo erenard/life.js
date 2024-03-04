@@ -19,12 +19,10 @@ export default class Animation {
     this.renderer = renderer
   }
 
+  // This function will wrap the whole process of updating the game and drawing it
   async mainLoop () {
-    // This function will wrap the whole process of updating the game and drawing it
-    if (this.grid && this.renderer) {
-      await this.grid.update()
-      this.renderer.render()
-    }
+    await this.grid.update()
+    this.renderer.render()
   }
 
   /**
@@ -56,6 +54,7 @@ export default class Animation {
    * Initialize and start the animator.
    */
   async start () {
+    if (!this.grid || !this.renderer) return
     this.running = true
     if (this.benchmarking) await this.benchmark()
     else await this.animate()

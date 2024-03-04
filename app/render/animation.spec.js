@@ -47,18 +47,6 @@ describe('Animation', () => {
       //
       expect(calls).toEqual(['grid.update', 'renderer.render'])
     })
-    test('do nothing when grid is uninitialized', async () => {
-      animation.grid = null
-      await animation.mainLoop()
-      expect(grid.update).not.toHaveBeenCalled()
-      expect(renderer.render).not.toHaveBeenCalled()
-    })
-    test('do nothing when renderer is uninitialized', async () => {
-      animation.renderer = null
-      await animation.mainLoop()
-      expect(grid.update).not.toHaveBeenCalled()
-      expect(renderer.render).not.toHaveBeenCalled()
-    })
   })
 
   describe('stop ()', () => {
@@ -75,6 +63,16 @@ describe('Animation', () => {
     test('should set running to true', async () => {
       await animation.start()
       expect(animation.running).toBeTruthy()
+    })
+    test('do nothing when grid is uninitialized', async () => {
+      animation.grid = null
+      await animation.start()
+      expect(animation.running).toBeFalsy()
+    })
+    test('do nothing when renderer is uninitialized', async () => {
+      animation.renderer = null
+      await animation.start()
+      expect(animation.running).toBeFalsy()
     })
   })
 
