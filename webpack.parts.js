@@ -18,7 +18,11 @@ module.exports = {
       compress: false,
       port,
       contentBase: './dist',
-      quiet: false
+      quiet: false,
+      headers: {
+        'Cross-Origin-Opener-Policy': 'same-origin',
+        'Cross-Origin-Embedder-Policy': 'require-corp'
+      }
     }
   }),
   baseConfig: ({ isDev }) => ({

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js --mode production",
     "electron": "electron app/electron.js",
-    "start": "webpack serve --config webpack.config.js",
+    "start": "webpack serve --config webpack.config.js --mode development",
     "lint": "eslint . --ext .js,.vue --cache --fix",
     "test": "jest",
     "test:coverage": "jest --coverage",
