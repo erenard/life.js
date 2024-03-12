@@ -5,7 +5,9 @@ let stats
 export default {
   init: () => {
     stats = new Stats()
-    document.body.appendChild(stats.dom)
+    const container = document.getElementById('statsContainer') || document.body
+    container.appendChild(stats.dom)
+    stats.dom.style.position = 'unset'
   },
   begin: () => {
     if (stats) stats.begin()

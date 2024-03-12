@@ -34,9 +34,6 @@ describe('AppVue', () => {
       expect(game.setRunningMock).toHaveBeenCalledTimes(1)
       expect(game.setRunningMock).toHaveBeenCalledWith(true)
     })
-    test('should pass running to the animation-control', () => {
-      expect(wrapper.find('animationcontrol-stub').props('running')).toEqual(wrapper.vm.running)
-    })
     test('should pass board to the board-editor', () => {
       expect(wrapper.find('boardeditor-stub').props('board')).toEqual(wrapper.vm.board)
     })
@@ -45,39 +42,24 @@ describe('AppVue', () => {
     })
   })
 
-  describe('when animation control emits "running"', () => {
-    beforeEach(async () => {
-      wrapper.find('animationcontrol-stub').vm.$emit('running')
-      wrapper.find('animationcontrol-stub').vm.$emit('running')
-      await wrapper.vm.$nextTick()
-    })
+  test('the running state', async () => {
+    expect(wrapper.vm.running).toEqual(true)
+    expect(wrapper.find('.ui__step__button').exists()).toBe(false)
+    expect(wrapper.find('.ui__play-pause__button').text()).toEqual('Pause')
+    expect(game.setRunningMock).toHaveBeenCalledTimes(1)
+    expect(game.setRunningMock).toHaveBeenCalledWith(true)
 
-    test('should set switch the running state', () => {
-      expect(game.setRunningMock).toHaveBeenCalledTimes(3)
-      expect(game.setRunningMock).toHaveBeenNthCalledWith(2, false)
-      expect(game.setRunningMock).toHaveBeenNthCalledWith(3, true)
-    })
-  })
+    await wrapper.find('.ui__play-pause__button').trigger('click')
 
-  describe('when animation control switch benchmarking on', () => {
-    beforeEach(async () => {
-      wrapper.find('animationcontrol-stub').vm.$emit('benchmarking')
-      await wrapper.vm.$nextTick()
-    })
-    test('should set switch on the benchmarking mode', async () => {
-      expect(game.setBenchmarkingMock).toHaveBeenCalledTimes(1)
-      expect(game.setBenchmarkingMock).toHaveBeenNthCalledWith(1, true)
-    })
-    describe('when animation control switch benchmarking off', () => {
-      beforeEach(async () => {
-        wrapper.find('animationcontrol-stub').vm.$emit('benchmarking')
-        await wrapper.vm.$nextTick()
-      })
-      test('should set switch on the benchmarking mode', async () => {
-        expect(game.setBenchmarkingMock).toHaveBeenCalledTimes(2)
-        expect(game.setBenchmarkingMock).toHaveBeenNthCalledWith(2, false)
-      })
-    })
+    expect(wrapper.vm.running).toEqual(false)
+    expect(wrapper.find('.ui__play-pause__button').text()).toEqual('Resume')
+    expect(wrapper.find('.ui__step__button').exists()).toBe(true)
+    expect(game.setRunningMock).toHaveBeenCalledTimes(2)
+    expect(game.setRunningMock).toHaveBeenCalledWith(false)
+
+    expect(game.step).toHaveBeenCalledTimes(0)
+    await wrapper.find('.ui__step__button').trigger('click')
+    expect(game.step).toHaveBeenCalledTimes(1)
   })
 
   describe.each([
@@ -93,17 +75,6 @@ describe('AppVue', () => {
 
     test(`should set ${propName} from ${initialValue} to ${changedValue}`, () => {
       expect(game[mockName]).toHaveBeenCalledWith(changedValue)
-    })
-  })
-
-  describe('when animation emits step', () => {
-    beforeEach(async () => {
-      wrapper.find('animationcontrol-stub').vm.$emit('step')
-      await wrapper.vm.$nextTick()
-    })
-
-    test('should call game.step', () => {
-      expect(game.step).toHaveBeenCalledTimes(1)
     })
   })
 

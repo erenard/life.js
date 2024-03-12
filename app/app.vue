@@ -9,12 +9,22 @@
     <template #ui>
       <div class="box">
         <h1>Controls</h1>
-        <AnimationControl
-          :running="running"
-          :benchmarking="benchmarking"
-          @running="switchRunning"
-          @benchmarking="switchBenchmarking"
-          @step="stepAnimate"
+        <button
+          class="ui__play-pause__button"
+          @click="switchRunning"
+          v-text="pauseButtonLabel"
+        />
+        <button
+          v-if="!running"
+          class="ui__step__button"
+          @click="stepAnimate"
+        >
+          Step
+        </button>
+        <button
+          class="ui__benchmark__button"
+          @click="switchBenchmarking"
+          v-text="benchmarkButtonLabel"
         />
         <button @click="showRulesEditor = true">
           Rules
@@ -22,6 +32,7 @@
         <button @click="showBoardEditor = true">
           Board
         </button>
+        <div id="statsContainer" />
       </div>
     </template>
     <template #modals>
@@ -44,7 +55,6 @@
 </template>
 
 <script>
-import AnimationControl from './components/animation-control.vue'
 import Layout from './components/layout.vue'
 import BoardEditor from './components/board-editor.vue'
 import RulesEditor from './components/rules-editor.vue'
@@ -61,7 +71,6 @@ export let game
 export default {
   name: 'App',
   components: {
-    AnimationControl,
     Layout,
     BoardEditor,
     RulesEditor,
@@ -75,6 +84,14 @@ export default {
     showBoardEditor: false,
     showRulesEditor: false
   }),
+  computed: {
+    pauseButtonLabel () {
+      return this.running ? 'Pause' : 'Resume'
+    },
+    benchmarkButtonLabel () {
+      return `benchmark: ${this.benchmarking ? 'on' : 'off'}`
+    }
+  },
   async mounted () {
     game = await gameLoading
     this.board = game.board
@@ -136,6 +153,9 @@ body {
   opacity: 0.75;
   border: solid;
   padding: 5px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 h1 {

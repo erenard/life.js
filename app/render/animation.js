@@ -11,10 +11,10 @@ export default class Animation {
     this.renderer = null
     this.running = false
     this.benchmarking = false
+    stats.init()
   }
 
   init (grid, renderer) {
-    stats.init()
     this.grid = grid
     this.renderer = renderer
   }
